@@ -1,0 +1,83 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff"
+    tools:context=".IntroActivity">
+
+  <androidx.viewpager.widget.ViewPager
+      android:id="@+id/viewScreenPager"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginBottom="1dp"
+      app:layout_constraintBottom_toTopOf="@+id/tab_indicator"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="1.0">
+
+  </androidx.viewpager.widget.ViewPager>
+
+  <Button
+      android:id="@+id/btn_next"
+      style="@style/Widget.AppCompat.Button.Borderless"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
+      android:background="#fff"
+      android:drawableEnd="@drawable/ic_arrow_forward_black_24dp"
+      android:drawableTint="#2196F3"
+      android:text="Next"
+      android:textColor="#2196F3"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.946"
+      app:layout_constraintStart_toEndOf="@+id/tab_indicator"
+      app:layout_constraintTop_toBottomOf="@+id/viewScreenPager"
+      app:layout_constraintVertical_bias="1.0" />
+
+  <com.google.android.material.tabs.TabLayout
+      android:id="@+id/tab_indicator"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginBottom="8dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:tabBackground="@drawable/indicator_selector" />
+
+  <Button
+      android:id="@+id/btn_get_started"
+      android:layout_width="132dp"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="64dp"
+      android:background="@drawable/btn_gradient"
+      android:fontFamily="sans-serif-black"
+      android:text="Get Started"
+      android:textColor="@android:color/white"
+      android:visibility="invisible"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@+id/viewScreenPager"
+      app:layout_constraintHorizontal_bias="0.498"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/viewScreenPager"
+      app:layout_constraintVertical_bias="0.988" />
+
+  <Button
+      android:id="@+id/btn_skip"
+      android:layout_width="120dp"
+      android:layout_height="wrap_content"
+      android:text="skip"
+      android:background="@drawable/btn_skip_bg"
+      android:textColor="#2196F3"
+      app:layout_constraintBottom_toTopOf="@+id/btn_get_started"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.93"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/viewScreenPager"
+      app:layout_constraintVertical_bias="0.04000002" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
