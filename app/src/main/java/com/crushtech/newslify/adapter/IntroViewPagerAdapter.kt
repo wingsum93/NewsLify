@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.crushtech.newslify.R
-import com.crushtech.newslify.data.ScreenItems
+import com.crushtech.newslify.models.ScreenItems
 
 class IntroViewPagerAdapter(val context: Context, val screenItems: List<ScreenItems>) :
     PagerAdapter() {

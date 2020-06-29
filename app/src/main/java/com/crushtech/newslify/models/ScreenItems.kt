@@ -1,4 +1,4 @@
-package com.crushtech.newslify.data
+package com.crushtech.newslify.models
 
 data class ScreenItems(
     val Title: String,

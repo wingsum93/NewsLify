@@ -11,7 +11,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.viewpager.widget.ViewPager
 import com.crushtech.newslify.adapter.IntroViewPagerAdapter
-import com.crushtech.newslify.data.ScreenItems
+import com.crushtech.newslify.models.ScreenItems
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_intro.*
 import java.util.ArrayList
