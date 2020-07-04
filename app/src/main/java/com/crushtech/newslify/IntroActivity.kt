@@ -96,12 +96,6 @@ class IntroActivity : AppCompatActivity() {
             saveInstanceToPrefs()
             finish()
         }
-        btn_skip.setOnClickListener {
-            val intent = Intent(this, SelectCountry::class.java)
-            startActivity(intent)
-            saveInstanceToPrefs()
-            finish()
-        }
     }
 
     private fun setUpListScreens() {
