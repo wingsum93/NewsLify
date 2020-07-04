@@ -15,15 +15,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.crushtech.newslify.NewsActivity
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BusinessNewsCoverAdapter
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.crushtech.newslify.ui.util.Resource
+import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
-import kotlinx.android.synthetic.main.fragment_search_news.paginationProgressBar
+import kotlinx.android.synthetic.main.fragment_search_news.search_loading_lottie
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -38,6 +39,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
+        (activity as NewsActivity).parent_layout.setBackgroundResource(R.color.brown)
         setUpRecyclerView()
 
         newsAdapter.setOnItemClickListener { article ->
@@ -176,12 +178,12 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
     }
 
     private fun hideProgressBar() {
-        paginationProgressBar.visibility = View.INVISIBLE
+        search_loading_lottie.visibility = View.INVISIBLE
         isLoading = false
     }
 
     private fun showProgressBar() {
-        paginationProgressBar.visibility = View.VISIBLE
+        search_loading_lottie.visibility = View.VISIBLE
         isLoading = true
     }
 

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:fullBackupContent="true">
-        <activity android:name=".IntroActivity"
+        <activity android:name=".ui.IntroActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,9 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".SelectCountry"
+        <activity android:name=".ui.SelectCountry"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".NewsActivity" />
+        <activity android:name=".ui.NewsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

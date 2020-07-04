@@ -37,7 +37,7 @@ class BusinessNewsCoverAdapter :
                     Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception) {
-                        bnews_picture.setBackgroundResource(R.drawable.ic_launcher_background)
+                        bnews_picture.setBackgroundResource(R.color.colorPrimary)
                     }
                 })
             val formattedJsonDate = article.publishedAt?.substring(0, 9)

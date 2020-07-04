@@ -1,4 +1,4 @@
-package com.crushtech.newslify
+package com.crushtech.newslify.ui
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import com.crushtech.newslify.R
 import com.mikelau.countrypickerx.CountryPickerCallbacks
 import com.mikelau.countrypickerx.CountryPickerDialog
 import kotlinx.android.synthetic.main.activity_select_country.*
@@ -26,7 +27,9 @@ class SelectCountry : AppCompatActivity() {
 
         setContentView(R.layout.activity_select_country)
 
-        val btnAnim = AnimationUtils.loadAnimation(this, R.anim.button_anim)
+        val btnAnim = AnimationUtils.loadAnimation(this,
+            R.anim.button_anim
+        )
         btn_finish.animation = btnAnim
         btn_select_country.setOnClickListener {
             val countryPicker: CountryPickerDialog = CountryPickerDialog(

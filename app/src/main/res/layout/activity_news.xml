@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FDF9F9"
     android:id="@+id/parent_layout"
-    tools:context="com.crushtech.newslify.NewsActivity">
+    tools:context="com.crushtech.newslify.ui.NewsActivity">
 
     <FrameLayout
         android:id="@+id/flFragment"

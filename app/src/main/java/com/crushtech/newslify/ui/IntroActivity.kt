@@ -1,4 +1,4 @@
-package com.crushtech.newslify
+package com.crushtech.newslify.ui
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.viewpager.widget.ViewPager
+import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.IntroViewPagerAdapter
 import com.crushtech.newslify.models.ScreenItems
 import com.google.android.material.tabs.TabLayout
@@ -45,7 +46,9 @@ class IntroActivity : AppCompatActivity() {
 
         //initialize views
         tabIndicator = findViewById(R.id.tab_indicator)
-        btnAnim = AnimationUtils.loadAnimation(this, R.anim.button_anim)
+        btnAnim = AnimationUtils.loadAnimation(this,
+            R.anim.button_anim
+        )
 
         //setUp screen
         setUpListScreens()

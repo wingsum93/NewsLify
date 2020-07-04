@@ -8,7 +8,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.crushtech.newslify.NewsActivity
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior

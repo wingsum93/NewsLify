@@ -8,11 +8,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.crushtech.newslify.NewsActivity
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BreakingNewsAdapter
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
@@ -22,6 +23,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
+        (activity as NewsActivity).parent_layout.setBackgroundResource(R.color.brown)
         setUpRecyclerView()
 
         newsAdapter.setOnItemClickListener { article ->

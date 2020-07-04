@@ -41,22 +41,12 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
                     Callback {
                     override fun onSuccess() {}
                     override fun onError(e: Exception) {
-                       breaking_news_image.setBackgroundResource(R.drawable.ic_launcher_background)
+                       breaking_news_image.setBackgroundResource(R.color.colorPrimary)
                     }
                 })
             val formattedJsonDate = article.publishedAt?.substring(0, 9)
-            val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            var date: Date? = null
-            try {
-                date = dateformat.parse(formattedJsonDate!!)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            val calendar = Calendar.getInstance()
-            calendar.time = date!!
-            val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
 
-            publishedAt_and_source.text = "$formatted      ${article.source?.name}"
+            publishedAt_and_source.text = "$formattedJsonDate     ${article.source?.name}"
             title.text = article?.title
             description.text = article?.description
 

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.crushtech.newslify.NewsActivity
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.GroupAdapter
 import com.crushtech.newslify.models.Group
@@ -279,9 +279,8 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
 
         private fun hideProgressBar() {
-            loading_lottie.visibility=View.INVISIBLE
+            brk_loading_lottie.visibility=View.INVISIBLE
             tv_loading.visibility=View.INVISIBLE
-           // paginationProgressBar.visibility = View.INVISIBLE
             brk_parent.setBackgroundResource(R.color.brown)
             (activity as NewsActivity).parent_layout.setBackgroundResource(R.color.brown)
            rvBreakingNews.visibility = View.VISIBLE
@@ -290,8 +289,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         }
 
         private fun showProgressBar() {
-            loading_lottie.visibility=View.VISIBLE
-          //  paginationProgressBar.visibility = View.VISIBLE
+            brk_loading_lottie.visibility=View.VISIBLE
             tv_loading.visibility=View.VISIBLE
             rvBreakingNews.visibility = View.INVISIBLE
             brk_parent.setBackgroundResource(android.R.color.white)

@@ -35,25 +35,15 @@ class EntertainmentNewsAdapter : RecyclerView.Adapter<EntertainmentNewsAdapter.E
         val article = differ.currentList[position]
         holder.itemView.apply {
             if(article?.urlToImage.isNullOrEmpty()){
-                entertainment_news_image.setBackgroundResource(R.drawable.ic_launcher_background)
+                entertainment_news_image.setBackgroundResource(R.color.colorPrimary)
             }
             else{
                 Picasso.get().load(article.urlToImage).fit().centerCrop().into(entertainment_news_image)
             }
             
             val formattedJsonDate = article.publishedAt?.substring(0, 9)
-            val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            var date: Date? = null
-            try {
-                date = dateformat.parse(formattedJsonDate!!)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            val calendar = Calendar.getInstance()
-            calendar.time = date!!
-            val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
 
-            entertainment_news_publishedAt.text = formatted
+            entertainment_news_publishedAt.text = formattedJsonDate
             entertainment_news_title.text = article.title
             entertainment_news_source.text= article.source?.name
 

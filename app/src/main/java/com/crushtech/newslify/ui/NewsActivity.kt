@@ -1,4 +1,4 @@
-package com.crushtech.newslify
+package com.crushtech.newslify.ui
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -9,10 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.crushtech.newslify.ui.NewsViewModelProviderFactory
+import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
 import com.crushtech.newslify.repository.NewsRepository
-import com.crushtech.newslify.ui.NewsViewModel
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
@@ -30,9 +29,11 @@ class NewsActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
 
-        val appBarConfig= AppBarConfiguration(setOf(R.id.breakingNewsFragment,
+        val appBarConfig= AppBarConfiguration(setOf(
+            R.id.breakingNewsFragment,
             R.id.savedNewsFragment,
-            R.id.searchNewsFragment)
+            R.id.searchNewsFragment
+        )
         )
 
         setupActionBarWithNavController(newsNavHostFragment.findNavController(),appBarConfig)
