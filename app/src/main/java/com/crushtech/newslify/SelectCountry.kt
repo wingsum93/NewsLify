@@ -48,6 +48,7 @@ class SelectCountry : AppCompatActivity() {
 
             saveDataToPref(country.toString())
             startActivity(Intent(this, NewsActivity::class.java))
+            finish()
         }
         if (savedInstanceState != null) {
             country_selected.text = savedInstanceState.getString("myCon")

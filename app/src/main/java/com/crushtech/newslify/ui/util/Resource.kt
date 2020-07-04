@@ -1,4 +1,4 @@
-package com.crushtech.newslify.util
+package com.crushtech.newslify.ui.util
 
 sealed class Resource<T>(
     var data: T? = null,

@@ -1,7 +1,6 @@
-package com.androiddevs.mvvmnewsapp.api
+package com.crushtech.newslify.api
 
-import com.crushtech.newslify.util.Constants.Companion.BASE_URL
-import com.crushtech.newslify.api.NewsApi
+import com.crushtech.newslify.ui.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

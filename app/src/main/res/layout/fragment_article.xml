@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/news_article_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/article_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/article_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/article_image"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-black"
+            android:text="The Vinegard"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/article_publishedAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="sans-serif-black"
+            android:text="24th january 2018"
+            android:textColor="@android:color/white"
+            android:textSize="19sp" />
+    </RelativeLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="40dp"
+                android:clickable="true"
+                android:layout_gravity="bottom|end"
+                android:backgroundTint="#9C27B0"
+                android:src="@drawable/ic_favorite"
+                android:focusable="true" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="120dp"
+        android:clickable="true"
+        android:layout_gravity="bottom|end"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:src="@drawable/ic_share"
+        android:focusable="true" />
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/my_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:background="@drawable/webview_bg"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="100dp"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <WebView
+            android:id="@+id/scrollwebView"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"/>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+    <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="match_parent"-->
+    <!--    android:background="@drawable/webview_bg"-->
+    <!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+
+    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/fab_favorite"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="32dp"-->
+    <!--            android:layout_marginBottom="32dp"-->
+    <!--            android:clickable="true"-->
+    <!--            android:backgroundTint="#9C27B0"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            android:src="@drawable/ic_favorite"-->
+    <!--            android:focusable="true" />-->
+    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/fab_share"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="32dp"-->
+    <!--            android:layout_marginBottom="120dp"-->
+    <!--            android:clickable="true"-->
+    <!--            app:fabSize="normal"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            android:src="@drawable/ic_share"-->
+    <!--            android:focusable="true" />-->
+    <!--        <WebView-->
+    <!--            android:id="@+id/my_webView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent" />-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+

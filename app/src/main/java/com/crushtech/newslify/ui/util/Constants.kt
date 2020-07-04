@@ -1,4 +1,4 @@
-package com.crushtech.newslify.util
+package com.crushtech.newslify.ui.util
 
 class Constants {
     companion object{

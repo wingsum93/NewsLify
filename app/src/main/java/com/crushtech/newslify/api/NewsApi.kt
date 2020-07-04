@@ -1,7 +1,7 @@
 package com.crushtech.newslify.api
 
 import com.crushtech.newslify.models.NewsResponse
-import com.crushtech.newslify.util.Constants.Companion.API_KEY
+import com.crushtech.newslify.ui.util.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
