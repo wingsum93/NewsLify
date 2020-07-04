@@ -18,7 +18,8 @@ import java.util.*
 
 class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNewsHolder>() {
 
-   // var breakingNewsShimmerEffect: ShimmerFrameLayout?=null
+    var showShimmer = true
+    val SHIMMER_ITEM_NUMBER = 5
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreakingNewsHolder {
         return BreakingNewsHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -28,31 +29,53 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
             )
         )
     }
+
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
     override fun onBindViewHolder(holder: BreakingNewsHolder, position: Int) {
-        val article = differ.currentList[position]
         holder.itemView.apply {
+            if (showShimmer) {
+                brk_shimmer.startShimmer()
+            } else {
+                val article = differ.currentList[position]
+                brk_shimmer.apply {
+                    stopShimmer()
+                    setShimmer(null)
+                }
+                breaking_news_image.background = null
+                publishedAt_and_source.background = null
+                title.background = null
+                description.background = null
+                Picasso.get().load(article.urlToImage).fit().centerCrop()
+                    .into(breaking_news_image, object :
+                        Callback {
+                        override fun onSuccess() {}
+                        override fun onError(e: Exception) {
+                            breaking_news_image.setBackgroundResource(R.color.brown)
+                        }
+                    })
+                val formattedJsonDate = article.publishedAt?.substring(0, 10)
+                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                var date: Date? = null
+                try {
+                    date = dateformat.parse(formattedJsonDate!!)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
 
-            Picasso.get().load(article.urlToImage).fit().centerCrop()
-                .into(breaking_news_image, object :
-                    Callback {
-                    override fun onSuccess() {}
-                    override fun onError(e: Exception) {
-                       breaking_news_image.setBackgroundResource(R.color.colorPrimary)
+                publishedAt_and_source.text = "$formatted      ${article.source?.name}"
+                title.text = article?.title
+                description.text = article?.description
+
+                setOnClickListener {
+                    onItemClickListener?.let {
+                        it(article)
                     }
-                })
-            val formattedJsonDate = article.publishedAt?.substring(0, 9)
-
-            publishedAt_and_source.text = "$formattedJsonDate     ${article.source?.name}"
-            title.text = article?.title
-            description.text = article?.description
-
-            setOnClickListener {
-                onItemClickListener?.let {
-                    it(article)
                 }
             }
         }

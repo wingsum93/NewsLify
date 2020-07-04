@@ -23,7 +23,6 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
-        (activity as NewsActivity).parent_layout.setBackgroundResource(R.color.brown)
         setUpRecyclerView()
 
         newsAdapter.setOnItemClickListener { article ->

@@ -18,6 +18,9 @@ import java.util.*
 
 class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHolder>() {
 
+    var showShimmer = true
+    val SHIMMER_ITEM_NUMBER = 5
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SportNewsViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.sport_list_item, parent, false)
@@ -25,31 +28,54 @@ class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHold
     }
 
     override fun onBindViewHolder(holder: SportNewsViewHolder, position: Int) {
-        val article = differ.currentList[position]
+
         holder.itemView.apply {
-            Picasso.get().load(article.urlToImage).fit().centerCrop()
-                .into(sport_news_picture, object :
-                    Callback {
-                    override fun onSuccess() {}
-                    override fun onError(e: Exception) {
-                        sport_news_picture.setBackgroundResource(R.color.colorPrimary)
+            if (showShimmer) {
+                sp_shimmer.startShimmer()
+            } else {
+                val article = differ.currentList[position]
+                sp_shimmer.apply {
+                    stopShimmer()
+                    setShimmer(null)
+                }
+                sport_news_picture.background = null
+                sport_title.background = null
+                sport_publishedAt.background = null
+
+                Picasso.get().load(article.urlToImage).fit().centerCrop()
+                    .into(sport_news_picture, object :
+                        Callback {
+                        override fun onSuccess() {}
+                        override fun onError(e: Exception) {
+                            sport_news_picture.setBackgroundResource(R.color.colorPrimary)
+                        }
+                    })
+                val formattedJsonDate = article.publishedAt?.substring(0, 10)
+                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                var date: Date? = null
+                try {
+                    date = dateformat.parse(formattedJsonDate!!)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
+
+                sport_title.text = article.title
+                sport_publishedAt.text = formatted
+
+                setOnClickListener {
+                    onItemClickListener?.let {
+                        it(article)
                     }
-                })
-            val formattedJsonDate = article.publishedAt?.substring(0, 9)
-
-            sport_title.text = article.title
-            sport_publishedAt.text = formattedJsonDate
-
-            setOnClickListener {
-                onItemClickListener?.let {
-                    it(article)
                 }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
 

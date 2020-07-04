@@ -16,7 +16,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EntertainmentNewsAdapter : RecyclerView.Adapter<EntertainmentNewsAdapter.EntertainmentNewsHolder>() {
-
+    var showShimmer = true
+    val SHIMMER_ITEM_NUMBER = 5
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntertainmentNewsHolder {
         return EntertainmentNewsHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -28,28 +29,53 @@ class EntertainmentNewsAdapter : RecyclerView.Adapter<EntertainmentNewsAdapter.E
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
     override fun onBindViewHolder(holder: EntertainmentNewsHolder, position: Int) {
-        val article = differ.currentList[position]
+
         holder.itemView.apply {
-            if(article?.urlToImage.isNullOrEmpty()){
-                entertainment_news_image.setBackgroundResource(R.color.colorPrimary)
+            if(showShimmer){
+                et_shimmer.startShimmer()
             }
-            else{
-                Picasso.get().load(article.urlToImage).fit().centerCrop().into(entertainment_news_image)
-            }
-            
-            val formattedJsonDate = article.publishedAt?.substring(0, 9)
+            else {
+                val article = differ.currentList[position]
+                et_shimmer.apply {
+                    stopShimmer()
+                    setShimmer(null)
+                }
+                entertainment_news_title.background=null
+                entertainment_news_image.background=null
+                entertainment_news_publishedAt.background=null
+                entertainment_news_source.background=null
 
-            entertainment_news_publishedAt.text = formattedJsonDate
-            entertainment_news_title.text = article.title
-            entertainment_news_source.text= article.source?.name
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    entertainment_news_image.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(entertainment_news_image)
+                }
 
-            setOnClickListener {
-                onItemClickListener?.let {
-                    it(article)
+                val formattedJsonDate = article.publishedAt?.substring(0, 10)
+                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                var date: Date? = null
+                try {
+                    date = dateformat.parse(formattedJsonDate!!)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
+
+                entertainment_news_publishedAt.text = formatted
+                entertainment_news_title.text = article.title
+                entertainment_news_source.text = article.source?.name
+
+                setOnClickListener {
+                    onItemClickListener?.let {
+                        it(article)
+                    }
                 }
             }
         }

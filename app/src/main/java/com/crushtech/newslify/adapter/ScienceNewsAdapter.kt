@@ -18,6 +18,9 @@ import java.util.*
 
 class ScienceNewsAdapter : RecyclerView.Adapter<ScienceNewsAdapter.ScienceNewsViewHolder>() {
 
+    var showShimmer = true
+    val SHIMMER_ITEM_NUMBER = 5
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScienceNewsViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.science_list_item, parent, false)
@@ -25,31 +28,54 @@ class ScienceNewsAdapter : RecyclerView.Adapter<ScienceNewsAdapter.ScienceNewsVi
     }
 
     override fun onBindViewHolder(holder: ScienceNewsViewHolder, position: Int) {
-        val article = differ.currentList[position]
+
         holder.itemView.apply {
-            Picasso.get().load(article.urlToImage).fit().centerCrop()
-                .into(science_news_picture, object :
-                    Callback {
-                    override fun onSuccess() {}
-                    override fun onError(e: Exception) {
-                       science_news_picture.setBackgroundResource(R.color.colorPrimary)
+            if(showShimmer){
+                sc_shimmer.startShimmer()
+            }else {
+                val article = differ.currentList[position]
+                    sc_shimmer.apply {
+                        stopShimmer()
+                        setShimmer(null)
                     }
-                })
-            val formattedJsonDate = article.publishedAt?.substring(0, 9)
+                science_news_picture.background=null
+                science_title.background=null
+                science_publishedAt.background=null
 
-            science_title.text = article.title
-            science_publishedAt.text = formattedJsonDate
+                Picasso.get().load(article.urlToImage).fit().centerCrop()
+                    .into(science_news_picture, object :
+                        Callback {
+                        override fun onSuccess() {}
+                        override fun onError(e: Exception) {
+                            science_news_picture.setBackgroundResource(R.color.colorPrimary)
+                        }
+                    })
+                val formattedJsonDate = article.publishedAt?.substring(0, 10)
+                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                var date: Date? = null
+                try {
+                    date = dateformat.parse(formattedJsonDate!!)
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
 
-            setOnClickListener {
-                onItemClickListener?.let {
-                    it(article)
+                science_title.text = article.title
+                science_publishedAt.text = formatted
+
+                setOnClickListener {
+                    onItemClickListener?.let {
+                        it(article)
+                    }
                 }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return differ.currentList.size
+        return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
 

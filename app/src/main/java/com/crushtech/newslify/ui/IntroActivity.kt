@@ -36,11 +36,11 @@ class IntroActivity : AppCompatActivity() {
         )
 
         //check if this activity has been launched earlier than this
-//        if(restoreInstancePrefs()){
-//            val intent = Intent(this, NewsActivity::class.java)
-//            startActivity(intent)
-            // finish()
-//        }
+        if(restoreInstancePrefs()){
+            val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
+             finish()
+        }
         setContentView(R.layout.activity_intro)
 
 

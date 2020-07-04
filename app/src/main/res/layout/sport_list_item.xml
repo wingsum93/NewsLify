@@ -5,6 +5,11 @@
     android:layout_width="150dp"
     android:layout_height="200dp"
     android:orientation="vertical">
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/sp_shimmer"
+        android:background="@android:color/transparent">
     <RelativeLayout
         android:id="@+id/picture_parent"
         android:layout_width="match_parent"
@@ -26,6 +31,7 @@
                 <ImageView
                     android:id="@+id/sport_news_picture"
                     android:layout_width="match_parent"
+                    android:background="@color/brown"
                     android:layout_height="match_parent" />
 
                 <TextView
@@ -34,9 +40,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:ellipsize="end"
+                    android:background="@color/brown"
                     android:maxLines="4"
                     android:layout_alignParentBottom="true"
-                    android:text="Drone Racing League is raising $50 million"
                     android:layout_marginBottom="50dp"
                     android:textStyle="bold"
                     android:fontFamily="sans-serif-black"
@@ -53,7 +59,7 @@
                     android:fontFamily="sans-serif-light"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
-                    android:text="3 june 2020"
+                   android:background="@color/brown"
                     android:textColor="@android:color/white" />
 
             </RelativeLayout>
@@ -61,5 +67,5 @@
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-
+    </com.facebook.shimmer.ShimmerFrameLayout>
 </RelativeLayout>
