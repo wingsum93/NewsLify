@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
+import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.entertainment_news.view.*
 import java.text.DateFormat
@@ -17,7 +18,6 @@ import java.util.*
 
 class EntertainmentNewsAdapter : RecyclerView.Adapter<EntertainmentNewsAdapter.EntertainmentNewsHolder>() {
     var showShimmer = true
-    val SHIMMER_ITEM_NUMBER = 5
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntertainmentNewsHolder {
         return EntertainmentNewsHolder(
             LayoutInflater.from(parent.context).inflate(

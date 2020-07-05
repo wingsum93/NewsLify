@@ -32,7 +32,8 @@ class NewsActivity : AppCompatActivity() {
         val appBarConfig= AppBarConfiguration(setOf(
             R.id.breakingNewsFragment,
             R.id.savedNewsFragment,
-            R.id.searchNewsFragment
+            R.id.searchNewsFragment,
+            R.id.settingsFragment
         )
         )
 

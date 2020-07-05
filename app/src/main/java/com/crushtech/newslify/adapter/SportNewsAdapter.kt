@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
+import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.sport_list_item.view.*
@@ -19,7 +20,6 @@ import java.util.*
 class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHolder>() {
 
     var showShimmer = true
-    val SHIMMER_ITEM_NUMBER = 5
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SportNewsViewHolder {
         val view =

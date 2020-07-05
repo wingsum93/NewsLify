@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.crushtech.newslify.ui.fragments.ArticleFragment"
-        android:label="ArticleFragment">
+        android:label="News Article">
         <argument
             android:name="article"
             app:argType="com.crushtech.newslify.models.Article" />
@@ -51,4 +51,8 @@
             android:id="@+id/action_articleFragment_to_savedNewsFragment"
             app:destination="@id/savedNewsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.crushtech.newslify.ui.fragments.settingsFragment"
+        android:label="Settings" />
 </navigation>

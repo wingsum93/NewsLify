@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
+import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -22,7 +23,6 @@ class BusinessNewsCoverAdapter :
     RecyclerView.Adapter<BusinessNewsCoverAdapter.BusinessViewHolder>() {
 
     var showShimmer = true
-    val SHIMMER_ITEM_NUMBER = 5
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusinessViewHolder {
         val view =
