@@ -53,7 +53,7 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
                         Callback {
                         override fun onSuccess() {}
                         override fun onError(e: Exception) {
-                            breaking_news_image.setBackgroundResource(R.color.brown)
+                            breaking_news_image.setBackgroundResource(R.color.shimmer_color)
                         }
                     })
                 val formattedJsonDate = article.publishedAt?.substring(0, 10)

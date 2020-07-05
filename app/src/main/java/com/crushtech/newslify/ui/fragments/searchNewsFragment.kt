@@ -25,10 +25,7 @@ import com.crushtech.newslify.ui.util.Resource
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.search_loading_lottie
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.OnQueryTextListener {
@@ -55,14 +52,20 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
-                    hideProgressBar()
+
+                   hideProgressBar()
 
                     response.data?.let {
-                        newsAdapter.differ.submitList(it.articles.toList())
-                        val totalPages = it.totalResults / Constants.QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.searchNewsPage == totalPages
-                        if (isLastPage) {
-                            rvSearchNews.setPadding(0, 0, 0, 0)
+                        GlobalScope.launch(Dispatchers.Main) {
+                            delay(4000)
+                            newsAdapter.differ.submitList(it.articles.toList())
+                            newsAdapter.showShimmer=false
+                            newsAdapter.notifyDataSetChanged()
+                            val totalPages = it.totalResults / Constants.QUERY_PAGE_SIZE + 2
+                            isLastPage = viewModel.searchNewsPage == totalPages
+                            if (isLastPage) {
+                                rvSearchNews.setPadding(0, 0, 0, 0)
+                            }
                         }
                     }
                 }
@@ -84,6 +87,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
     private fun setUpRecyclerView() {
        // newsAdapter = BreakingNewsAdapter()
         newsAdapter = BusinessNewsCoverAdapter()
+        newsAdapter.showShimmer=false
         rvSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -93,6 +97,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         newsAdapter.differ.submitList(null)
+        newsAdapter.showShimmer=true
         viewModel.searchNewsResponse=null
         performSearch(query)
         queryText = query

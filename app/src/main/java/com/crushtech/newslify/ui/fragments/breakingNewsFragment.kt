@@ -3,6 +3,7 @@ package com.crushtech.newslify.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import com.crushtech.newslify.ui.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.crushtech.newslify.ui.util.Resource
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
+import kotlinx.android.synthetic.main.group_item.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -32,7 +34,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
-
         setUpRecyclerView()
 
     }
@@ -68,16 +69,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel.sportNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    groupAdapter!!.sportNews.showShimmer = false
                     reconnect_btn.visibility = View.INVISIBLE
                     response.data?.let { newsResponse ->
                         try {
-                            GlobalScope.launch(Dispatchers.Main) {
-                                delay(9000)
-                                groupAdapter!!.sportNews.differ.submitList(newsResponse.articles.toList())
-                                groupAdapter!!.sportNews.showShimmer = false
-                                groupAdapter!!.sportNews.notifyDataSetChanged()
+                            groupAdapter!!.sportNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.sportNews.notifyDataSetChanged()
 
-                            }
                         } catch (e: Exception) {
                         }
                     }
@@ -90,23 +88,27 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
                     }
                 }
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
+                }
             }
         })
 
         viewModel.businessNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    groupAdapter!!.businessNews.showShimmer = false
+                    reconnect_btn.visibility = View.INVISIBLE
                     response.data?.let { newsResponse ->
 
                         try {
-                            GlobalScope.launch(Dispatchers.Main) {
-                                delay(9000)
-                                groupAdapter!!.businessNews.differ.submitList(newsResponse.articles.toList())
-                                groupAdapter!!.businessNews.showShimmer = false
-                                groupAdapter!!.businessNews.notifyDataSetChanged()
+                            groupAdapter!!.businessNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.businessNews.notifyDataSetChanged()
 
-                            }
-                        }catch (e: Exception) {
+
+                        } catch (e: Exception) {
                         }
                     }
                 }
@@ -118,7 +120,10 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         reconnectOnNoConnection()
                     }
                 }
-                is Resource.Loading->{
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
                 }
             }
         })
@@ -126,22 +131,19 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel.entertainmentNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    groupAdapter!!.entertainmentNews.showShimmer = false
                     reconnect_btn.visibility = View.INVISIBLE
 
                     response.data?.let { newsResponse ->
 
                         try {
-                            GlobalScope.launch(Dispatchers.Main) {
-                                delay(9000)
-                                groupAdapter!!.entertainmentNews.differ.submitList(newsResponse.articles.toList())
-                                groupAdapter!!.entertainmentNews.showShimmer=false
-                                groupAdapter!!.entertainmentNews.notifyDataSetChanged()
-                                val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                                isLastPage = viewModel.allBreakingNewsPage == totalPages
+                            groupAdapter!!.entertainmentNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.entertainmentNews.notifyDataSetChanged()
+                            val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
+                            isLastPage = viewModel.allBreakingNewsPage == totalPages
 //                            if (isLastPage) {
 //                                rvBreakingNews.setPadding(0, 0, 0, 0)
 //                            }
-                            }
                         } catch (e: Exception) {
                         }
                     }
@@ -155,6 +157,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
                 }
             }
         })
@@ -162,18 +167,14 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel.scienceNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    groupAdapter!!.scienceNews.showShimmer = false
                     reconnect_btn.visibility = View.INVISIBLE
-
                     response.data?.let { newsResponse ->
 
                         try {
-                            GlobalScope.launch(Dispatchers.Main) {
-                                delay(9000)
-                                groupAdapter!!.scienceNews.differ.submitList(newsResponse.articles.toList())
-                                groupAdapter!!.scienceNews.showShimmer = false
-                                groupAdapter!!.scienceNews.notifyDataSetChanged()
-                            }
-                        }catch (e: Exception) {
+                            groupAdapter!!.scienceNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.scienceNews.notifyDataSetChanged()
+                        } catch (e: Exception) {
                         }
                     }
                 }
@@ -181,11 +182,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     response.message?.let {
                         Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
                             .show()
-
                         reconnectOnNoConnection()
                     }
                 }
                 is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
                 }
             }
         })
@@ -193,21 +196,17 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel.allBreakingNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    groupAdapter!!.breakingNews.showShimmer = false
                     reconnect_btn.visibility = View.INVISIBLE
 
                     response.data?.let { newsResponse ->
-
                         try {
-                            GlobalScope.launch(Dispatchers.Main) {
-                                delay(9000)
-                                groupAdapter!!.breakingNews.differ.submitList(newsResponse.articles.toList())
-                                groupAdapter!!.breakingNews.showShimmer = false
-                                groupAdapter!!.breakingNews.notifyDataSetChanged()
-                                val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                                isLastPage = viewModel.allBreakingNewsPage == totalPages
-                                if (isLastPage) {
-                                    rvBreakingNews.setPadding(0, 0, 0, 0)
-                                }
+                            groupAdapter!!.breakingNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.breakingNews.notifyDataSetChanged()
+                            val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
+                            isLastPage = viewModel.allBreakingNewsPage == totalPages
+                            if (isLastPage) {
+                                rvBreakingNews.setPadding(0, 0, 0, 0)
                             }
                         } catch (e: Exception) {
                         }
@@ -217,11 +216,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     response.message?.let {
                         Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
                             .show()
-
                         reconnectOnNoConnection()
                     }
                 }
-                is Resource.Loading->{
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
                 }
             }
         })
@@ -270,5 +271,4 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             }
         }
     }
-
 }

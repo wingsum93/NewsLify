@@ -65,7 +65,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
         article_source.text = article.source!!.name
 
-        val formattedJsonDate = article.publishedAt!!.substring(0, 9)
+        val formattedJsonDate = article.publishedAt!!.substring(0, 10)
         val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         var date: Date? = null
         try {

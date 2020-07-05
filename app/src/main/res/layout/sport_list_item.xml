@@ -31,16 +31,16 @@
                 <ImageView
                     android:id="@+id/sport_news_picture"
                     android:layout_width="match_parent"
-                    android:background="@color/brown"
+                    android:background="@color/shimmer_color"
                     android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/sport_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:ellipsize="end"
-                    android:background="@color/brown"
+                    android:background="@color/shimmer_color"
                     android:maxLines="4"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="50dp"
@@ -51,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/sport_publishedAt"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:ellipsize="end"
@@ -59,7 +59,7 @@
                     android:fontFamily="sans-serif-light"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
-                   android:background="@color/brown"
+                   android:background="@color/shimmer_color"
                     android:textColor="@android:color/white" />
 
             </RelativeLayout>

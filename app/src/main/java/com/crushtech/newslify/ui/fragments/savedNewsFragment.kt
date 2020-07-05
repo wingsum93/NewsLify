@@ -70,6 +70,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun setUpRecyclerView() {
         newsAdapter = BreakingNewsAdapter()
+            newsAdapter.showShimmer=false
         rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)

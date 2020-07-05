@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/entertainment_news_image"
                 android:contentDescription="text"
-                android:background="@color/brown"
+                android:background="@color/shimmer_color"
                 android:layout_height="match_parent"/>
         </androidx.cardview.widget.CardView>
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:layout_marginTop="3dp"
                 android:id="@+id/entertainment_news_title"
                 android:fontFamily="@font/averia_libre"
-              android:background="@color/brown"
+              android:background="@color/shimmer_color"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -55,7 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:id="@+id/entertainment_news_publishedAt"
                 android:fontFamily="sans-serif-black"
-               android:background="@color/brown"
+               android:background="@color/shimmer_color"
                 android:textColor="#2196F3"
                 android:layout_marginBottom="2dp"
                 android:textSize="15sp"/>
@@ -65,8 +65,8 @@
                 android:maxLines="1"
                 android:id="@+id/entertainment_news_source"
                 android:fontFamily="sans-serif-black"
-               android:background="@color/brown"
-                android:textColor="#2196F3"
+               android:background="@color/shimmer_color"
+                android:textColor="@color/colorPrimary"
                 android:layout_marginBottom="2dp"
                 android:textSize="19sp"/>
         </LinearLayout>
