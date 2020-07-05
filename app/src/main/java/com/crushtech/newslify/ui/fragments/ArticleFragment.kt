@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.fragment_article.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -31,6 +32,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
+        (activity as NewsActivity).supportActionBar?.hide()
         //  (activity as NewsActivity).supportActionBar?.hide()
         val article = args.article
         //get the argument from the generated arg class
@@ -53,30 +55,10 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        Picasso.get().load(article.urlToImage).fit().centerCrop()
-            .into(article_image,
-                object :
-                    Callback {
-                    override fun onSuccess() {}
-                    override fun onError(e: Exception) {
-                        article_image.setBackgroundResource(R.drawable.ic_launcher_background)
-                    }
-                })
-
-        article_source.text = article.source!!.name
-
-        val formattedJsonDate = article.publishedAt!!.substring(0, 10)
-        val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        var date: Date? = null
-        try {
-            date = dateformat.parse(formattedJsonDate)
-        } catch (e: ParseException) {
-            e.printStackTrace()
+        article.urlToImage?.let { image ->
+            Picasso.get().load(image).fit().centerCrop()
+                .into(article_img)
         }
-        val calendar = Calendar.getInstance()
-        calendar.time = date!!
-        val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
-        article_publishedAt.text = formatted
         scrollwebView.apply {
 
             webViewClient = WebViewClient()
@@ -96,6 +78,7 @@ class ArticleFragment : Fragment(R.layout.fragment_article) {
 
     override fun onStop() {
         (activity as NewsActivity).showBottomNavigation()
+        (activity as NewsActivity).supportActionBar?.show()
         super.onStop()
     }
 

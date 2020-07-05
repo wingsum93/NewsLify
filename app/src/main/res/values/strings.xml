@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NewsLify</string>
     <string name="june_12_2020_bbc">june 12</string>
+    <string name="article_image">article image</string>
 </resources>
