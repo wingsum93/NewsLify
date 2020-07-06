@@ -2,9 +2,11 @@
 <resources>
     <color name="colorPrimary">#FFC107</color>
     <color name="colorPrimaryDark">#FFC107</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#4CAF50</color>
     <color name="mycolor">#7A7C7C</color>
     <color name="shimmer_color">#DDDCDC</color>
     <color name="brownie">#A5A3A3</color>
     <color name="black">#000000</color>
+    <color name="color_red_AA">#F03C2E</color>
+    <color name="white">#FFFFFF</color>
 </resources>

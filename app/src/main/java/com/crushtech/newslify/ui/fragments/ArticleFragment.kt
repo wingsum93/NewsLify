@@ -1,6 +1,7 @@
 package com.crushtech.newslify.ui.fragments
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.webkit.WebView
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
+import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -47,12 +49,18 @@ class ArticleFragment : Fragment() {
 
         view.findViewById<FloatingActionButton>(R.id.fab_favorite).setOnClickListener {
             viewModel.saveArticle(article)
-            Snackbar.make(view, "Article saved successfully", Snackbar.LENGTH_SHORT).apply {
-                setAction("View") {
-                    findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
-                }
-                show()
+//            Snackbar.make(view, "Article saved successfully", Snackbar.LENGTH_SHORT).apply {
+//                setBackgroundTint(Color.BLACK)
+//                setAction("View") {
+//                    findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
+//                }
+//                show()
+//            }
+            val customSnackListener=View.OnClickListener {
+                findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
             }
+            SimpleCustomSnackbar.make(view,"Article saved successfully",Snackbar.LENGTH_LONG,
+                customSnackListener,R.drawable.snack_fav,"View",R.color.colorAccent)?.show()
         }
 
         view.findViewById<FloatingActionButton>(R.id.fab_share).setOnClickListener {
