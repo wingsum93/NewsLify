@@ -2,6 +2,7 @@ package com.crushtech.newslify.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BreakingNewsAdapter
+import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -49,20 +51,16 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val article = newsAdapter.differ.currentList[position]
+                viewModel.deleteArticle(article)
 
                 val snackListener = View.OnClickListener {
                     viewModel.saveArticle(article)
                 }
                 SimpleCustomSnackbar.make(
-                    saved_coordinator,
-                    "article deleted",
-                    Snackbar.LENGTH_LONG,
-                    snackListener,
-                    R.drawable.delete_article,
-                    "Undo",
-                    R.color.mycolor
-                )
-                updateUI()
+                    saved_coordinator, "article deleted",
+                    Snackbar.LENGTH_LONG, snackListener, R.drawable.delete_article, "Undo",
+                    ContextCompat.getColor(requireContext(), R.color.mycolor)
+                )?.show()
             }
 
         }
@@ -72,7 +70,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
         viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
             newsAdapter.differ.submitList(article)
-            updateUI()
+            updateUI(article)
         })
     }
 
@@ -85,9 +83,9 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
     }
 
-    private fun updateUI() {
-        val adapterHasItem = newsAdapter.differ.currentList.size > 0
-        if (!(adapterHasItem)) {
+    private fun updateUI(article:List<Article>) {
+        val adapterHasNoItem = article.isEmpty()
+        if (adapterHasNoItem) {
             lottie_no_article_saved.visibility = View.VISIBLE
             no_saved_article_text1.visibility = View.VISIBLE
             no_saved_article_text2.visibility = View.VISIBLE

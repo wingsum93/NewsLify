@@ -64,14 +64,17 @@ class IntroActivity : AppCompatActivity() {
 
         btn_next.setOnClickListener {
             position = screenPager.currentItem
-            if (position < mList!!.size) {
-                position++
-                screenPager.currentItem = position
-            }
-            if (position == mList!!.size - 1) {
-                loadLastScreen()
-            } else {
-                resetToNormalScreen()
+            when {
+                position < mList!!.size -> {
+                    position++
+                    screenPager.currentItem = position
+                }
+                position == mList!!.size - 1 -> {
+                    loadLastScreen()
+                }
+                else -> {
+                    resetToNormalScreen()
+                }
             }
 
         }
@@ -81,6 +84,9 @@ class IntroActivity : AppCompatActivity() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
+                if (tab!!.position == 0) {
+                    tabIndicator.visibility = View.INVISIBLE
+                }
 
             }
 
@@ -114,7 +120,7 @@ class IntroActivity : AppCompatActivity() {
             ScreenItems(
                 "Welcome to Newslify",
                 " ",
-               R.raw.bg
+                R.raw.bg
             )
         )
         mList!!.add(
@@ -141,7 +147,7 @@ class IntroActivity : AppCompatActivity() {
         mList!!.add(
             ScreenItems(
                 "Never miss out",
-                "favorite news you love for easy access later",
+                "save news articles you love for easy access later",
                 R.raw.favorite
             )
         )

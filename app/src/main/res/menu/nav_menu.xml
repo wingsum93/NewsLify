@@ -8,6 +8,10 @@
         android:icon="@drawable/home" />
 
     <item
+        android:id="@+id/exploreFragment"
+        android:title="Explore"
+        android:icon="@drawable/ic_explore" />
+    <item
         android:id="@+id/savedNewsFragment"
         android:title="Saved News"
         android:icon="@drawable/fav" />

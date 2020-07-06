@@ -55,4 +55,8 @@
         android:id="@+id/settingsFragment"
         android:name="com.crushtech.newslify.ui.fragments.settingsFragment"
         android:label="Settings" />
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.crushtech.newslify.ui.fragments.exploreFragment"
+        android:label="Explore" />
 </navigation>
