@@ -8,10 +8,11 @@
     android:background="@color/black">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/brk_coordinator"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="10dp"
         android:elevation="30dp"
-        android:id="@+id/brk_coordinator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -56,7 +57,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:id="@+id/network_off_text"
+        android:id="@+id/no_saved_article_text1"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

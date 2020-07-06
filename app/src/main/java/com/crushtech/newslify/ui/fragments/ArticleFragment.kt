@@ -62,7 +62,7 @@ class ArticleFragment : Fragment() {
             SimpleCustomSnackbar.make(
                 viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
                 customSnackListener, R.drawable.snack_fav,
-                "View", ContextCompat.getColor(requireContext(), R.color.black)
+                "View", ContextCompat.getColor(requireContext(), R.color.mycolor)
             )?.show()
         }
 
@@ -70,7 +70,7 @@ class ArticleFragment : Fragment() {
             SimpleCustomSnackbar.make(
                 viewPos, "Article shared", Snackbar.LENGTH_LONG,
                 null, R.drawable.ic_share,
-                "", ContextCompat.getColor(requireContext(), R.color.black)
+                "", ContextCompat.getColor(requireContext(), R.color.mycolor)
             )?.show()
         }
 

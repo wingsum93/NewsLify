@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BreakingNewsAdapter
+import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
@@ -34,10 +34,10 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 bundle
             )
         }
-        val itemTouchHelperCallback= object :ItemTouchHelper.SimpleCallback(
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-        ){
+        ) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -47,15 +47,22 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-               val position=viewHolder.adapterPosition
-                val article=newsAdapter.differ.currentList[position]
-                viewModel.deleteArticle(article)
-                Snackbar.make(view,"deleted successfully",Snackbar.LENGTH_LONG).apply {
-                    setAction("Undo"){
-                        viewModel.saveArticle(article)
-                    }
-                    show()
+                val position = viewHolder.adapterPosition
+                val article = newsAdapter.differ.currentList[position]
+
+                val snackListener = View.OnClickListener {
+                    viewModel.saveArticle(article)
                 }
+                SimpleCustomSnackbar.make(
+                    saved_coordinator,
+                    "article deleted",
+                    Snackbar.LENGTH_LONG,
+                    snackListener,
+                    R.drawable.delete_article,
+                    "Undo",
+                    R.color.mycolor
+                )
+                updateUI()
             }
 
         }
@@ -63,17 +70,31 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             attachToRecyclerView(rvSavedNews)
         }
 
-        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer {article->
+        viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
             newsAdapter.differ.submitList(article)
+            updateUI()
         })
     }
 
     private fun setUpRecyclerView() {
         newsAdapter = BreakingNewsAdapter()
-            newsAdapter.showShimmer=false
+        newsAdapter.showShimmer = false
         rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+    }
+
+    private fun updateUI() {
+        val adapterHasItem = newsAdapter.differ.currentList.size > 0
+        if (!(adapterHasItem)) {
+            lottie_no_article_saved.visibility = View.VISIBLE
+            no_saved_article_text1.visibility = View.VISIBLE
+            no_saved_article_text2.visibility = View.VISIBLE
+        } else {
+            lottie_no_article_saved.visibility = View.INVISIBLE
+            no_saved_article_text1.visibility = View.INVISIBLE
+            no_saved_article_text2.visibility = View.INVISIBLE
         }
     }
 }

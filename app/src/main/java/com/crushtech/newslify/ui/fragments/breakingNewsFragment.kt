@@ -3,8 +3,6 @@ package com.crushtech.newslify.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
-import android.widget.Adapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -19,9 +17,7 @@ import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.android.synthetic.main.group_item.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -83,12 +79,14 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
-                    lottie_no_internet.visibility=View.VISIBLE
+                    lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
-                        SimpleCustomSnackbar.make(brk_coordinator, it,
-                            Snackbar.LENGTH_SHORT,null,R.drawable.network_off,"",
-                            ContextCompat.getColor(requireContext(),R.color.black))?.show()
+                        SimpleCustomSnackbar.make(
+                            brk_coordinator, it,
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
 
                     }
                 }
@@ -116,13 +114,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
-                    lottie_no_internet.visibility=View.VISIBLE
+                    lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.black)
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
                         )?.show()
                     }
                 }
@@ -154,13 +152,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
-                    lottie_no_internet.visibility=View.VISIBLE
+                    lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.black)
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
                         )?.show()
                     }
                 }
@@ -186,13 +184,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
-                    lottie_no_internet.visibility=View.VISIBLE
+                    lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.black)
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
                         )?.show()
                     }
                 }
@@ -224,13 +222,13 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 }
                 is Resource.Error -> {
                     rvBreakingNews.visibility = View.INVISIBLE
-                    lottie_no_internet.visibility=View.VISIBLE
-                    network_off_text.visibility=View.VISIBLE
+                    lottie_no_internet.visibility = View.VISIBLE
+                    no_saved_article_text1.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.black)
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
                         )?.show()
                     }
                 }
@@ -243,7 +241,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         })
 
     }
-
 
 
     var isLoading = false
