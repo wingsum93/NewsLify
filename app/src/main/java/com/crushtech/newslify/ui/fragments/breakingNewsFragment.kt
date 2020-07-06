@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.AbsListView
 import android.widget.Adapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +14,11 @@ import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.GroupAdapter
 import com.crushtech.newslify.models.Group
+import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.crushtech.newslify.ui.util.Resource
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.android.synthetic.main.group_item.*
@@ -70,7 +73,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             when (response) {
                 is Resource.Success -> {
                     groupAdapter!!.sportNews.showShimmer = false
-                    reconnect_btn.visibility = View.INVISIBLE
                     response.data?.let { newsResponse ->
                         try {
                             groupAdapter!!.sportNews.differ.submitList(newsResponse.articles.toList())
@@ -81,10 +83,12 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
+                    lottie_no_internet.visibility=View.VISIBLE
+                    rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
-                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
-                            .show()
-                        reconnectOnNoConnection()
+                        SimpleCustomSnackbar.make(brk_coordinator, it,
+                            Snackbar.LENGTH_SHORT,null,R.drawable.network_off,"",
+                            ContextCompat.getColor(requireContext(),R.color.black))?.show()
 
                     }
                 }
@@ -100,7 +104,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             when (response) {
                 is Resource.Success -> {
                     groupAdapter!!.businessNews.showShimmer = false
-                    reconnect_btn.visibility = View.INVISIBLE
                     response.data?.let { newsResponse ->
 
                         try {
@@ -113,11 +116,14 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
+                    lottie_no_internet.visibility=View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
-                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
-                            .show()
-                        reconnectOnNoConnection()
+                        SimpleCustomSnackbar.make(
+                            brk_coordinator, it,
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.black)
+                        )?.show()
                     }
                 }
                 is Resource.Loading -> {
@@ -132,7 +138,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             when (response) {
                 is Resource.Success -> {
                     groupAdapter!!.entertainmentNews.showShimmer = false
-                    reconnect_btn.visibility = View.INVISIBLE
 
                     response.data?.let { newsResponse ->
 
@@ -149,11 +154,14 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
+                    lottie_no_internet.visibility=View.VISIBLE
+                    rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
-                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
-                            .show()
-
-                        reconnectOnNoConnection()
+                        SimpleCustomSnackbar.make(
+                            brk_coordinator, it,
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.black)
+                        )?.show()
                     }
                 }
                 is Resource.Loading -> {
@@ -168,7 +176,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             when (response) {
                 is Resource.Success -> {
                     groupAdapter!!.scienceNews.showShimmer = false
-                    reconnect_btn.visibility = View.INVISIBLE
                     response.data?.let { newsResponse ->
 
                         try {
@@ -179,10 +186,14 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
+                    lottie_no_internet.visibility=View.VISIBLE
+                    rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
-                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
-                            .show()
-                        reconnectOnNoConnection()
+                        SimpleCustomSnackbar.make(
+                            brk_coordinator, it,
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.black)
+                        )?.show()
                     }
                 }
                 is Resource.Loading -> {
@@ -197,7 +208,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             when (response) {
                 is Resource.Success -> {
                     groupAdapter!!.breakingNews.showShimmer = false
-                    reconnect_btn.visibility = View.INVISIBLE
 
                     response.data?.let { newsResponse ->
                         try {
@@ -213,10 +223,15 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     }
                 }
                 is Resource.Error -> {
+                    rvBreakingNews.visibility = View.INVISIBLE
+                    lottie_no_internet.visibility=View.VISIBLE
+                    network_off_text.visibility=View.VISIBLE
                     response.message?.let {
-                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
-                            .show()
-                        reconnectOnNoConnection()
+                        SimpleCustomSnackbar.make(
+                            brk_coordinator, it,
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.black)
+                        )?.show()
                     }
                 }
                 is Resource.Loading -> {
@@ -229,12 +244,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     }
 
-    private fun reconnectOnNoConnection() {
-        reconnect_btn.visibility = View.VISIBLE
-        reconnect_btn.setOnClickListener {
-            setUpData()
-        }
-    }
 
 
     var isLoading = false

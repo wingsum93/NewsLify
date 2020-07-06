@@ -2,4 +2,5 @@
     <string name="app_name">NewsLify</string>
     <string name="june_12_2020_bbc">june 12</string>
     <string name="article_image">article image</string>
+    <string name="opps_couldn_t_load_feed_have_you_tried_switching_on_your_data">Opps, couldn\'t load feed, have you \ntried switching on your data?</string>
 </resources>
