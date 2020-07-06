@@ -10,7 +10,9 @@
         android:id="@+id/snack_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/next_page_bg">
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/snack_bg">
 
         <androidx.appcompat.widget.AppCompatImageView
 
@@ -22,6 +24,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/snack_fav"
             tools:ignore="VectorDrawableCompat" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -29,11 +32,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:paddingStart="10dp"
+            android:text="article saved successfully"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/im_action_left"
             app:layout_constraintStart_toEndOf="@+id/im_action_left"
@@ -46,14 +51,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="View"
             android:paddingBottom="10dp"
-            android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-black"
             android:textStyle="bold"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/tv_message"
             app:layout_constraintStart_toEndOf="@+id/tv_message"

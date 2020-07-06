@@ -8,22 +8,25 @@ import androidx.core.content.ContextCompat
 import com.crushtech.newslify.R
 import com.google.android.material.snackbar.BaseTransientBottomBar
 
-class SimpleCustomSnackbar (
+class SimpleCustomSnackbar(
     parent: ViewGroup,
     content: SimpleCustomSnackbarView
 ) : BaseTransientBottomBar<SimpleCustomSnackbar>(parent, content, content) {
 
 
     init {
-        getView().setBackgroundColor(ContextCompat.getColor(view.context, android.R.color.transparent))
+        // getView().setBackgroundColor(ContextCompat.getColor(view.context, android.R.color.transparent))
+        getView().setBackgroundResource(R.drawable.snack_bg)
         getView().setPadding(0, 0, 0, 0)
     }
 
     companion object {
 
-        fun make(view: View,
-                 message : String, duration : Int,
-                 listener : View.OnClickListener?, icon : Int, action_lable : String?, bg_color : Int): SimpleCustomSnackbar? {
+        fun make(
+            view: View,
+            message: String, duration: Int,
+            listener: View.OnClickListener?, icon: Int, action_label: String?, bg_color: Int
+        ): SimpleCustomSnackbar? {
 
             // First we find a suitable parent for our custom view
             val parent = view.findSuitableParent() ?: throw IllegalArgumentException(
@@ -31,16 +34,16 @@ class SimpleCustomSnackbar (
             )
 
             // We inflate our custom view
-            try{
+            try {
                 val customView = LayoutInflater.from(view.context).inflate(
-                   R.layout.custom_view_inflation,
+                    R.layout.custom_view_inflation,
                     parent,
                     false
                 ) as SimpleCustomSnackbarView
                 // We create and return our Snackbar
                 customView.tvMsg.text = message
-                action_lable?.let {
-                    customView.tvAction.text = action_lable
+                action_label?.let {
+                    customView.tvAction.text = action_label
                     customView.tvAction.setOnClickListener {
                         listener?.onClick(customView.tvAction)
                     }
@@ -51,8 +54,9 @@ class SimpleCustomSnackbar (
 
                 return SimpleCustomSnackbar(
                     parent,
-                    customView).setDuration(duration)
-            }catch ( e: Exception){
+                    customView
+                ).setDuration(duration)
+            } catch (e: Exception) {
                 e.message?.let { Log.v("exception ", it) }
             }
 

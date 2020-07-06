@@ -1,9 +1,11 @@
 package com.crushtech.newslify.ui
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +17,7 @@ import com.crushtech.newslify.repository.NewsRepository
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
+
     lateinit var newsViewModel: NewsViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,6 @@ class NewsActivity : AppCompatActivity() {
         bottomNavigationView.visibility= View.GONE
     }
     fun showBottomNavigation(){
-        bottomNavigationView.visibility= View.VISIBLE
+        bottomNavigationView.visibility = View.VISIBLE
     }
 }
