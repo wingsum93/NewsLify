@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.viewpager.widget.PagerAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.crushtech.newslify.R
@@ -24,6 +25,7 @@ class IntroViewPagerAdapter(val context: Context, val screenItems: List<ScreenIt
         container.removeView((`object` as View))
     }
 
+
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(
             container.context
@@ -41,8 +43,13 @@ class IntroViewPagerAdapter(val context: Context, val screenItems: List<ScreenIt
             introDesc.text = currentItem.Description
         }
         introImage.let {
+            if(currentItem.Title=="Welcome to Newslify"){
+                introImage.setBackgroundResource(R.drawable.mylogo)
+            }
             introImage.apply {
-                setAnimation(currentItem.ScreenImg)
+                currentItem.ScreenImg?.let {
+                        it1 -> setAnimation(it1)
+                }
                 playAnimation()
             }
         }

@@ -36,17 +36,18 @@ class IntroActivity : AppCompatActivity() {
         )
 
         //check if this activity has been launched earlier than this
-        if(restoreInstancePrefs()){
-            val intent = Intent(this, NewsActivity::class.java)
-            startActivity(intent)
-             finish()
-        }
+//        if(restoreInstancePrefs()){
+//            val intent = Intent(this, NewsActivity::class.java)
+//            startActivity(intent)
+//             finish()
+//        }
         setContentView(R.layout.activity_intro)
 
 
         //initialize views
         tabIndicator = findViewById(R.id.tab_indicator)
-        btnAnim = AnimationUtils.loadAnimation(this,
+        btnAnim = AnimationUtils.loadAnimation(
+            this,
             R.anim.button_anim
         )
 
@@ -69,7 +70,7 @@ class IntroActivity : AppCompatActivity() {
             }
             if (position == mList!!.size - 1) {
                 loadLastScreen()
-            }else{
+            } else {
                 resetToNormalScreen()
             }
 
@@ -84,11 +85,16 @@ class IntroActivity : AppCompatActivity() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab!!.position == mList!!.size - 1) {
-                    loadLastScreen()
-                }
-                else{
-                    resetToNormalScreen()
+                when {
+                    tab!!.position == mList!!.size - 1 -> {
+                        loadLastScreen()
+                    }
+                    tab.position == 0 -> {
+                        tabIndicator.visibility = View.INVISIBLE
+                    }
+                    else -> {
+                        resetToNormalScreen()
+                    }
                 }
             }
 
@@ -107,6 +113,13 @@ class IntroActivity : AppCompatActivity() {
         mList!!.add(
             ScreenItems(
                 "Welcome to Newslify",
+                " ",
+               R.raw.bg
+            )
+        )
+        mList!!.add(
+            ScreenItems(
+                "Stay Updated",
                 "stay up-to-date with newslify news app, get insights on businesses, trending,breaking news and so much more",
                 R.raw.news2
             )
@@ -154,19 +167,23 @@ class IntroActivity : AppCompatActivity() {
         tabIndicator.visibility = View.INVISIBLE
         btn_get_started.animation = btnAnim
     }
-    private fun resetToNormalScreen(){
+
+    private fun resetToNormalScreen() {
         btn_next.visibility = View.VISIBLE
         btn_get_started.visibility = View.INVISIBLE
         tabIndicator.visibility = View.VISIBLE
     }
-    private fun saveInstanceToPrefs(){
-        val sharedPrefs=applicationContext.getSharedPreferences(
-            "prefs", Context.MODE_PRIVATE).apply {
-            edit().putBoolean("first time user",true).apply()
+
+    private fun saveInstanceToPrefs() {
+        val sharedPrefs = applicationContext.getSharedPreferences(
+            "prefs", Context.MODE_PRIVATE
+        ).apply {
+            edit().putBoolean("first time user", true).apply()
         }
     }
-    private fun restoreInstancePrefs():Boolean{
-        val prefs=applicationContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        return prefs.getBoolean("first time user",false)
+
+    private fun restoreInstancePrefs(): Boolean {
+        val prefs = applicationContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        return prefs.getBoolean("first time user", false)
     }
 }
