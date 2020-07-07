@@ -58,5 +58,5 @@
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.crushtech.newslify.ui.fragments.exploreFragment"
-        android:label="Explore" />
+        android:label="Explore News" />
 </navigation>

@@ -22,6 +22,7 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
+
         getCountryDataFromPrefs()
         supportActionBar?.show()
         val newsRepository = NewsRepository(ArticleDatabase(this))
