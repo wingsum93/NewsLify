@@ -5,4 +5,6 @@
     <string name="opps_couldn_t_load_feed_have_you_tried_switching_on_your_data">Opps, couldn\'t load feed, have you \ntried switching on your data?</string>
     <string name="no_news_article_saved">No news article saved</string>
     <string name="news_articles_you_ve_saved_will_appear_here">News articles you\'ve saved will appear here</string>
+    <string name="searchArticle">search by keywords eg america</string>
+    <string name="search_for_articles">Search for Articles</string>
 </resources>

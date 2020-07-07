@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -18,10 +19,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BusinessNewsCoverAdapter
+import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.crushtech.newslify.ui.util.Resource
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.search_loading_lottie
@@ -52,14 +55,14 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         viewModel.searchNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
-
-                   hideProgressBar()
+                    hideEmptySearchView()
+                    hideProgressBar()
 
                     response.data?.let {
                         GlobalScope.launch(Dispatchers.Main) {
                             delay(4000)
                             newsAdapter.differ.submitList(it.articles.toList())
-                            newsAdapter.showShimmer=false
+                            newsAdapter.showShimmer = false
                             newsAdapter.notifyDataSetChanged()
                             val totalPages = it.totalResults / Constants.QUERY_PAGE_SIZE + 2
                             isLastPage = viewModel.searchNewsPage == totalPages
@@ -70,14 +73,21 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
                     }
                 }
                 is Resource.Error -> {
+                    hideEmptySearchView()
+                    newsAdapter.showShimmer = false
                     hideProgressBar()
                     response.message?.let {
-                        Toast.makeText(activity, "An error occurred: $it", Toast.LENGTH_SHORT)
-                            .show()
+                        SimpleCustomSnackbar.make(
+                            search_coordinator, it, Snackbar.LENGTH_SHORT, null,
+                            R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
                     }
+                    showEmptySearchView()
                 }
                 is Resource.Loading -> {
-                    showProgressBar()
+                    hideEmptySearchView()
+                    //showProgressBar()
                 }
             }
         })
@@ -85,9 +95,9 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
     }
 
     private fun setUpRecyclerView() {
-       // newsAdapter = BreakingNewsAdapter()
+        // newsAdapter = BreakingNewsAdapter()
         newsAdapter = BusinessNewsCoverAdapter()
-        newsAdapter.showShimmer=false
+        newsAdapter.showShimmer = false
         rvSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -97,14 +107,12 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         newsAdapter.differ.submitList(null)
-        newsAdapter.showShimmer=true
-        viewModel.searchNewsResponse=null
+        newsAdapter.showShimmer = true
+        hideEmptySearchView()
+        viewModel.searchNewsResponse = null
         performSearch(query)
         queryText = query
-
-
         hideKeyboard()
-
         return true
     }
 
@@ -168,6 +176,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         val menuItem = menu.findItem(R.id.search)
         val searchView = menuItem?.actionView as SearchView?
         searchView?.setOnQueryTextListener(this)
+        searchView?.queryHint = "Search for news articles of any kind"
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -192,6 +201,16 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         isLoading = true
     }
 
+    private fun hideEmptySearchView() {
+        lottie_search_article.visibility = View.GONE
+        search_article_text1.visibility = View.GONE
+        search_article_text2.visibility = View.GONE
+    }
 
+    private fun showEmptySearchView() {
+        lottie_search_article.visibility = View.VISIBLE
+        search_article_text1.visibility = View.VISIBLE
+        search_article_text2.visibility = View.VISIBLE
+    }
 }
 
