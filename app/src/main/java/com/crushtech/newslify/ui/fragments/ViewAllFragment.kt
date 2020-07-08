@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AbsListView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,9 +28,9 @@ import java.util.*
 class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
     private lateinit var viewModel: NewsViewModel
     private lateinit var viewAllAdapter: ViewAllAdapter
-    var articleCategory = ""
+    private var articleCategory = ""
     var shouldPaginate = false
-    var countryIsoCode: String? = null
+    private var countryIsoCode: String? = null
 
     //for view all title
     private val args: ViewAllFragmentArgs by navArgs()
@@ -40,6 +41,18 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
         (activity as NewsActivity).supportActionBar?.title = articleCategory
 
         setUpRecyclerView()
+
+        viewAllAdapter.setOnItemClickListener { article ->
+            article.category = articleCategory
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+
+            }
+            findNavController().navigate(
+                R.id.action_viewAllFragment_to_articleFragment,
+                bundle
+            )
+        }
     }
 
     private fun setUpRecyclerView() {
@@ -103,7 +116,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                         }
                     })
             }
-            "Sport News" -> {
+            "Sports News" -> {
                 viewModel.getSportNews(
                     countryIsoCode!!.toLowerCase(Locale.ROOT),
                     "sport"
@@ -186,6 +199,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                             is Resource.Loading -> {
                                 GlobalScope.launch(Dispatchers.Main) {
                                     delay(2000)
+                                    showProgressBar()
                                 }
                             }
                         }
@@ -326,13 +340,16 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
         isLoading = true
     }
 
+
     override fun onAttach(context: Context) {
         (activity as NewsActivity).hideBottomNavigation()
         super.onAttach(context)
     }
 
-    override fun onStop() {
-        (activity as NewsActivity).showBottomNavigation()
-        super.onStop()
-    }
+//    override fun onStop() {
+//        (activity as NewsActivity).showBottomNavigation()
+//        super.onStop()
+//    }
+
+
 }

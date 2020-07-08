@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -23,32 +24,40 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-      //  getCountryDataFromPrefs()
+        //  getCountryDataFromPrefs()
         supportActionBar?.show()
         val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository,application)
+        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository, application)
         newsViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
 
-        val appBarConfig= AppBarConfiguration(setOf(
-            R.id.breakingNewsFragment,
-            R.id.exploreFragment,
-            R.id.savedNewsFragment,
-            R.id.searchNewsFragment,
-            R.id.settingsFragment
-        )
+        val appBarConfig = AppBarConfiguration(
+            setOf(
+                R.id.breakingNewsFragment,
+                R.id.exploreFragment,
+                R.id.savedNewsFragment,
+                R.id.searchNewsFragment,
+                R.id.settingsFragment
+            )
         )
 
-        setupActionBarWithNavController(newsNavHostFragment.findNavController(),appBarConfig)
+        setupActionBarWithNavController(newsNavHostFragment.findNavController(), appBarConfig)
+
     }
 
-    fun hideBottomNavigation(){
-        bottomNavigationView.visibility= View.GONE
+    fun hideBottomNavigation() {
+        bottomNavigationView.visibility = View.GONE
     }
-    fun showBottomNavigation(){
+
+    fun showBottomNavigation() {
         bottomNavigationView.visibility = View.VISIBLE
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = newsNavHostFragment.findNavController()
+        return navController.navigateUp()
     }
 }

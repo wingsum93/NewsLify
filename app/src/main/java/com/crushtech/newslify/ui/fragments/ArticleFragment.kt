@@ -99,17 +99,14 @@ class ArticleFragment : Fragment() {
 
     }
 
-    override fun onDetach() {
-        try {
-            (activity as NewsActivity).showBottomNavigation()
-        } catch (e: Exception) {
-        }
-        super.onDetach()
+    override fun onResume() {
+        (activity as NewsActivity).hideBottomNavigation()
+        super.onResume()
     }
 
     override fun onStop() {
         try {
-            (activity as NewsActivity).showBottomNavigation()
+            // (activity as NewsActivity).showBottomNavigation()
             (activity as NewsActivity).supportActionBar?.show()
             (activity as NewsActivity).window.clearFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN

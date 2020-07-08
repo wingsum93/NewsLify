@@ -74,5 +74,8 @@
             android:name="groupTitle"
             android:defaultValue="View All"
             app:argType="string" />
+        <action
+            android:id="@+id/action_viewAllFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
     </fragment>
 </navigation>

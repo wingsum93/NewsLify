@@ -1,5 +1,6 @@
 package com.crushtech.newslify.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
@@ -276,5 +277,15 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 isScrolling = true
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onAttach(context)
+    }
+
+    override fun onResume() {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onResume()
     }
 }

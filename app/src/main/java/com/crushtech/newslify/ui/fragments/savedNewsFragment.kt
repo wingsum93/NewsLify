@@ -1,5 +1,6 @@
 package com.crushtech.newslify.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -98,5 +99,17 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             no_saved_article_text2.visibility = View.INVISIBLE
         }
     }
+
+    override fun onAttach(context: Context) {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onAttach(context)
+    }
+
+    override fun onResume() {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onResume()
+    }
+
+
 }
 

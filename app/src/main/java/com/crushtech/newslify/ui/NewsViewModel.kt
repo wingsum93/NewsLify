@@ -28,23 +28,23 @@ class NewsViewModel(
 
     val businessNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var businessNewsPage = 1
-    var businessNewsResponse: NewsResponse? = null
+    private var businessNewsResponse: NewsResponse? = null
 
     val allBreakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var allBreakingNewsPage = 1
-    var allBreakingNewsResponse: NewsResponse? = null
+    private var allBreakingNewsResponse: NewsResponse? = null
 
     val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var sportNewsPage = 1
-    var sportNewsResponse: NewsResponse? = null
+    private var sportNewsResponse: NewsResponse? = null
 
     val scienceNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var scienceNewsPage = 1
-    var scienceNewsResponse: NewsResponse? = null
+    private var scienceNewsResponse: NewsResponse? = null
 
     val entertainmentNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var entertainmentNewsPage = 1
-    var entertainmentNewsResponse: NewsResponse? = null
+    private var entertainmentNewsResponse: NewsResponse? = null
 
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
