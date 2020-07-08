@@ -15,6 +15,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_breakingNewsFragment_to_viewAllFragment"
+            app:destination="@id/viewAllFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/savedNewsFragment"
@@ -59,4 +66,13 @@
         android:id="@+id/exploreFragment"
         android:name="com.crushtech.newslify.ui.fragments.exploreFragment"
         android:label="Explore News" />
+    <fragment
+        android:id="@+id/viewAllFragment"
+        android:name="com.crushtech.newslify.ui.fragments.ViewAllFragment"
+        android:label="ViewAllFragment">
+        <argument
+            android:name="groupTitle"
+            android:defaultValue="View All"
+            app:argType="string" />
+    </fragment>
 </navigation>

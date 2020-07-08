@@ -41,7 +41,8 @@ class GroupAdapter
             setGroupTitle(holder.group_title, it)
         }
         group.groupTitle?.let {
-            setOnClickViewAll(holder.head_parent, it)
+            holder.setOnClickViewAll(it)
+
         }
 
         setLists(holder.itemView.group_recycler_view, position)
@@ -59,11 +60,7 @@ class GroupAdapter
         button.text = text
     }
 
-    private fun setOnClickViewAll(button: RelativeLayout, groupTitle: String) {
-        button.setOnClickListener {
-            Toast.makeText(context, "View all $groupTitle", Toast.LENGTH_LONG).show()
-        }
-    }
+
 
     private fun setLists(recyclerView: RecyclerView, position: Int) {
         //todo 4. Create a new adapter for it and display it in the list
@@ -79,6 +76,7 @@ class GroupAdapter
 
     private fun setSportList(recyclerView: RecyclerView) {
         sportNews.setOnItemClickListener { article ->
+            article.category = "Sports"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
@@ -98,6 +96,7 @@ class GroupAdapter
 
     private fun setBusinessList(recyclerView: RecyclerView) {
         businessNews.setOnItemClickListener { article ->
+            article.category = "Business"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
@@ -116,13 +115,14 @@ class GroupAdapter
     }
     private fun setEntertainmentList(recyclerView: RecyclerView) {
        entertainmentNews.setOnItemClickListener { article ->
-            val bundle = Bundle().apply {
-                putSerializable("article", article)
-            }
-            breakingNewsFragment.findNavController().navigate(
-                R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
-            )
+           article.category = "Entertainment"
+           val bundle = Bundle().apply {
+               putSerializable("article", article)
+           }
+           breakingNewsFragment.findNavController().navigate(
+               R.id.action_breakingNewsFragment_to_articleFragment,
+               bundle
+           )
         }
         recyclerView.apply {
             setHasFixedSize(true)
@@ -135,6 +135,7 @@ class GroupAdapter
 
     private fun setScienceList(recyclerView: RecyclerView) {
         scienceNews.setOnItemClickListener { article ->
+            article.category = "Science"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
@@ -153,6 +154,7 @@ class GroupAdapter
     }
     private fun setBreakingNews(recyclerView: RecyclerView) {
         breakingNews.setOnItemClickListener { article ->
+            article.category = "General News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
@@ -187,6 +189,18 @@ class GroupAdapter
         var view_all: Button = itemView.findViewById(R.id.view_all)
         var group_recycler_view: RecyclerView = itemView.findViewById(R.id.group_recycler_view)
 
+        fun setOnClickViewAll(groupTitle: String) {
+            view_all.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putSerializable("groupTitle", groupTitle)
+                }
+                breakingNewsFragment.findNavController()
+                    .navigate(
+                        R.id.action_breakingNewsFragment_to_viewAllFragment,
+                        bundle
+                    )
+            }
+        }
     }
 
 

@@ -43,6 +43,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         setUpRecyclerView()
 
         newsAdapter.setOnItemClickListener { article ->
+            article.category = "General News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }

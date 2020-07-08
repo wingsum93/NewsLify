@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BreakingNewsAdapter
+import com.crushtech.newslify.adapter.SavedArticlesAdapter
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
@@ -21,11 +22,13 @@ import kotlinx.android.synthetic.main.fragment_saved_news.*
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private lateinit var viewModel: NewsViewModel
-    private lateinit var newsAdapter: BreakingNewsAdapter
+    private lateinit var newsAdapter: SavedArticlesAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
+
         setUpRecyclerView()
+
 
         newsAdapter.setOnItemClickListener { article ->
             val bundle = Bundle().apply {
@@ -36,6 +39,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 bundle
             )
         }
+
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
@@ -75,15 +79,14 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     }
 
     private fun setUpRecyclerView() {
-        newsAdapter = BreakingNewsAdapter()
-        newsAdapter.showShimmer = false
+        newsAdapter = SavedArticlesAdapter()
         rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
 
-    private fun updateUI(article:List<Article>) {
+    private fun updateUI(article: List<Article>) {
         val adapterHasNoItem = article.isEmpty()
         if (adapterHasNoItem) {
             lottie_no_article_saved.visibility = View.VISIBLE

@@ -14,14 +14,24 @@
         app:cardCornerRadius="9dp"
         app:cardElevation="8dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:fontFamily="sans-serif-black"
-            android:text="Featured in Sport News"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20sp" />
+            android:background="@color/black"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/category_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Featured in Sport News"
+                android:textColor="@color/mycolor"
+                android:textSize="16sp" />
+        </LinearLayout>
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/image_parent"
@@ -32,7 +42,7 @@
             app:cardCornerRadius="9dp">
 
             <ImageView
-                android:id="@+id/breaking_news_image"
+                android:id="@+id/saved_news_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="text" />
@@ -41,12 +51,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="127dp"
             android:layout_marginEnd="10dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/saved_news_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -57,7 +68,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/saved_news_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
@@ -67,7 +78,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/publishedAt_and_source"
+                android:id="@+id/saved_news_publishedAt_and_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
