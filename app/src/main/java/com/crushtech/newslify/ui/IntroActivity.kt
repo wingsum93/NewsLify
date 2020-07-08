@@ -2,18 +2,29 @@ package com.crushtech.newslify.ui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Selection
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
+import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.IntroViewPagerAdapter
 import com.crushtech.newslify.models.ScreenItems
+import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.google.android.material.tabs.TabLayout
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_intro.*
 import java.util.ArrayList
 
@@ -36,11 +47,11 @@ class IntroActivity : AppCompatActivity() {
         )
 
         //check if this activity has been launched earlier than this
-        if(restoreInstancePrefs()){
-            val intent = Intent(this, WelcomeScreen::class.java)
-            startActivity(intent)
-             finish()
-        }
+//        if(restoreInstancePrefs()){
+//            val intent = Intent(this, WelcomeScreen::class.java)
+//            startActivity(intent)
+//             finish()
+//        }
         setContentView(R.layout.activity_intro)
 
 
@@ -62,6 +73,16 @@ class IntroActivity : AppCompatActivity() {
         //setup tablayout with slider viewpager
         tabIndicator.setupWithViewPager(screenPager)
 
+
+        if (position == 0) {
+            tabIndicator.visibility = View.INVISIBLE
+            term_of_service.makeLinks(Pair("Term of service", View.OnClickListener {
+                showBroswer(PRIVACY_POLICY)
+            }), Pair("Privacy policy", View.OnClickListener {
+                showBroswer(PRIVACY_POLICY)
+            }))
+        }
+
         btn_next.setOnClickListener {
             position = screenPager.currentItem
             when {
@@ -69,6 +90,7 @@ class IntroActivity : AppCompatActivity() {
                     position++
                     screenPager.currentItem = position
                 }
+
                 position == mList!!.size - 1 -> {
                     loadLastScreen()
                 }
@@ -84,19 +106,18 @@ class IntroActivity : AppCompatActivity() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                if (tab!!.position == 0) {
-                    tabIndicator.visibility = View.INVISIBLE
-                }
 
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                term_of_service.visibility = View.INVISIBLE
                 when {
                     tab!!.position == mList!!.size - 1 -> {
                         loadLastScreen()
                     }
                     tab.position == 0 -> {
                         tabIndicator.visibility = View.INVISIBLE
+                        term_of_service.visibility = View.VISIBLE
                     }
                     else -> {
                         resetToNormalScreen()
@@ -191,5 +212,34 @@ class IntroActivity : AppCompatActivity() {
     private fun restoreInstancePrefs(): Boolean {
         val prefs = applicationContext.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         return prefs.getBoolean("first time user", false)
+    }
+
+    //for onboarding term of service and privacy policy
+    private fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
+        val spannableString = SpannableString(this.text)
+        for (link in links) {
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(p0: View) {
+                    Selection.setSelection((p0 as TextView).text as Spannable, 0)
+                    p0.invalidate()
+                    link.second.onClick(p0)
+                }
+
+            }
+            val startIndexOfLink = this.text.toString().indexOf(link.first)
+            spannableString.setSpan(
+                clickableSpan, startIndexOfLink,
+                startIndexOfLink + link.first.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+        this.movementMethod = LinkMovementMethod.getInstance()
+        this.setText(spannableString, TextView.BufferType.SPANNABLE)
+    }
+
+    //browser function
+    private fun showBroswer(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
     }
 }

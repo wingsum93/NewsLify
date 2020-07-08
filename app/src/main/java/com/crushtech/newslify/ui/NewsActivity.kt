@@ -23,7 +23,7 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-        getCountryDataFromPrefs()
+      //  getCountryDataFromPrefs()
         supportActionBar?.show()
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository,application)
@@ -43,12 +43,6 @@ class NewsActivity : AppCompatActivity() {
         )
 
         setupActionBarWithNavController(newsNavHostFragment.findNavController(),appBarConfig)
-    }
-
-    private fun getCountryDataFromPrefs(){
-        val prefs=applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
-        val countryIsoCode = prefs.getString("countryIsoCode","US")
-       // mainText.text=countryIsoCode
     }
 
     fun hideBottomNavigation(){

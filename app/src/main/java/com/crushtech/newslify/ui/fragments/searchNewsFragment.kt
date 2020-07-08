@@ -158,6 +158,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
 
             if (shouldPaginate) {
                 viewModel.getSearchNews(queryText!!)
+                showProgressBar()
                 isScrolling = false
             }
         }

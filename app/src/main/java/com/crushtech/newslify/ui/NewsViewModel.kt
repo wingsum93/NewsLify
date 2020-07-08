@@ -6,16 +6,20 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.NewsResponse
 import com.crushtech.newslify.repository.NewsRepository
 import com.crushtech.newslify.ui.util.Resource
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
+import java.util.*
 
 class NewsViewModel(
     app: Application,
@@ -26,21 +30,21 @@ class NewsViewModel(
     var businessNewsPage = 1
     var businessNewsResponse: NewsResponse? = null
 
-    val allBreakingNews:MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var allBreakingNewsPage=1
-    var allBreakingNewsResponse:NewsResponse? =null
+    val allBreakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var allBreakingNewsPage = 1
+    var allBreakingNewsResponse: NewsResponse? = null
 
-    val sportNews:MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var sportNewsPage=1
-    var sportNewsResponse:NewsResponse? =null
+    val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var sportNewsPage = 1
+    var sportNewsResponse: NewsResponse? = null
 
-    val scienceNews:MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var scienceNewsPage=1
-    var scienceNewsResponse:NewsResponse? =null
+    val scienceNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var scienceNewsPage = 1
+    var scienceNewsResponse: NewsResponse? = null
 
-    val entertainmentNews:MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var entertainmentNewsPage=1
-    var entertainmentNewsResponse:NewsResponse? =null
+    val entertainmentNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var entertainmentNewsPage = 1
+    var entertainmentNewsResponse: NewsResponse? = null
 
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -48,25 +52,44 @@ class NewsViewModel(
     var searchNewsResponse: NewsResponse? = null
 
     init {
+        val getCountryCode =
+            app.applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
+        val countryIsoCode = getCountryCode.getString("countryIsoCode", "us")
         try {
-            getBusinessNews("us","business")
-            getAllBreakingNews("us")
-            getSportNews("us","sport")
-            getEntertainmentNews("us","entertainment")
-            getScienceNews("us","science")
+            getBusinessNews(countryIsoCode!!.toLowerCase(Locale.ROOT), "business")
+            getAllBreakingNews(countryIsoCode.toLowerCase(Locale.ROOT))
+            getSportNews(countryIsoCode.toLowerCase(Locale.ROOT), "sport")
+            getEntertainmentNews(
+                countryIsoCode.toLowerCase(Locale.ROOT), "entertainment",
+                app.applicationContext
+            )
+            getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
         } catch (e: Exception) {
         }
     }
 
+
     fun getBusinessNews(countryCode: String, category: String) = viewModelScope.launch {
-        safeBusinessNewsCall(countryCode,category)
+        safeBusinessNewsCall(countryCode, category)
     }
-    private suspend fun safeBusinessNewsCall(countryCode: String, category:String) {
+
+    private suspend fun safeBusinessNewsCall(countryCode: String, category: String) {
         businessNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepository.getBusinessNews(countryCode, category,businessNewsPage)
+                val response =
+                    newsRepository.getBusinessNews(countryCode, category, businessNewsPage)
                 businessNews.postValue(handleBusinessNewsResponse(response))
+
+                //check if the api has data for the selected country if not, set default to US
+                if (response.isSuccessful && response.body()?.articles.isNullOrEmpty()) {
+                    businessNews.postValue(Resource.Loading())
+                    val retryResponse = newsRepository.getBusinessNews(
+                        "us",
+                        "business", businessNewsPage
+                    )
+                    businessNews.postValue(handleBusinessNewsResponse(retryResponse))
+                }
             } else {
                 businessNews.postValue(Resource.Error("No internet connection"))
             }
@@ -89,7 +112,7 @@ class NewsViewModel(
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
                 }
-                return Resource.Success(businessNewsResponse?:resultResponse)
+                return Resource.Success(businessNewsResponse ?: resultResponse)
 
             }
         }
@@ -97,18 +120,51 @@ class NewsViewModel(
     }
 
 
+    fun getEntertainmentNews(countryCode: String, category: String, context: Context) =
+        viewModelScope.launch {
+            safeEntertainmentNewsCall(countryCode, category, context)
+        }
 
-    fun getEntertainmentNews(countryCode: String, category: String) = viewModelScope.launch {
-        safeEntertainmentNewsCall(countryCode,category)
-    }
-    private suspend fun safeEntertainmentNewsCall(countryCode: String, category:String) {
+    private suspend fun safeEntertainmentNewsCall(
+        countryCode: String,
+        category: String,
+        context: Context
+    ) {
         entertainmentNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepository.getEntertainmentNews(countryCode, category,entertainmentNewsPage)
+                val response = newsRepository.getEntertainmentNews(
+                    countryCode,
+                    category,
+                    entertainmentNewsPage
+                )
                 entertainmentNews.postValue(handleEntertainmentNewsResponse(response))
+
+                //check if the api has data for the selected country if not, set default to US
+                if (response.isSuccessful && response.body()?.articles.isNullOrEmpty()) {
+                    StyleableToast.makeText(
+                        context, "no news found for the selected country",
+                        R.style.customToast
+                    ).show()
+
+                    StyleableToast.makeText(
+                        context, " setting default to US",
+                        R.style.customToast
+                    ).show()
+
+                    StyleableToast.makeText(
+                        context, "you can reset country in settings",
+                        R.style.customToast
+                    ).show()
+                    entertainmentNews.postValue(Resource.Loading())
+                    val retryResponse = newsRepository.getEntertainmentNews(
+                        "us",
+                        "entertainment", entertainmentNewsPage
+                    )
+                    entertainmentNews.postValue(handleEntertainmentNewsResponse(retryResponse))
+                }
             } else {
-               entertainmentNews.postValue(Resource.Error("No internet connection"))
+                entertainmentNews.postValue(Resource.Error("No internet connection"))
             }
         } catch (t: Throwable) {
             when (t) {
@@ -129,24 +185,34 @@ class NewsViewModel(
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
                 }
-                return Resource.Success(entertainmentNewsResponse?:resultResponse)
+                return Resource.Success(entertainmentNewsResponse ?: resultResponse)
 
             }
         }
         return Resource.Error(response.message())
+
     }
 
 
-    fun getSportNews(countryCode: String,category: String) = viewModelScope.launch {
-        safeSportNewsCall(countryCode,category)
+    fun getSportNews(countryCode: String, category: String) = viewModelScope.launch {
+        safeSportNewsCall(countryCode, category)
     }
 
-    private suspend fun safeSportNewsCall(countryCode: String,category:String) {
+    private suspend fun safeSportNewsCall(countryCode: String, category: String) {
         sportNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepository.getSportNews(countryCode, category,sportNewsPage)
-               sportNews.postValue(handleSportNewsResponse(response))
+                val response = newsRepository.getSportNews(countryCode, category, sportNewsPage)
+                sportNews.postValue(handleSportNewsResponse(response))
+
+                if (response.isSuccessful && response.body()?.articles.isNullOrEmpty()) {
+                    sportNews.postValue(Resource.Loading())
+                    val retryResponse = newsRepository.getSportNews(
+                        "us",
+                        "sport", sportNewsPage
+                    )
+                    sportNews.postValue(handleSportNewsResponse(retryResponse))
+                }
             } else {
                 sportNews.postValue(Resource.Error("No internet connection"))
             }
@@ -157,8 +223,6 @@ class NewsViewModel(
             }
         }
     }
-
-
 
 
     private fun handleSportNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
@@ -172,7 +236,7 @@ class NewsViewModel(
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
                 }
-                return Resource.Success(sportNewsResponse?:resultResponse)
+                return Resource.Success(sportNewsResponse ?: resultResponse)
 
             }
         }
@@ -180,16 +244,25 @@ class NewsViewModel(
     }
 
 
-    fun getScienceNews(countryCode: String,category: String) = viewModelScope.launch {
-        safeScienceNewsCall(countryCode,category)
+    fun getScienceNews(countryCode: String, category: String) = viewModelScope.launch {
+        safeScienceNewsCall(countryCode, category)
     }
 
-    private suspend fun safeScienceNewsCall(countryCode: String,category:String) {
+    private suspend fun safeScienceNewsCall(countryCode: String, category: String) {
         scienceNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
-                val response = newsRepository.getScienceNews(countryCode, category,scienceNewsPage)
+                val response = newsRepository.getScienceNews(countryCode, category, scienceNewsPage)
                 scienceNews.postValue(handleScienceNewsResponse(response))
+
+                if (response.isSuccessful && response.body()?.articles.isNullOrEmpty()) {
+                    scienceNews.postValue(Resource.Loading())
+                    val retryResponse = newsRepository.getScienceNews(
+                        "us",
+                        "science", scienceNewsPage
+                    )
+                    scienceNews.postValue(handleBusinessNewsResponse(retryResponse))
+                }
             } else {
                 scienceNews.postValue(Resource.Error("No internet connection"))
             }
@@ -200,8 +273,6 @@ class NewsViewModel(
             }
         }
     }
-
-
 
 
     private fun handleScienceNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
@@ -215,7 +286,7 @@ class NewsViewModel(
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
                 }
-                return Resource.Success(scienceNewsResponse?:resultResponse)
+                return Resource.Success(scienceNewsResponse ?: resultResponse)
 
             }
         }
@@ -225,12 +296,22 @@ class NewsViewModel(
     fun getAllBreakingNews(countryCode: String) = viewModelScope.launch {
         safeAllBreakingNewsCall(countryCode)
     }
+
     private suspend fun safeAllBreakingNewsCall(countryCode: String) {
         allBreakingNews.postValue(Resource.Loading())
         try {
             if (hasInternetConnection()) {
                 val response = newsRepository.getAllBreakingNews(countryCode, allBreakingNewsPage)
                 allBreakingNews.postValue(handleAllBreakingNewsResponse(response))
+
+                if (response.isSuccessful && response.body()?.articles.isNullOrEmpty()) {
+                    allBreakingNews.postValue(Resource.Loading())
+                    val retryResponse = newsRepository.getAllBreakingNews(
+                        "us",
+                        allBreakingNewsPage
+                    )
+                    allBreakingNews.postValue(handleBusinessNewsResponse(retryResponse))
+                }
             } else {
                 allBreakingNews.postValue(Resource.Error("No internet connection"))
             }
@@ -253,7 +334,7 @@ class NewsViewModel(
                     val newArticles = resultResponse.articles
                     oldArticles?.addAll(newArticles)
                 }
-                return Resource.Success(allBreakingNewsResponse?:resultResponse)
+                return Resource.Success(allBreakingNewsResponse ?: resultResponse)
 
             }
         }
@@ -261,11 +342,10 @@ class NewsViewModel(
     }
 
 
-
-
     fun getSearchNews(searchQuery: String) = viewModelScope.launch {
         safeSearchNewsCall(searchQuery)
     }
+
     private suspend fun safeSearchNewsCall(searchQuery: String) {
         searchNews.postValue(Resource.Loading())
         try {
@@ -301,7 +381,6 @@ class NewsViewModel(
     }
 
 
-
     fun saveArticle(article: Article) = viewModelScope.launch {
         newsRepository.upsert(article)
     }
@@ -327,7 +406,7 @@ class NewsViewModel(
                 capabilities.hasTransport(TRANSPORT_WIFI) -> true
                 capabilities.hasTransport(TRANSPORT_CELLULAR) -> true
                 capabilities.hasTransport(TRANSPORT_ETHERNET) -> true
-                capabilities.hasTransport(TRANSPORT_VPN)->true
+                capabilities.hasTransport(TRANSPORT_VPN) -> true
                 else -> false
             }
         } else {
@@ -336,7 +415,7 @@ class NewsViewModel(
                     TYPE_WIFI -> true
                     TYPE_MOBILE -> true
                     TYPE_ETHERNET -> true
-                    TYPE_VPN-> true
+                    TYPE_VPN -> true
                     else -> false
                 }
             }

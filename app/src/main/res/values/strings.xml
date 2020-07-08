@@ -7,4 +7,5 @@
     <string name="news_articles_you_ve_saved_will_appear_here">News articles you\'ve saved will appear here</string>
     <string name="searchArticle">search by keywords eg america</string>
     <string name="search_for_articles">Search for Articles</string>
+    <string name="term_of_service">by using this app, you have agreed to \n our Term of service and Privacy policy</string>
 </resources>

@@ -6,6 +6,7 @@ class Constants {
         const val BASE_URL="https://newsapi.org"
         const val SEARCH_NEWS_TIME_DELAY=1000L
         const val QUERY_PAGE_SIZE=20
-        val SHIMMER_ITEM_NUMBER = 10
+        const val SHIMMER_ITEM_NUMBER = 10
+        const val PRIVACY_POLICY ="http://www.crushtech.unaux.com/privacypolicy/?i=1"
     }
 }
