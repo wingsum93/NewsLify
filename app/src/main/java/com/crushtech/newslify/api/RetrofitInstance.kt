@@ -1,18 +1,28 @@
 package com.crushtech.newslify.api
 
+import android.content.Context
+import com.crushtech.newslify.ui.NewsActivity
+import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Constants.Companion.BASE_URL
+import okhttp3.Cache
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import kotlin.coroutines.coroutineContext
 
-class RetrofitInstance {
+class RetrofitInstance() {
     companion object {
         private val retrofit by lazy {
+
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addNetworkInterceptor(loggingInterceptor)
                 .build()
 
             Retrofit.Builder()
@@ -24,5 +34,7 @@ class RetrofitInstance {
         val api: NewsApi by lazy {
             retrofit.create(NewsApi::class.java)
         }
+
     }
 }
+

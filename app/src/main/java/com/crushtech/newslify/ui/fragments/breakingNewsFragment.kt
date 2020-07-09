@@ -82,6 +82,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
+                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
@@ -117,6 +118,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
+                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
@@ -155,6 +157,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
+                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
@@ -186,6 +189,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 }
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
+                    no_internet_text.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
@@ -224,7 +228,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     rvBreakingNews.visibility = View.INVISIBLE
                     lottie_no_internet.visibility = View.VISIBLE
-                    no_saved_article_text1.visibility = View.VISIBLE
+                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,

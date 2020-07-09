@@ -346,10 +346,5 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
         super.onAttach(context)
     }
 
-//    override fun onStop() {
-//        (activity as NewsActivity).showBottomNavigation()
-//        super.onStop()
-//    }
-
 
 }

@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_select_country.*
 
 class SelectCountry : AppCompatActivity() {
     private var countryIsoCode: String? = null
+    var countryPicker: CountryPickerDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -27,12 +28,13 @@ class SelectCountry : AppCompatActivity() {
 
         setContentView(R.layout.activity_select_country)
 
-        val btnAnim = AnimationUtils.loadAnimation(this,
+        val btnAnim = AnimationUtils.loadAnimation(
+            this,
             R.anim.button_anim
         )
         btn_finish.animation = btnAnim
         btn_select_country.setOnClickListener {
-            val countryPicker: CountryPickerDialog = CountryPickerDialog(
+            countryPicker = CountryPickerDialog(
                 this,
                 CountryPickerCallbacks { country, _ ->
                     countryIsoCode = country.isoCode
@@ -40,15 +42,10 @@ class SelectCountry : AppCompatActivity() {
                     country_selected.visibility = View.VISIBLE
                 }, false, 0
             )
-            countryPicker.show()
+            countryPicker!!.show()
         }
         btn_finish.setOnClickListener {
             val country = country_selected.text
-            if (country_selected.text.isNullOrEmpty()) {
-                Toast.makeText(this, "please select country", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             saveDataToPref(country.toString())
             startActivity(Intent(this, NewsActivity::class.java))
             finish()
@@ -56,7 +53,7 @@ class SelectCountry : AppCompatActivity() {
         if (savedInstanceState != null) {
             country_selected.text = savedInstanceState.getString("myCon")
             country_selected.visibility = View.VISIBLE
-            countryIsoCode=savedInstanceState.getString("myConIsoCode")
+            countryIsoCode = savedInstanceState.getString("myConIsoCode")
         }
 
     }
@@ -82,5 +79,10 @@ class SelectCountry : AppCompatActivity() {
                     apply()
                 }
             }
+    }
+
+    override fun onStop() {
+        countryPicker?.dismiss()
+        super.onStop()
     }
 }

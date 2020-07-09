@@ -50,11 +50,11 @@ class ExploreItemsAdapter :
             explore_text.text = items.name
             explore_img.setImageResource(items.imageSource)
             explore_container.setBackgroundResource(items.itemBackground)
-            explore_container.setOnClickListener {
-                SimpleCustomSnackbar.make(this,items.name,Snackbar.LENGTH_SHORT,null,
-                    items.imageSource,"",ContextCompat.getColor(context,R.color.mycolor))?.show()
-                explore_container.startAnimation(logoAnim)
-            }
+//            explore_container.setOnClickListener {
+//                SimpleCustomSnackbar.make(this,items.name,Snackbar.LENGTH_SHORT,null,
+//                    items.imageSource,"",ContextCompat.getColor(context,R.color.mycolor))?.show()
+//                explore_container.startAnimation(logoAnim)
+//            }
         }
     }
     private val differCallBack = object : DiffUtil.ItemCallback<Explore>() {

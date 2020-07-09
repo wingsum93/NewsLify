@@ -3,11 +3,11 @@ package com.crushtech.newslify.ui.fragments
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.view.*
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
@@ -21,6 +21,7 @@ import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_news.*
@@ -79,9 +80,35 @@ class ArticleFragment : Fragment() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         view.findViewById<WebView>(R.id.scrollwebView).apply {
+            this.settings.cacheMode = WebSettings.LOAD_DEFAULT
 
-            webViewClient = WebViewClient()
-            article.url?.let { loadUrl(it) }
+            webViewClient = object : WebViewClient() {
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    if (lottie_webview_loading.isAnimating) {
+                        lottie_webview_loading.visibility = View.INVISIBLE
+                        webview_loading_text1.visibility = View.INVISIBLE
+                    }
+                    super.onPageFinished(view, url)
+                }
+
+                override fun onReceivedError(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                    error: WebResourceError?
+                ) {
+                    lottie_webview_loading.visibility = View.GONE
+                    webview_loading_text1.visibility = View.GONE
+                    StyleableToast.makeText(
+                        requireContext(),
+                        "An error occurred",
+                        R.style.customToast
+                    ).show()
+                }
+            }
+            article.url?.let {
+                loadUrl(it)
+            }
         }
         return view
     }

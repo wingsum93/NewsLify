@@ -34,6 +34,10 @@ class NewsViewModel(
     var allBreakingNewsPage = 1
     private var allBreakingNewsResponse: NewsResponse? = null
 
+    val specificNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var specificNewsPage = 1
+    private var specificNewsResponse: NewsResponse? = null
+
     val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var sportNewsPage = 1
     private var sportNewsResponse: NewsResponse? = null
@@ -64,6 +68,7 @@ class NewsViewModel(
                 app.applicationContext
             )
             getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
+            getSpecificNews("bbc.com")
         } catch (e: Exception) {
         }
     }
@@ -113,6 +118,47 @@ class NewsViewModel(
                     oldArticles?.addAll(newArticles)
                 }
                 return Resource.Success(businessNewsResponse ?: resultResponse)
+
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+
+    fun getSpecificNews(source: String) = viewModelScope.launch {
+        safeSpecificNewsCall(source)
+    }
+
+    private suspend fun safeSpecificNewsCall(source: String) {
+        specificNews.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response =
+                    newsRepository.getNewsFromSpecificSource(source, specificNewsPage)
+                specificNews.postValue(handleSpecificNewsResponse(response))
+            } else {
+                specificNews.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> specificNews.postValue(Resource.Error("Network Failure"))
+                else -> specificNews.postValue(Resource.Error("conversion error"))
+            }
+        }
+    }
+
+    private fun handleSpecificNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                specificNewsPage++
+                if (specificNewsResponse == null) {
+                    specificNewsResponse = resultResponse
+                } else {
+                    val oldArticles = specificNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(specificNewsResponse ?: resultResponse)
 
             }
         }
@@ -392,7 +438,7 @@ class NewsViewModel(
     fun getSavedNews() = newsRepository.getSavedNews()
 
 
-    private fun hasInternetConnection(): Boolean {
+    fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<NewsApplication>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
