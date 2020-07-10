@@ -2,7 +2,7 @@
     <string name="app_name">NewsLify</string>
     <string name="june_12_2020_bbc">june 12</string>
     <string name="article_image">article image</string>
-    <string name="opps_couldn_t_load_feed_have_you_tried_switching_on_your_data">Opps, couldn\'t load feed, have you \ntried switching on your data?</string>
+    <string name="opps_couldn_t_load_feed_have_you_tried_switching_on_your_data">Opps, couldn\'t load feed, \n an error occurred</string>
     <string name="no_news_article_saved">No news article saved</string>
     <string name="news_articles_you_ve_saved_will_appear_here">News articles you\'ve saved will appear here</string>
     <string name="searchArticle">search by keywords eg america</string>

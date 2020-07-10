@@ -11,6 +11,7 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_article_preview.view.*
 import kotlinx.android.synthetic.main.sport_list_item.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -42,14 +43,12 @@ class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHold
                 sport_title.background = null
                 sport_publishedAt.background = null
 
-                Picasso.get().load(article.urlToImage).fit().centerCrop()
-                    .into(sport_news_picture, object :
-                        Callback {
-                        override fun onSuccess() {}
-                        override fun onError(e: Exception) {
-                            sport_news_picture.setBackgroundResource(R.color.colorPrimary)
-                        }
-                    })
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    sport_news_picture.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(sport_news_picture)
+                }
                 val formattedJsonDate = article.publishedAt?.substring(0, 10)
                 val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 var date: Date? = null

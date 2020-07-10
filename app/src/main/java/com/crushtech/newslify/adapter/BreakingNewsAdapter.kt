@@ -11,6 +11,7 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -48,14 +49,14 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
                 publishedAt_and_source.background = null
                 title.background = null
                 description.background = null
-                Picasso.get().load(article.urlToImage).fit().centerCrop()
-                    .into(breaking_news_image, object :
-                        Callback {
-                        override fun onSuccess() {}
-                        override fun onError(e: Exception) {
-                            breaking_news_image.setBackgroundResource(R.color.shimmer_color)
-                        }
-                    })
+
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    breaking_news_image.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(breaking_news_image)
+                }
+
                 val formattedJsonDate = article.publishedAt?.substring(0, 10)
                 val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 var date: Date? = null

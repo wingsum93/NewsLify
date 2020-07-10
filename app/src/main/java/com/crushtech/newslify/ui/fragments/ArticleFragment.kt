@@ -1,5 +1,6 @@
 package com.crushtech.newslify.ui.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Resources
@@ -10,6 +11,7 @@ import android.view.*
 import android.webkit.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -38,6 +40,7 @@ class ArticleFragment : Fragment() {
     private val args: ArticleFragmentArgs by navArgs()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,13 +84,15 @@ class ArticleFragment : Fragment() {
 
         view.findViewById<WebView>(R.id.scrollwebView).apply {
             this.settings.cacheMode = WebSettings.LOAD_DEFAULT
+            this.settings.javaScriptEnabled = true
 
             webViewClient = object : WebViewClient() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
-                    if (lottie_webview_loading.isAnimating) {
+                    try {
                         lottie_webview_loading.visibility = View.INVISIBLE
                         webview_loading_text1.visibility = View.INVISIBLE
+                    } catch (e: Exception) {
                     }
                     super.onPageFinished(view, url)
                 }
@@ -97,8 +102,12 @@ class ArticleFragment : Fragment() {
                     request: WebResourceRequest?,
                     error: WebResourceError?
                 ) {
-                    lottie_webview_loading.visibility = View.GONE
-                    webview_loading_text1.visibility = View.GONE
+
+                    try {
+                        lottie_webview_loading.visibility = View.GONE
+                        webview_loading_text1.visibility = View.GONE
+                    } catch (e: Exception) {
+                    }
                     StyleableToast.makeText(
                         requireContext(),
                         "An error occurred",

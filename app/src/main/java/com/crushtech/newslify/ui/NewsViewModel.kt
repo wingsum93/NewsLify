@@ -38,6 +38,9 @@ class NewsViewModel(
     var specificNewsPage = 1
     private var specificNewsResponse: NewsResponse? = null
 
+    val specificNews1: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private var specificNewsResponse1: NewsResponse? = null
+
     val sportNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var sportNewsPage = 1
     private var sportNewsResponse: NewsResponse? = null
@@ -68,6 +71,8 @@ class NewsViewModel(
                 app.applicationContext
             )
             getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
+
+            getSpecificNews1("cnn.com")
             getSpecificNews("bbc.com")
         } catch (e: Exception) {
         }
@@ -129,6 +134,7 @@ class NewsViewModel(
         safeSpecificNewsCall(source)
     }
 
+
     private suspend fun safeSpecificNewsCall(source: String) {
         specificNews.postValue(Resource.Loading())
         try {
@@ -159,6 +165,48 @@ class NewsViewModel(
                     oldArticles?.addAll(newArticles)
                 }
                 return Resource.Success(specificNewsResponse ?: resultResponse)
+
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+
+    fun getSpecificNews1(source: String) = viewModelScope.launch {
+        safeSpecificNewsCall1(source)
+    }
+
+
+    private suspend fun safeSpecificNewsCall1(source: String) {
+        specificNews1.postValue(Resource.Loading())
+        try {
+            if (hasInternetConnection()) {
+                val response =
+                    newsRepository.getNewsFromSpecificSource(source, specificNewsPage)
+                specificNews1.postValue(handleSpecificNewsResponse1(response))
+            } else {
+                specificNews1.postValue(Resource.Error("No internet connection"))
+            }
+        } catch (t: Throwable) {
+            when (t) {
+                is IOException -> specificNews1.postValue(Resource.Error("Network Failure"))
+                else -> specificNews1.postValue(Resource.Error("conversion error"))
+            }
+        }
+    }
+
+    private fun handleSpecificNewsResponse1(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                specificNewsPage++
+                if (specificNewsResponse1 == null) {
+                    specificNewsResponse1 = resultResponse
+                } else {
+                    val oldArticles = specificNewsResponse1?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(specificNewsResponse1 ?: resultResponse)
 
             }
         }
@@ -438,7 +486,7 @@ class NewsViewModel(
     fun getSavedNews() = newsRepository.getSavedNews()
 
 
-    fun hasInternetConnection(): Boolean {
+    private fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<NewsApplication>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager

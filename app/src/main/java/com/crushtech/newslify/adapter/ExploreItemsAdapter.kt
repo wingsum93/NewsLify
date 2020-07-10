@@ -50,13 +50,16 @@ class ExploreItemsAdapter :
             explore_text.text = items.name
             explore_img.setImageResource(items.imageSource)
             explore_container.setBackgroundResource(items.itemBackground)
-//            explore_container.setOnClickListener {
-//                SimpleCustomSnackbar.make(this,items.name,Snackbar.LENGTH_SHORT,null,
-//                    items.imageSource,"",ContextCompat.getColor(context,R.color.mycolor))?.show()
-//                explore_container.startAnimation(logoAnim)
-//            }
+            explore_container.setOnClickListener {
+                SimpleCustomSnackbar.make(
+                    this, items.name, Snackbar.LENGTH_SHORT, null,
+                    items.imageSource, "", ContextCompat.getColor(context, R.color.mycolor)
+                )?.show()
+                explore_container.startAnimation(logoAnim)
+            }
         }
     }
+
     private val differCallBack = object : DiffUtil.ItemCallback<Explore>() {
         override fun areItemsTheSame(oldItem: Explore, newItem: Explore): Boolean {
             return oldItem.name == newItem.name
@@ -71,6 +74,7 @@ class ExploreItemsAdapter :
     fun setOnItemClickListener(listener: (Explore) -> Unit) {
         onItemClickListener = listener
     }
+
     val differ = AsyncListDiffer(this, differCallBack)
 
     inner class ExploreItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

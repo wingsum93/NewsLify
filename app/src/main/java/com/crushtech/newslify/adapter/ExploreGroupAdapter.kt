@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.SimpleCustomSnackbar
+import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.ExploreSource
 import com.crushtech.newslify.ui.fragments.exploreFragment
 import com.google.android.material.snackbar.Snackbar
@@ -17,10 +18,10 @@ import kotlinx.android.synthetic.main.explore_layout.*
 import kotlinx.android.synthetic.main.explore_rv2_items.view.*
 import kotlinx.android.synthetic.main.group_item.view.*
 
-class ExploreGroupAdapter(val context: Context) :
+class ExploreGroupAdapter(val context: Context, val viewModel: NewsViewModel) :
     RecyclerView.Adapter<ExploreGroupAdapter.EsViewHolder>() {
     var newsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var exploreItems: ExploreItemsAdapter = ExploreItemsAdapter()
+    var newsSource1: ExploreBottomAdapter = ExploreBottomAdapter()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -44,6 +45,18 @@ class ExploreGroupAdapter(val context: Context) :
             Picasso.get().load(items.img).fit().into(explore_source_img)
             explore_source_text.text = items.sourceName
             explore_source_motto.text = items.motto
+
+//            when(explore_source_text.text){
+//                "BBC"->{
+//                    viewModel.getSpecificNews("bbc.com")
+//                }
+//                "CNN"->{
+//                    viewModel.getSpecificNews("cnn.com")
+//                }
+//                "TECHCRUNCH"->{
+//                    viewModel.getSpecificNews("techcrunch.com")
+//                }
+//            }
         }
         setLists(holder.itemView.explore_source_rv, position)
     }
@@ -51,26 +64,24 @@ class ExploreGroupAdapter(val context: Context) :
     private fun setLists(recyclerView: RecyclerView, position: Int) {
         //todo 4. Create a new adapter for it and display it in the list
         when (position) {
-            0 -> setDiscoverNews(recyclerView)
-//            1 -> setSourceNews(recyclerView)
-//            2 -> setSourceNews(recyclerView)
-//            3 -> setSourceNews(recyclerView)
-//            4 -> setSourceNews(recyclerView)
+            0 -> setSourceNews(recyclerView)
+            1 -> setSourceNews1(recyclerView)
+            2 -> setSourceNews(recyclerView)
 
         }
     }
 
-    private fun setDiscoverNews(recyclerView: RecyclerView) {
-//        exploreItems.setOnItemClickListener {
-//
+//    private fun setDiscoverNews(recyclerView: RecyclerView) {
+////        exploreItems.setOnItemClickListener {
+////
+////        }
+//        recyclerView.apply {
+//            layoutManager = GridLayoutManager(context, 2)
+//            adapter = exploreItems
+//            isNestedScrollingEnabled = true
+//            setHasFixedSize(true)
 //        }
-        recyclerView.apply {
-            layoutManager = GridLayoutManager(context, 2)
-            adapter = exploreItems
-            isNestedScrollingEnabled = true
-            setHasFixedSize(true)
-        }
-    }
+//    }
 
     private fun setSourceNews(recyclerView: RecyclerView) {
         newsSource.setOnItemClickListener { article ->
@@ -82,13 +93,33 @@ class ExploreGroupAdapter(val context: Context) :
 //                R.id.action_breakingNewsFragment_to_articleFragment,
 //                bundle
 //            )
+
         }
         recyclerView.apply {
-            //  setHasFixedSize(true)
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = newsSource
-            isNestedScrollingEnabled = true
+            isNestedScrollingEnabled = false
+        }
+    }
+
+    private fun setSourceNews1(recyclerView: RecyclerView) {
+        newsSource1.setOnItemClickListener { article ->
+//            article.category = "Sports"
+//            val bundle = Bundle().apply {
+//                putSerializable("article", article)
+//            }
+//            breakingNewsFragment.findNavController().navigate(
+//                R.id.action_breakingNewsFragment_to_articleFragment,
+//                bundle
+//            )
+
+        }
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = newsSource1
+            isNestedScrollingEnabled = false
         }
     }
 

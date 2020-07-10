@@ -48,14 +48,12 @@ class ViewAllAdapter : RecyclerView.Adapter<ViewAllAdapter.VAdapter>() {
                 view_all_news_publishedAt_and_source.background = null
                 view_all_news_title.background = null
                 view_all_news_description.background = null
-                Picasso.get().load(article.urlToImage).fit().centerCrop()
-                    .into(view_all_news_image, object :
-                        Callback {
-                        override fun onSuccess() {}
-                        override fun onError(e: Exception) {
-                            view_all_news_image.setBackgroundResource(R.color.shimmer_color)
-                        }
-                    })
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    view_all_news_image.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(view_all_news_image)
+                }
                 val formattedJsonDate = article.publishedAt?.substring(0, 10)
                 val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 var date: Date? = null

@@ -17,6 +17,7 @@ import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ExploreBottomAdapter : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBottomViewHolder>() {
     override fun onCreateViewHolder(
@@ -43,14 +44,12 @@ class ExploreBottomAdapter : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBo
         holder.itemView.apply {
             val items = differ.currentList[position]
 
-            Picasso.get().load(items.urlToImage).fit().centerCrop()
-                .into(source_image, object :
-                    Callback {
-                    override fun onSuccess() {}
-                    override fun onError(e: Exception) {
-                        source_image.setBackgroundResource(R.color.shimmer_color)
-                    }
-                })
+            if (items?.urlToImage.isNullOrEmpty()) {
+                news_source_image.setBackgroundResource(R.color.colorPrimary)
+            } else {
+                Picasso.get().load(items.urlToImage).fit().centerCrop()
+                    .into(news_source_image)
+            }
             val formattedJsonDate = items.publishedAt?.substring(0, 10)
             val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             var date: Date? = null
@@ -66,6 +65,11 @@ class ExploreBottomAdapter : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBo
             source_publishedAt.text = "$formatted"
             source_title.text = items.title
             source_des.text = items?.description
+
+//            val source=sourceList[position]
+//            Picasso.get().load(source.img).fit().into(explore_source_img)
+//            source_text.text = source.sourceName
+//            source_motto.text = source.motto
 
             setOnClickListener {
                 onItemClickListener?.let {

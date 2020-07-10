@@ -13,6 +13,7 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.cover_item.view.*
+import kotlinx.android.synthetic.main.item_article_preview.view.*
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -48,18 +49,16 @@ class BusinessNewsCoverAdapter :
                     stopShimmer()
                     setShimmer(null)
                 }
-                bnews_picture.background=null
-                b_title.background=null
-                b_publishedAt.background=null
+                bnews_picture.background = null
+                b_title.background = null
+                b_publishedAt.background = null
 
-                Picasso.get().load(article.urlToImage).fit().centerCrop()
-                    .into(bnews_picture, object :
-                        Callback {
-                        override fun onSuccess() {}
-                        override fun onError(e: Exception) {
-                            bnews_picture.setBackgroundResource(R.color.colorPrimary)
-                        }
-                    })
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    bnews_picture.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(bnews_picture)
+                }
                 val formattedJsonDate = article.publishedAt?.substring(0, 10)
                 val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 var date: Date? = null

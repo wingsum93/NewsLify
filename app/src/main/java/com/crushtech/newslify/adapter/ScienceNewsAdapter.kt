@@ -11,6 +11,7 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_article_preview.view.*
 import kotlinx.android.synthetic.main.science_list_item.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -35,22 +36,20 @@ class ScienceNewsAdapter : RecyclerView.Adapter<ScienceNewsAdapter.ScienceNewsVi
                 sc_shimmer.startShimmer()
             }else {
                 val article = differ.currentList[position]
-                    sc_shimmer.apply {
-                        stopShimmer()
-                        setShimmer(null)
-                    }
-                science_news_picture.background=null
-                science_title.background=null
-                science_publishedAt.background=null
+                sc_shimmer.apply {
+                    stopShimmer()
+                    setShimmer(null)
+                }
+                science_news_picture.background = null
+                science_title.background = null
+                science_publishedAt.background = null
 
-                Picasso.get().load(article.urlToImage).fit().centerCrop()
-                    .into(science_news_picture, object :
-                        Callback {
-                        override fun onSuccess() {}
-                        override fun onError(e: Exception) {
-                            science_news_picture.setBackgroundResource(R.color.colorPrimary)
-                        }
-                    })
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    science_news_picture.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(science_news_picture)
+                }
                 val formattedJsonDate = article.publishedAt?.substring(0, 10)
                 val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 var date: Date? = null

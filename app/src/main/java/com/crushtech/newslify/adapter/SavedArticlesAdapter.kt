@@ -44,14 +44,12 @@ class SavedArticlesAdapter() :
     ) {
         holder.itemView.apply {
             val article = differ.currentList[position]
-            Picasso.get().load(article.urlToImage).fit().centerCrop()
-                .into(saved_news_image, object :
-                    Callback {
-                    override fun onSuccess() {}
-                    override fun onError(e: Exception) {
-                        saved_news_image.setBackgroundResource(R.color.shimmer_color)
-                    }
-                })
+            if (article?.urlToImage.isNullOrEmpty()) {
+                saved_news_image.setBackgroundResource(R.color.colorPrimary)
+            } else {
+                Picasso.get().load(article.urlToImage).fit().centerCrop()
+                    .into(saved_news_image)
+            }
             val formattedJsonDate = article.publishedAt?.substring(0, 10)
             val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             var date: Date? = null
