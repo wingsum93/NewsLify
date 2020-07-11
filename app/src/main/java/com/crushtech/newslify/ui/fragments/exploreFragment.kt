@@ -1,26 +1,23 @@
 package com.crushtech.newslify.ui.fragments
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import android.widget.AbsListView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.ExploreItemsAdapter
 import com.crushtech.newslify.adapter.ExploreGroupAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
-import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.explore_layout.*
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -84,7 +81,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
         initExploreSourceItems()
         setUpData()
         exploreGroupAdapter = ExploreGroupAdapter(
-            requireContext(), viewModel
+            requireContext(), this
         )
         exploreGroupAdapter!!.differ.submitList(exploreSource)
         explore_rv2.apply {
@@ -97,13 +94,41 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
 
     private fun initExploreSourceItems() {
         exploreSource = ArrayList()
-        exploreSource!!.add(ExploreSource("BBC", R.drawable.bbc, "The world's newsroom"))
-        exploreSource!!.add(ExploreSource("CNN", R.drawable.cnn, "The world's news network"))
+        exploreSource!!.add(ExploreSource("Bbc News", R.drawable.bbc, "The world's newsroom"))
+        exploreSource!!.add(ExploreSource("Cnn News", R.drawable.cnn, "The world's news network"))
         exploreSource!!.add(
             ExploreSource(
-                "TECHCRUNCH",
+                "TechCrunch",
                 R.drawable.techcrunch,
                 "Dronepocalypse Now"
+            )
+        )
+        exploreSource!!.add(
+            ExploreSource(
+                "Reuters",
+                R.drawable.reuters,
+                "Reuters Trust Principles"
+            )
+        )
+        exploreSource!!.add(
+            ExploreSource(
+                "Espn News",
+                R.drawable.espn,
+                "The worldwide leader in sports"
+            )
+        )
+        exploreSource!!.add(
+            ExploreSource(
+                "Cnbc News",
+                R.drawable.cnbc,
+                "First in business worldwide"
+            )
+        )
+        exploreSource!!.add(
+            ExploreSource(
+                "Wall Street Journal",
+                R.drawable.wsj,
+                "free markets and free people"
             )
         )
     }
@@ -115,7 +140,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     //groupAdapter!!.sportNews.showShimmer = false
                     response.data?.let { newsResponse ->
                         try {
-                            exploreGroupAdapter!!.newsSource.differ.submitList(newsResponse.articles.toList())
+                            exploreGroupAdapter!!.bbcNewsSource.differ.submitList(newsResponse.articles.toList())
                             //groupAdapter!!.sportNews.notifyDataSetChanged()
 
                         } catch (e: Exception) {
@@ -124,9 +149,6 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                 }
                 is Resource.Error -> {
                     explore_rv2.visibility = View.INVISIBLE
-//                    lottie_no_internet.visibility = View.VISIBLE
-//                    rvBreakingNews.visibility = View.INVISIBLE
-//                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
@@ -151,7 +173,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     //groupAdapter!!.sportNews.showShimmer = false
                     response.data?.let { newsResponse ->
                         try {
-                            exploreGroupAdapter!!.newsSource1.differ.submitList(newsResponse.articles.toList())
+                            exploreGroupAdapter!!.cnnNewsSource.differ.submitList(newsResponse.articles.toList())
                             //groupAdapter!!.sportNews.notifyDataSetChanged()
 
                         } catch (e: Exception) {
@@ -160,9 +182,40 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                 }
                 is Resource.Error -> {
                     explore_rv2.visibility = View.INVISIBLE
-//                    lottie_no_internet.visibility = View.VISIBLE
-//                    rvBreakingNews.visibility = View.INVISIBLE
-//                    no_internet_text.visibility = View.VISIBLE
+                    response.message?.let {
+                        SimpleCustomSnackbar.make(
+                            requireView(), "an error occurred :$it",
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
+
+                    }
+                }
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
+                }
+            }
+        })
+
+        viewModel.specificNews2.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    //groupAdapter!!.sportNews.showShimmer = false
+                    response.data?.let { newsResponse ->
+                        try {
+                            exploreGroupAdapter!!.techCrunchnewsSource.differ.submitList(
+                                newsResponse.articles.toList()
+                            )
+                            //groupAdapter!!.sportNews.notifyDataSetChanged()
+
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    explore_rv2.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
@@ -189,5 +242,15 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
         } catch (e: Exception) {
         }
         super.onStop()
+    }
+
+    override fun onAttach(context: Context) {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onAttach(context)
+    }
+
+    override fun onResume() {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onResume()
     }
 }

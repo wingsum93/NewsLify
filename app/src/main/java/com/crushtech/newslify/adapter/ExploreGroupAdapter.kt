@@ -1,27 +1,24 @@
 package com.crushtech.newslify.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
-import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.ExploreSource
 import com.crushtech.newslify.ui.fragments.exploreFragment
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.explore_items.view.*
-import kotlinx.android.synthetic.main.explore_layout.*
 import kotlinx.android.synthetic.main.explore_rv2_items.view.*
-import kotlinx.android.synthetic.main.group_item.view.*
 
-class ExploreGroupAdapter(val context: Context, val viewModel: NewsViewModel) :
+class ExploreGroupAdapter(val context: Context, val exploreFragment: exploreFragment) :
     RecyclerView.Adapter<ExploreGroupAdapter.EsViewHolder>() {
-    var newsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var newsSource1: ExploreBottomAdapter = ExploreBottomAdapter()
+    var bbcNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+    var cnnNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+    var techCrunchnewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -45,18 +42,6 @@ class ExploreGroupAdapter(val context: Context, val viewModel: NewsViewModel) :
             Picasso.get().load(items.img).fit().into(explore_source_img)
             explore_source_text.text = items.sourceName
             explore_source_motto.text = items.motto
-
-//            when(explore_source_text.text){
-//                "BBC"->{
-//                    viewModel.getSpecificNews("bbc.com")
-//                }
-//                "CNN"->{
-//                    viewModel.getSpecificNews("cnn.com")
-//                }
-//                "TECHCRUNCH"->{
-//                    viewModel.getSpecificNews("techcrunch.com")
-//                }
-//            }
         }
         setLists(holder.itemView.explore_source_rv, position)
     }
@@ -64,61 +49,75 @@ class ExploreGroupAdapter(val context: Context, val viewModel: NewsViewModel) :
     private fun setLists(recyclerView: RecyclerView, position: Int) {
         //todo 4. Create a new adapter for it and display it in the list
         when (position) {
-            0 -> setSourceNews(recyclerView)
-            1 -> setSourceNews1(recyclerView)
-            2 -> setSourceNews(recyclerView)
+            0 -> setBbcSourceNews(recyclerView)
+            1 -> setCnnSourceNews(recyclerView)
+            2 -> setTechCrucnhSourceNews(recyclerView)
+            3 -> setBbcSourceNews(recyclerView)
+            4 -> setBbcSourceNews(recyclerView)
+            5 -> setBbcSourceNews(recyclerView)
+            6 -> setBbcSourceNews(recyclerView)
+            7 -> setBbcSourceNews(recyclerView)
 
         }
     }
 
-//    private fun setDiscoverNews(recyclerView: RecyclerView) {
-////        exploreItems.setOnItemClickListener {
-////
-////        }
-//        recyclerView.apply {
-//            layoutManager = GridLayoutManager(context, 2)
-//            adapter = exploreItems
-//            isNestedScrollingEnabled = true
-//            setHasFixedSize(true)
-//        }
-//    }
 
-    private fun setSourceNews(recyclerView: RecyclerView) {
-        newsSource.setOnItemClickListener { article ->
-//            article.category = "Sports"
-//            val bundle = Bundle().apply {
-//                putSerializable("article", article)
-//            }
-//            breakingNewsFragment.findNavController().navigate(
-//                R.id.action_breakingNewsFragment_to_articleFragment,
-//                bundle
-//            )
+    private fun setBbcSourceNews(recyclerView: RecyclerView) {
+        bbcNewsSource.setOnItemClickListener { article ->
+            article.category = "Bbc News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
 
         }
         recyclerView.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = newsSource
+            adapter = bbcNewsSource
             isNestedScrollingEnabled = false
         }
     }
 
-    private fun setSourceNews1(recyclerView: RecyclerView) {
-        newsSource1.setOnItemClickListener { article ->
-//            article.category = "Sports"
-//            val bundle = Bundle().apply {
-//                putSerializable("article", article)
-//            }
-//            breakingNewsFragment.findNavController().navigate(
-//                R.id.action_breakingNewsFragment_to_articleFragment,
-//                bundle
-//            )
+    private fun setCnnSourceNews(recyclerView: RecyclerView) {
+        cnnNewsSource.setOnItemClickListener { article ->
+            article.category = "Cnn News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
 
         }
         recyclerView.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = newsSource1
+            adapter = cnnNewsSource
+            isNestedScrollingEnabled = false
+        }
+    }
+
+    private fun setTechCrucnhSourceNews(recyclerView: RecyclerView) {
+        techCrunchnewsSource.setOnItemClickListener { article ->
+            article.category = "TechCrunch News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
+
+        }
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = techCrunchnewsSource
             isNestedScrollingEnabled = false
         }
     }

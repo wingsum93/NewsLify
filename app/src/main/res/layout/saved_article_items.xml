@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:fontFamily="@font/amaranth_bold"
+                android:fontFamily="@font/averia_libre"
                 android:maxLines="2"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
@@ -72,9 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/averia_libre"
                 android:maxLines="2"
-                android:textColor="#8E8E8E"
+                android:textColor="@color/mycolor"
                 android:textSize="15sp" />
 
             <TextView
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="2dp"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="sans-serif"
                 android:maxLines="1"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />

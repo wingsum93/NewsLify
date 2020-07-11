@@ -47,7 +47,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="50dp"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/averia_libre"
                     android:textColor="@android:color/white"
                     android:textSize="15sp" />
 

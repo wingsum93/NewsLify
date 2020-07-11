@@ -65,7 +65,11 @@
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.crushtech.newslify.ui.fragments.exploreFragment"
-        android:label="Explore News" />
+        android:label="Explore News">
+        <action
+            android:id="@+id/action_exploreFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewAllFragment"
         android:name="com.crushtech.newslify.ui.fragments.ViewAllFragment"

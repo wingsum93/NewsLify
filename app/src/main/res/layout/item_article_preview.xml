@@ -43,7 +43,7 @@
                 android:maxLines="2"
                 android:layout_marginTop="3dp"
                 android:id="@+id/title"
-                android:fontFamily="@font/amaranth_bold"
+                android:fontFamily="@font/averia_libre"
                 android:background="@color/shimmer_color"
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
@@ -54,9 +54,9 @@
                 android:maxLines="2"
                 android:layout_marginTop="3dp"
                 android:id="@+id/description"
-                android:fontFamily="sans-serif-black"
-               android:background="@color/shimmer_color"
-                android:textColor="#8E8E8E"
+                android:fontFamily="@font/averia_libre"
+                android:background="@color/shimmer_color"
+                android:textColor="@color/mycolor"
                 android:textSize="15sp"/>
             <TextView
                 android:layout_width="match_parent"
@@ -64,8 +64,8 @@
                 android:maxLines="1"
                 android:layout_marginTop="3dp"
                 android:id="@+id/publishedAt_and_source"
-                android:fontFamily="sans-serif-black"
-              android:background="@color/shimmer_color"
+                android:fontFamily="@font/averia_libre"
+                android:background="@color/shimmer_color"
                 android:textColor="@color/colorPrimary"
                 android:layout_marginBottom="2dp"
                 android:textSize="15sp"/>

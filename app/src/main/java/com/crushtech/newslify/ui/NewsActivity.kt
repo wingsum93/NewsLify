@@ -43,11 +43,17 @@ class NewsActivity : AppCompatActivity() {
     }
 
     fun hideBottomNavigation() {
-        bottomNavigationView.visibility = View.GONE
+        try {
+            bottomNavigationView.visibility = View.GONE
+        } catch (e: Exception) {
+        }
     }
 
     fun showBottomNavigation() {
-        bottomNavigationView.visibility = View.VISIBLE
+        try {
+            bottomNavigationView.visibility = View.VISIBLE
+        } catch (e: Exception) {
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
