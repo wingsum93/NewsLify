@@ -68,7 +68,18 @@
         android:label="Explore News">
         <action
             android:id="@+id/action_exploreFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_exploreFragment_to_exploreTopItemsFragment"
+            app:destination="@id/exploreTopItemsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/viewAllFragment"
@@ -80,6 +91,18 @@
             app:argType="string" />
         <action
             android:id="@+id/action_viewAllFragment_to_articleFragment"
-            app:destination="@id/articleFragment" />
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/exploreTopItemsFragment"
+        android:name="com.crushtech.newslify.ui.fragments.ExploreTopItemsFragment"
+        android:label="ExploreTopItemsFragment">
+        <argument
+            android:name="exploreName"
+            app:argType="string" />
     </fragment>
 </navigation>

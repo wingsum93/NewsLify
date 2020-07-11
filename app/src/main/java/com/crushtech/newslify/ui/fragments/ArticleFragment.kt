@@ -106,13 +106,13 @@ class ArticleFragment : Fragment() {
                     try {
                         lottie_webview_loading.visibility = View.GONE
                         webview_loading_text1.visibility = View.GONE
+                        StyleableToast.makeText(
+                            requireContext(),
+                            "An error occurred",
+                            R.style.customToast
+                        ).show()
                     } catch (e: Exception) {
                     }
-                    StyleableToast.makeText(
-                        requireContext(),
-                        "An error occurred",
-                        R.style.customToast
-                    ).show()
                 }
             }
             article.url?.let {

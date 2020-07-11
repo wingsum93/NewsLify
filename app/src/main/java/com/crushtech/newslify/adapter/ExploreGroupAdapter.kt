@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
-import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.ExploreSource
 import com.crushtech.newslify.ui.fragments.exploreFragment
 import com.squareup.picasso.Picasso
@@ -19,6 +18,11 @@ class ExploreGroupAdapter(val context: Context, val exploreFragment: exploreFrag
     var bbcNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
     var cnnNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
     var techCrunchnewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+    var reutersNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+    var espnNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+    var cnbcNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+    var wsjNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -51,12 +55,11 @@ class ExploreGroupAdapter(val context: Context, val exploreFragment: exploreFrag
         when (position) {
             0 -> setBbcSourceNews(recyclerView)
             1 -> setCnnSourceNews(recyclerView)
-            2 -> setTechCrucnhSourceNews(recyclerView)
-            3 -> setBbcSourceNews(recyclerView)
-            4 -> setBbcSourceNews(recyclerView)
-            5 -> setBbcSourceNews(recyclerView)
-            6 -> setBbcSourceNews(recyclerView)
-            7 -> setBbcSourceNews(recyclerView)
+            2 -> setTechCrunchSourceNews(recyclerView)
+            3 -> setReutersSourceNews(recyclerView)
+            4 -> setEspnSourceNews(recyclerView)
+            5 -> setCnbcSourceNews(recyclerView)
+            6 -> setWsjSourceNews(recyclerView)
 
         }
     }
@@ -102,7 +105,7 @@ class ExploreGroupAdapter(val context: Context, val exploreFragment: exploreFrag
         }
     }
 
-    private fun setTechCrucnhSourceNews(recyclerView: RecyclerView) {
+    private fun setTechCrunchSourceNews(recyclerView: RecyclerView) {
         techCrunchnewsSource.setOnItemClickListener { article ->
             article.category = "TechCrunch News"
             val bundle = Bundle().apply {
@@ -118,6 +121,88 @@ class ExploreGroupAdapter(val context: Context, val exploreFragment: exploreFrag
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = techCrunchnewsSource
+            isNestedScrollingEnabled = false
+        }
+    }
+
+    private fun setReutersSourceNews(recyclerView: RecyclerView) {
+        reutersNewsSource.setOnItemClickListener { article ->
+            article.category = "Reuters News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
+
+        }
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = reutersNewsSource
+            isNestedScrollingEnabled = false
+        }
+    }
+
+
+    private fun setEspnSourceNews(recyclerView: RecyclerView) {
+        espnNewsSource.setOnItemClickListener { article ->
+            article.category = "TechCrunch News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
+
+        }
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = espnNewsSource
+            isNestedScrollingEnabled = false
+        }
+    }
+
+    private fun setCnbcSourceNews(recyclerView: RecyclerView) {
+        cnbcNewsSource.setOnItemClickListener { article ->
+            article.category = "Cnbc News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
+
+        }
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = cnbcNewsSource
+            isNestedScrollingEnabled = false
+        }
+    }
+
+
+    private fun setWsjSourceNews(recyclerView: RecyclerView) {
+        wsjNewsSource.setOnItemClickListener { article ->
+            article.category = "Reuters News"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            exploreFragment.findNavController().navigate(
+                R.id.action_exploreFragment_to_articleFragment,
+                bundle
+            )
+
+        }
+        recyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = wsjNewsSource
             isNestedScrollingEnabled = false
         }
     }

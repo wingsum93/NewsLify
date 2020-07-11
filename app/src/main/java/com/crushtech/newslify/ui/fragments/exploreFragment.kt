@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crushtech.newslify.R
@@ -17,6 +20,7 @@ import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.explore_items.view.*
 import kotlinx.android.synthetic.main.explore_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -41,6 +45,16 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
         (activity as NewsActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpRecView()
         setUpRecyclerViewForSource()
+
+        exploreItemsAdapter!!.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("exploreName", it.name)
+            }
+            findNavController().navigate(
+                R.id.action_exploreFragment_to_exploreTopItemsFragment,
+                bundle
+            )
+        }
     }
 
     private fun initExploreItems() {
@@ -210,6 +224,133 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                             )
                             //groupAdapter!!.sportNews.notifyDataSetChanged()
 
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    explore_rv2.visibility = View.INVISIBLE
+                    response.message?.let {
+                        SimpleCustomSnackbar.make(
+                            requireView(), "an error occurred :$it",
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
+
+                    }
+                }
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
+                }
+            }
+        })
+
+
+        viewModel.specificNews3.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        try {
+                            exploreGroupAdapter!!.reutersNewsSource.differ.submitList(
+                                newsResponse.articles.toList()
+                            )
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    explore_rv2.visibility = View.INVISIBLE
+                    response.message?.let {
+                        SimpleCustomSnackbar.make(
+                            requireView(), "an error occurred :$it",
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
+
+                    }
+                }
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
+                }
+            }
+        })
+
+
+        viewModel.specificNews4.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        try {
+                            exploreGroupAdapter!!.espnNewsSource.differ.submitList(
+                                newsResponse.articles.toList()
+                            )
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    explore_rv2.visibility = View.INVISIBLE
+                    response.message?.let {
+                        SimpleCustomSnackbar.make(
+                            requireView(), "an error occurred :$it",
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
+
+                    }
+                }
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
+                }
+            }
+        })
+
+
+        viewModel.specificNews5.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        try {
+                            exploreGroupAdapter!!.cnbcNewsSource.differ.submitList(
+                                newsResponse.articles.toList()
+                            )
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    explore_rv2.visibility = View.INVISIBLE
+                    response.message?.let {
+                        SimpleCustomSnackbar.make(
+                            requireView(), "an error occurred :$it",
+                            Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                        )?.show()
+
+                    }
+                }
+                is Resource.Loading -> {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(3000)
+                    }
+                }
+            }
+        })
+
+        viewModel.specificNews6.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        try {
+                            exploreGroupAdapter!!.wsjNewsSource.differ.submitList(
+                                newsResponse.articles.toList()
+                            )
                         } catch (e: Exception) {
                         }
                     }
