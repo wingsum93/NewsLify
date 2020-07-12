@@ -3,6 +3,7 @@ package com.crushtech.newslify.adapter
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -115,12 +116,23 @@ class ExploreBottomAdapter(
                     "", ContextCompat.getColor(context, R.color.mygrey)
                 )?.show()
                 if (bottomDialog.isShowing) {
-                    bottomDialog.hide()
+                    bottomDialog.dismiss()
                 }
             }
-//            view.shareExArticleLink.setOnClickListener {
-//                StyleableToast.makeText(context, "shared", R.style.customToast).show()
-//            }
+            view.shareExArticleLink.setOnClickListener {
+                val articleUrl = "From NewsLify:  ${items.url}"
+                val shareSub = "APP NAME/TITLE"
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/link"
+                    putExtra(Intent.EXTRA_SUBJECT, shareSub)
+                    putExtra(Intent.EXTRA_TEXT, articleUrl)
+                }
+                if (bottomDialog.isShowing) {
+                    bottomDialog.dismiss()
+                }
+                context.startActivity(Intent.createChooser(intent, "Share Using"))
+
+            }
 
             setOnClickListener {
                 onItemClickListener?.let {
