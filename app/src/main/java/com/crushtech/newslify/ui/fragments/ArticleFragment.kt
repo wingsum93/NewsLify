@@ -3,15 +3,10 @@ package com.crushtech.newslify.ui.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.webkit.*
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -24,15 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoastlibrary.StyleableToast
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.fragment_article.*
-import java.text.DateFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ArticleFragment : Fragment() {
@@ -66,7 +53,7 @@ class ArticleFragment : Fragment() {
             SimpleCustomSnackbar.make(
                 viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
                 customSnackListener, R.drawable.snack_fav,
-                "View", ContextCompat.getColor(requireContext(), R.color.mycolor)
+                "View", ContextCompat.getColor(requireContext(), R.color.mygrey)
             )?.show()
         }
 
@@ -74,7 +61,7 @@ class ArticleFragment : Fragment() {
             SimpleCustomSnackbar.make(
                 viewPos, "Article shared", Snackbar.LENGTH_LONG,
                 null, R.drawable.ic_share,
-                "", ContextCompat.getColor(requireContext(), R.color.mycolor)
+                "", ContextCompat.getColor(requireContext(), R.color.mygrey)
             )?.show()
         }
 

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
-import com.crushtech.newslify.adapter.BreakingNewsAdapter
 import com.crushtech.newslify.adapter.SavedArticlesAdapter
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
@@ -64,7 +63,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 SimpleCustomSnackbar.make(
                     saved_coordinator, "article deleted",
                     Snackbar.LENGTH_LONG, snackListener, R.drawable.delete_article, "Undo",
-                    ContextCompat.getColor(requireContext(), R.color.mycolor)
+                    ContextCompat.getColor(requireContext(), R.color.mygrey)
                 )?.show()
             }
 

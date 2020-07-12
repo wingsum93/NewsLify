@@ -1,5 +1,6 @@
 package com.crushtech.newslify.ui
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,6 +32,7 @@ class WelcomeScreen : AppCompatActivity() {
        )
         welcome_logo.startAnimation(logoAnim)
         app_text.animation=logoAnim
+
         val intent= Intent(this,NewsActivity::class.java)
         GlobalScope.launch(Dispatchers.Main) {
             delay(5000)
@@ -45,4 +47,5 @@ class WelcomeScreen : AppCompatActivity() {
 
 
     }
+
 }

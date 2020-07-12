@@ -5,9 +5,12 @@
     <string name="opps_couldn_t_load_feed_have_you_tried_switching_on_your_data">Opps, couldn\'t load feed, \n an error occurred</string>
     <string name="no_news_article_saved">No news article saved</string>
     <string name="news_articles_you_ve_saved_will_appear_here">News articles you\'ve saved will appear here</string>
-    <string name="searchArticle">search by keywords eg america</string>
+    <string name="searchArticle">Anything good starts with a good search</string>
     <string name="search_for_articles">Search for Articles</string>
     <string name="term_of_service">by using this app, you have agreed to \n our Term of service and Privacy policy</string>
     <string name="search_hint">Search news articles</string>
     <string name="ftm">From Top News Channels</string>
+    <string name="save_article">\t\t\t\t\t\tSave Article</string>
+    <string name="copy_link">\t\t\t\t\t\tCopy Link</string>
+    <string name="share_article">\t\t\t\t\t\tShare</string>
 </resources>

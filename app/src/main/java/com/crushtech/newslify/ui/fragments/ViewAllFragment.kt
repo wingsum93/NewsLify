@@ -18,8 +18,6 @@ import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
-import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_view_all_news.*
 import kotlinx.coroutines.*
 import java.lang.Exception
@@ -103,7 +101,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mycolor)
+                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
                                     )?.show()
 
                                 }
@@ -147,7 +145,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mycolor)
+                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
                                     )?.show()
 
                                 }
@@ -191,7 +189,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mycolor)
+                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
                                     )?.show()
 
                                 }
@@ -236,7 +234,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mycolor)
+                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
                                     )?.show()
 
                                 }
@@ -277,7 +275,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mycolor)
+                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
                                     )?.show()
 
                                 }

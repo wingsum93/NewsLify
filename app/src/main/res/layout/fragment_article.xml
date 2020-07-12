@@ -55,7 +55,7 @@
         android:fontFamily="sans-serif-black"
         android:text="Loading please wait..."
         android:textAlignment="center"
-        android:textColor="@color/mycolor"
+        android:textColor="@color/mygrey"
         android:textSize="20sp"
         android:visibility="visible" />
 

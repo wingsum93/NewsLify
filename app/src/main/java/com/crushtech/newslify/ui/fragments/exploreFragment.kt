@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,7 +18,6 @@ import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.explore_items.view.*
 import kotlinx.android.synthetic.main.explore_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -95,7 +92,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
         initExploreSourceItems()
         setUpData()
         exploreGroupAdapter = ExploreGroupAdapter(
-            requireContext(), this
+            requireContext(), this, viewModel, explore_coordinator
         )
         exploreGroupAdapter!!.differ.submitList(exploreSource)
         explore_rv2.apply {
@@ -167,7 +164,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -200,7 +197,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -234,7 +231,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -266,7 +263,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -298,7 +295,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -330,7 +327,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -361,7 +358,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }

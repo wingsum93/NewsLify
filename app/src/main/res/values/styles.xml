@@ -8,7 +8,7 @@
     </style>
 
     <style name="customToast">
-        <item name="colorBackground">@color/mycolor</item>
+        <item name="colorBackground">@color/mygrey</item>
         <item name="textColor">@color/white</item>
         <item name="iconRight">@drawable/error_ic</item>
         <item name="strokeColor">@color/colorPrimary</item>
@@ -17,4 +17,5 @@
         <item name="length">LONG</item>
         <item name="cornerRadius">5dp</item>
     </style>
+
 </resources>

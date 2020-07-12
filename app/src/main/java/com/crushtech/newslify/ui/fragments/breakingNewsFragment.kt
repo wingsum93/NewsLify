@@ -87,7 +87,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
 
                     }
@@ -123,7 +123,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
                     }
                 }
@@ -162,7 +162,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
                     }
                 }
@@ -195,7 +195,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
                     }
                 }
@@ -233,7 +233,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, it,
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
                     }
                 }

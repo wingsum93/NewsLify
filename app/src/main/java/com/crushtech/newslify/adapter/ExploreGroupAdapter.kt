@@ -5,23 +5,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
+import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.ExploreSource
 import com.crushtech.newslify.ui.fragments.exploreFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.explore_rv2_items.view.*
 
-class ExploreGroupAdapter(val context: Context, val exploreFragment: exploreFragment) :
+class ExploreGroupAdapter(
+    val context: Context,
+    val exploreFragment: exploreFragment,
+    val viewModel: NewsViewModel,
+    val coordinatorLayout: CoordinatorLayout
+) :
     RecyclerView.Adapter<ExploreGroupAdapter.EsViewHolder>() {
-    var bbcNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var cnnNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var techCrunchnewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var reutersNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var espnNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var cnbcNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
-    var wsjNewsSource: ExploreBottomAdapter = ExploreBottomAdapter()
+
+    var bbcNewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+    var cnnNewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+    var techCrunchnewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+    var reutersNewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+    var espnNewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+    var cnbcNewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+    var wsjNewsSource: ExploreBottomAdapter =
+        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

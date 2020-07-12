@@ -5,7 +5,7 @@
     android:layout_width="300dp"
     android:layout_height="350dp"
     android:layout_marginBottom="10dp"
-    android:elevation="40dp"
+    android:elevation="100dp"
     android:layout_marginStart="7dp"
     android:orientation="vertical">
     <!--    <com.facebook.shimmer.ShimmerFrameLayout-->
@@ -65,7 +65,7 @@
                 android:fontFamily="@font/averia_libre"
                 android:maxLines="3"
                 android:text="msmsmammsmmmsdmmsdmsmd"
-                android:textColor="@color/mycolor"
+                android:textColor="@color/mygrey"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 

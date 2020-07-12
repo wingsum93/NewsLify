@@ -8,7 +8,6 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -25,7 +24,6 @@ import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.search_loading_lottie
 import kotlinx.coroutines.*
@@ -81,7 +79,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
                         SimpleCustomSnackbar.make(
                             search_coordinator, it, Snackbar.LENGTH_SHORT, null,
                             R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mycolor)
+                            ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
                     }
                     showEmptySearchView()

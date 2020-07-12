@@ -1,25 +1,36 @@
 package com.crushtech.newslify.adapter
 
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
-import com.crushtech.newslify.ui.fragments.ExploreSource
-import com.squareup.picasso.Callback
+import com.crushtech.newslify.models.SimpleCustomSnackbar
+import com.crushtech.newslify.ui.NewsViewModel
+import com.crushtech.newslify.ui.fragments.exploreFragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.explore_bottom_items.view.*
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import kotlinx.android.synthetic.main.explore_news_options_layout.view.*
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class ExploreBottomAdapter : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBottomViewHolder>() {
+class ExploreBottomAdapter(
+    val exploreFragment: exploreFragment,
+    val viewModel: NewsViewModel, val exploreCordinator: CoordinatorLayout
+) : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBottomViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -66,10 +77,34 @@ class ExploreBottomAdapter : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBo
             source_title.text = items.title
             source_des.text = items?.description
 
-//            val source=sourceList[position]
-//            Picasso.get().load(source.img).fit().into(explore_source_img)
-//            source_text.text = source.sourceName
-//            source_motto.text = source.motto
+            val bottomDialog =
+                BottomSheetDialog(context, R.style.Theme_MaterialComponents_BottomSheetDialog)
+            val view =
+                LayoutInflater.from(context).inflate(R.layout.explore_news_options_layout, null)
+            bottomDialog.setContentView(view)
+            select_more_options.setOnClickListener {
+                bottomDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+                bottomDialog.show()
+            }
+            view.saveExArticle.setOnClickListener {
+                viewModel.saveArticle(items)
+                val customSnackListener: View.OnClickListener = View.OnClickListener {
+                    exploreFragment.findNavController().navigate(
+                        R.id.action_exploreFragment_to_savedNewsFragment
+                    )
+                }
+                SimpleCustomSnackbar.make(
+                    exploreCordinator, "Article saved successfully", Snackbar.LENGTH_LONG,
+                    customSnackListener, R.drawable.snack_fav,
+                    "View", ContextCompat.getColor(context, R.color.mygrey)
+                )?.show()
+            }
+            view.copyExArticleLink.setOnClickListener {
+                StyleableToast.makeText(context, "copied", R.style.customToast).show()
+            }
+            view.shareExArticleLink.setOnClickListener {
+                StyleableToast.makeText(context, "shared", R.style.customToast).show()
+            }
 
             setOnClickListener {
                 onItemClickListener?.let {

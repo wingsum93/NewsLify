@@ -1,22 +1,16 @@
 package com.crushtech.newslify.adapter
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
-import com.crushtech.newslify.models.Article
-import com.crushtech.newslify.models.Group
-import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.fragments.Explore
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.explore_items.view.*
+import kotlinx.android.synthetic.main.explore_top_items.view.*
 
 class ExploreItemsAdapter :
     RecyclerView.Adapter<ExploreItemsAdapter.ExploreItemViewHolder>() {
@@ -26,7 +20,7 @@ class ExploreItemsAdapter :
     ): ExploreItemsAdapter.ExploreItemViewHolder {
         return ExploreItemViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.explore_items,
+                R.layout.explore_top_items,
                 parent,
                 false
             )

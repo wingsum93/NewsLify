@@ -60,7 +60,7 @@
         android:fontFamily="@font/averia_libre"
         android:text="Easily open any file"
         android:textAlignment="center"
-        android:textColor="@color/mycolor"
+        android:textColor="@color/mygrey"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

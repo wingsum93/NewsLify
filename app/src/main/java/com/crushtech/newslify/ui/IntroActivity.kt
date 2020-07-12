@@ -17,14 +17,12 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
-import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.IntroViewPagerAdapter
 import com.crushtech.newslify.models.ScreenItems
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.google.android.material.tabs.TabLayout
-import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_intro.*
 import java.util.ArrayList
 
@@ -52,6 +50,12 @@ class IntroActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        //restore selectCountry activity
+        if (restoreInstancePrefs() && selectCountryWasKilled()) {
+            val intent = Intent(this, SelectCountry::class.java)
+            startActivity(intent)
+        }
+
         setContentView(R.layout.activity_intro)
 
 
@@ -63,7 +67,7 @@ class IntroActivity : AppCompatActivity() {
         )
 
         //setUp screen
-        setUpListScreens()
+        setUpScreenLists()
 
         //setup viewpager
         screenPager = findViewById(R.id.viewScreenPager)
@@ -77,9 +81,9 @@ class IntroActivity : AppCompatActivity() {
         if (position == 0) {
             tabIndicator.visibility = View.INVISIBLE
             term_of_service.makeLinks(Pair("Term of service", View.OnClickListener {
-                showBroswer(PRIVACY_POLICY)
+                showBrowser(PRIVACY_POLICY)
             }), Pair("Privacy policy", View.OnClickListener {
-                showBroswer(PRIVACY_POLICY)
+                showBrowser(PRIVACY_POLICY)
             }))
         }
 
@@ -135,7 +139,7 @@ class IntroActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpListScreens() {
+    private fun setUpScreenLists() {
         mList = ArrayList()
         mList!!.add(
             ScreenItems(
@@ -237,9 +241,15 @@ class IntroActivity : AppCompatActivity() {
     }
 
     //browser function
-    private fun showBroswer(url: String) {
+    private fun showBrowser(url: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         startActivity(intent)
+    }
+
+    private fun selectCountryWasKilled(): Boolean {
+        val selectCountryPrefs =
+            applicationContext.getSharedPreferences("selectCountry", Context.MODE_PRIVATE)
+        return selectCountryPrefs.getBoolean("isStopped", false)
     }
 }

@@ -16,7 +16,8 @@ import kotlinx.android.synthetic.main.activity_select_country.*
 
 class SelectCountry : AppCompatActivity() {
     private var countryIsoCode: String? = null
-    var countryPicker: CountryPickerDialog? = null
+    private var countryPicker: CountryPickerDialog? = null
+    private var isStopped = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,6 +26,7 @@ class SelectCountry : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+
 
         setContentView(R.layout.activity_select_country)
 
@@ -45,6 +47,8 @@ class SelectCountry : AppCompatActivity() {
             countryPicker!!.show()
         }
         btn_finish.setOnClickListener {
+            isStopped = false
+            saveInstance()
             val country = country_selected.text
             saveDataToPref(country.toString())
             startActivity(Intent(this, NewsActivity::class.java))
@@ -58,8 +62,10 @@ class SelectCountry : AppCompatActivity() {
 
     }
 
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        saveInstance()
         outState.putString("myCon", country_selected.text.toString())
         outState.putString("myConIsoCode", countryIsoCode)
 
@@ -82,7 +88,33 @@ class SelectCountry : AppCompatActivity() {
     }
 
     override fun onStop() {
+        isStopped = true
         countryPicker?.dismiss()
         super.onStop()
+    }
+
+    override fun onPause() {
+        isStopped = true
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        isStopped = true
+        super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        isStopped = true
+        super.onBackPressed()
+    }
+
+    //restore this activity, if it's killed before country is selected
+    private fun saveInstance() {
+        applicationContext.getSharedPreferences("selectCountry", Context.MODE_PRIVATE).apply {
+            edit().apply {
+                putBoolean("isStopped", isStopped)
+                apply()
+            }
+        }
     }
 }

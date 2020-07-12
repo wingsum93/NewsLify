@@ -56,7 +56,7 @@
                 android:id="@+id/description"
                 android:fontFamily="@font/averia_libre"
                 android:background="@color/shimmer_color"
-                android:textColor="@color/mycolor"
+                android:textColor="@color/mygrey"
                 android:textSize="15sp"/>
             <TextView
                 android:layout_width="match_parent"

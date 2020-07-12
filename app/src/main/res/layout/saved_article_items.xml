@@ -74,7 +74,7 @@
                 android:layout_marginTop="3dp"
                 android:fontFamily="@font/averia_libre"
                 android:maxLines="2"
-                android:textColor="@color/mycolor"
+                android:textColor="@color/mygrey"
                 android:textSize="15sp" />
 
             <TextView
