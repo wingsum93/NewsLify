@@ -61,7 +61,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                     viewModel.saveArticle(article)
                 }
                 SimpleCustomSnackbar.make(
-                    saved_coordinator, "article deleted",
+                    view, "article deleted",
                     Snackbar.LENGTH_LONG, snackListener, R.drawable.delete_article, "Undo",
                     ContextCompat.getColor(requireContext(), R.color.mygrey)
                 )?.show()

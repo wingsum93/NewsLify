@@ -1,5 +1,8 @@
 package com.crushtech.newslify.adapter
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +32,8 @@ import java.util.*
 
 class ExploreBottomAdapter(
     val exploreFragment: exploreFragment,
-    val viewModel: NewsViewModel, val exploreCordinator: CoordinatorLayout
+    val viewModel: NewsViewModel,
+    val category: String
 ) : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBottomViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -73,9 +77,10 @@ class ExploreBottomAdapter(
             calendar.time = date!!
             val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
 
-            source_publishedAt.text = "$formatted"
+            source_publishedAt.text = formatted
             source_title.text = items.title
             source_des.text = items?.description
+            items.category = category
 
             val bottomDialog =
                 BottomSheetDialog(context, R.style.Theme_MaterialComponents_BottomSheetDialog)
@@ -94,17 +99,28 @@ class ExploreBottomAdapter(
                     )
                 }
                 SimpleCustomSnackbar.make(
-                    exploreCordinator, "Article saved successfully", Snackbar.LENGTH_LONG,
+                    this, "Article saved successfully", Snackbar.LENGTH_LONG,
                     customSnackListener, R.drawable.snack_fav,
                     "View", ContextCompat.getColor(context, R.color.mygrey)
                 )?.show()
+                if (bottomDialog.isShowing) {
+                    bottomDialog.hide()
+                }
             }
             view.copyExArticleLink.setOnClickListener {
-                StyleableToast.makeText(context, "copied", R.style.customToast).show()
+                this.context.copyToClipboard(items.url.toString(), this.context)
+                SimpleCustomSnackbar.make(
+                    this, "Article Link Copied", Snackbar.LENGTH_LONG,
+                    null, R.drawable.link_copied_icon,
+                    "", ContextCompat.getColor(context, R.color.mygrey)
+                )?.show()
+                if (bottomDialog.isShowing) {
+                    bottomDialog.hide()
+                }
             }
-            view.shareExArticleLink.setOnClickListener {
-                StyleableToast.makeText(context, "shared", R.style.customToast).show()
-            }
+//            view.shareExArticleLink.setOnClickListener {
+//                StyleableToast.makeText(context, "shared", R.style.customToast).show()
+//            }
 
             setOnClickListener {
                 onItemClickListener?.let {
@@ -112,6 +128,12 @@ class ExploreBottomAdapter(
                 }
             }
         }
+    }
+
+    private fun Context.copyToClipboard(text: CharSequence, context: Context) {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("articleUrl", text)
+        clipboard.setPrimaryClip(clip)
     }
 
     private var onItemClickListener: ((Article) -> Unit)? = null

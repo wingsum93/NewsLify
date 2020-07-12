@@ -92,7 +92,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
         initExploreSourceItems()
         setUpData()
         exploreGroupAdapter = ExploreGroupAdapter(
-            requireContext(), this, viewModel, explore_coordinator
+            requireContext(), this, viewModel
         )
         exploreGroupAdapter!!.differ.submitList(exploreSource)
         explore_rv2.apply {
@@ -151,9 +151,9 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     //groupAdapter!!.sportNews.showShimmer = false
                     response.data?.let { newsResponse ->
                         try {
-                            exploreGroupAdapter!!.bbcNewsSource.differ.submitList(newsResponse.articles.toList())
-                            //groupAdapter!!.sportNews.notifyDataSetChanged()
-
+                            exploreGroupAdapter!!.bbcNewsSource.differ.submitList(
+                                newsResponse.articles.toList().shuffled()
+                            )
                         } catch (e: Exception) {
                         }
                     }
@@ -184,7 +184,9 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     //groupAdapter!!.sportNews.showShimmer = false
                     response.data?.let { newsResponse ->
                         try {
-                            exploreGroupAdapter!!.cnnNewsSource.differ.submitList(newsResponse.articles.toList())
+                            exploreGroupAdapter!!.cnnNewsSource.differ.submitList(
+                                newsResponse.articles.toList().shuffled()
+                            )
                             //groupAdapter!!.sportNews.notifyDataSetChanged()
 
                         } catch (e: Exception) {
@@ -217,7 +219,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     response.data?.let { newsResponse ->
                         try {
                             exploreGroupAdapter!!.techCrunchnewsSource.differ.submitList(
-                                newsResponse.articles.toList()
+                                newsResponse.articles.toList().shuffled()
                             )
                             //groupAdapter!!.sportNews.notifyDataSetChanged()
 
@@ -251,7 +253,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     response.data?.let { newsResponse ->
                         try {
                             exploreGroupAdapter!!.reutersNewsSource.differ.submitList(
-                                newsResponse.articles.toList()
+                                newsResponse.articles.toList().shuffled()
                             )
                         } catch (e: Exception) {
                         }
@@ -283,7 +285,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     response.data?.let { newsResponse ->
                         try {
                             exploreGroupAdapter!!.espnNewsSource.differ.submitList(
-                                newsResponse.articles.toList()
+                                newsResponse.articles.toList().shuffled()
                             )
                         } catch (e: Exception) {
                         }
@@ -315,7 +317,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     response.data?.let { newsResponse ->
                         try {
                             exploreGroupAdapter!!.cnbcNewsSource.differ.submitList(
-                                newsResponse.articles.toList()
+                                newsResponse.articles.toList().shuffled()
                             )
                         } catch (e: Exception) {
                         }
@@ -346,7 +348,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                     response.data?.let { newsResponse ->
                         try {
                             exploreGroupAdapter!!.wsjNewsSource.differ.submitList(
-                                newsResponse.articles.toList()
+                                newsResponse.articles.toList().shuffled()
                             )
                         } catch (e: Exception) {
                         }

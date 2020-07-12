@@ -67,7 +67,7 @@
         android:background="@drawable/custom_bottomsheet_items_bg"
         android:drawableStart="@drawable/share_ex_article"
         android:fontFamily="@font/averia_libre"
-        android:padding="24dp"
+        android:padding="20dp"
         android:text="@string/share_article"
         android:textColor="@color/white"
         android:textSize="19sp"

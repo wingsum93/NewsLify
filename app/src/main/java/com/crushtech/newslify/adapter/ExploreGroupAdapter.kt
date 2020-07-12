@@ -18,25 +18,24 @@ import kotlinx.android.synthetic.main.explore_rv2_items.view.*
 class ExploreGroupAdapter(
     val context: Context,
     val exploreFragment: exploreFragment,
-    val viewModel: NewsViewModel,
-    val coordinatorLayout: CoordinatorLayout
+    val viewModel: NewsViewModel
 ) :
     RecyclerView.Adapter<ExploreGroupAdapter.EsViewHolder>() {
 
     var bbcNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "Bbc News")
     var cnnNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "Cnn News")
     var techCrunchnewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "TechCrunch News")
     var reutersNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "Reuters News")
     var espnNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "Espn News")
     var cnbcNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "Cnbc News")
     var wsjNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, coordinatorLayout)
+        ExploreBottomAdapter(exploreFragment, viewModel, "Wall Street Journal")
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -204,7 +203,7 @@ class ExploreGroupAdapter(
 
     private fun setWsjSourceNews(recyclerView: RecyclerView) {
         wsjNewsSource.setOnItemClickListener { article ->
-            article.category = "Reuters News"
+            article.category = "Wall Street Journal"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
