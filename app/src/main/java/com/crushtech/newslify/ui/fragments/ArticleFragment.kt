@@ -2,6 +2,7 @@ package com.crushtech.newslify.ui.fragments
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.*
@@ -58,11 +59,14 @@ class ArticleFragment : Fragment() {
         }
 
         view.findViewById<FloatingActionButton>(R.id.fab_share).setOnClickListener {
-            SimpleCustomSnackbar.make(
-                viewPos, "Article shared", Snackbar.LENGTH_LONG,
-                null, R.drawable.ic_share,
-                "", ContextCompat.getColor(requireContext(), R.color.mygrey)
-            )?.show()
+            val articleUrl = "From NewsLify:  ${article.url}"
+            val shareSub = "APP NAME/TITLE"
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/link"
+                putExtra(Intent.EXTRA_SUBJECT, shareSub)
+                putExtra(Intent.EXTRA_TEXT, articleUrl)
+            }
+            startActivity(Intent.createChooser(intent, "Share Using"))
         }
 
         val bottomSheet: NestedScrollView = view.findViewById(R.id.my_bottom_sheet)
