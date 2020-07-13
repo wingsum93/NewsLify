@@ -7,13 +7,19 @@ import com.crushtech.newslify.models.Article
 class NewsRepository(
     private val db: ArticleDatabase
 ) {
-    suspend fun getBusinessNews(countryCode: String, category:String, pageNumber: Int) =
+    suspend fun getBusinessNews(countryCode: String, category: String, pageNumber: Int) =
         RetrofitInstance.api.getBusinessNews(countryCode, category, pageNumber)
 
-    suspend fun getSportNews(countryCode: String, category:String, pageNumber: Int) =
+    suspend fun getTechnologyNews(countryCode: String, category: String, pageNumber: Int) =
+        RetrofitInstance.api.getTechnologyNews(countryCode, category, pageNumber)
+
+    suspend fun getHealthNews(countryCode: String, category: String, pageNumber: Int) =
+        RetrofitInstance.api.getHealthNews(countryCode, category, pageNumber)
+
+    suspend fun getSportNews(countryCode: String, category: String, pageNumber: Int) =
         RetrofitInstance.api.getSportNews(countryCode, category, pageNumber)
 
-    suspend fun getEntertainmentNews(countryCode: String, category:String, pageNumber: Int) =
+    suspend fun getEntertainmentNews(countryCode: String, category: String, pageNumber: Int) =
         RetrofitInstance.api.getEntertainmentNews(countryCode, category, pageNumber)
 
     suspend fun getScienceNews(countryCode: String, category: String, pageNumber: Int) =

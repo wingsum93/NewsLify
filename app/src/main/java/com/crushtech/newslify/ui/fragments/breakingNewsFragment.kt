@@ -23,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.ArrayList
+import java.util.*
 
 class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private var groups: ArrayList<Group>? = null
@@ -35,6 +35,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
+        retainInstance = true
 
     }
 
@@ -66,6 +67,20 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun setUpData() {
+        val getCountryCode =
+            context?.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
+        val countryIsoCode = getCountryCode?.getString("countryIsoCode", "us")
+
+        if (countryIsoCode != null) {
+            viewModel.getSportNews(countryIsoCode.toLowerCase(Locale.ROOT), "sport")
+            viewModel.getBusinessNews(countryIsoCode.toLowerCase(Locale.ROOT), "business")
+            viewModel.getAllBreakingNews(countryIsoCode.toLowerCase(Locale.ROOT))
+            viewModel.getEntertainmentNews(
+                countryIsoCode.toLowerCase(Locale.ROOT), "entertainment",
+                requireContext()
+            )
+            viewModel.getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
+        }
         viewModel.sportNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {

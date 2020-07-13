@@ -39,7 +39,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
         (activity as NewsActivity).supportActionBar?.title = articleCategory
 
         setUpRecyclerView()
-
+        retainInstance = true
         viewAllAdapter.setOnItemClickListener { article ->
             article.category = articleCategory
             val bundle = Bundle().apply {

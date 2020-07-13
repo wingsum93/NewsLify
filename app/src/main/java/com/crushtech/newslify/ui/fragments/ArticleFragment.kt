@@ -42,6 +42,8 @@ class ArticleFragment : Fragment() {
         viewModel = (activity as NewsActivity).newsViewModel
         (activity as NewsActivity).supportActionBar?.hide()
         (activity as NewsActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        retainInstance = true
         //get the argument from the generated arg class
         val article = args.article
         val viewPos: View = view.findViewById(R.id.myCord)
@@ -113,9 +115,6 @@ class ArticleFragment : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -133,7 +132,6 @@ class ArticleFragment : Fragment() {
 
     override fun onStop() {
         try {
-            // (activity as NewsActivity).showBottomNavigation()
             (activity as NewsActivity).supportActionBar?.show()
             (activity as NewsActivity).window.clearFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN

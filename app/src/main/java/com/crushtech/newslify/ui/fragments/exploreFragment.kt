@@ -42,7 +42,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
         (activity as NewsActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setUpRecView()
         setUpRecyclerViewForSource()
-
+        retainInstance = true
         exploreItemsAdapter!!.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("exploreName", it.name)
