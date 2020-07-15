@@ -167,7 +167,6 @@ class GroupAdapter
             adapter = breakingNews
             layoutManager = LinearLayoutManager(recyclerView.context)
             isNestedScrollingEnabled = true
-            addOnScrollListener(breakingNewsFragment.myScrollListener)
         }
 
     }

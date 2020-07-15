@@ -96,4 +96,9 @@ dependencies {
 
     //rate app prompt
     implementation 'com.github.hotchemi:android-rate:1.0.1'
+
+    //admob
+   // implementation 'com.google.android.gms:play-services-ads:19.2.0'
+
+
 }

@@ -206,7 +206,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun saveInstanceToPrefs() {
-        val sharedPrefs = applicationContext.getSharedPreferences(
+        applicationContext.getSharedPreferences(
             "prefs", Context.MODE_PRIVATE
         ).apply {
             edit().putBoolean("first time user", true).apply()

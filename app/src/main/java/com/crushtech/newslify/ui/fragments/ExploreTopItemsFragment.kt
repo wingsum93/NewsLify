@@ -41,7 +41,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
         exploreItemCategory = args.exploreName
         viewModel = (activity as NewsActivity).newsViewModel
         (activity as NewsActivity).supportActionBar?.title = exploreItemCategory
-
+        retainInstance = true
         setUpRecyclerView()
 
         exploreTopItemAdapter.setOnItemClickListener { article ->

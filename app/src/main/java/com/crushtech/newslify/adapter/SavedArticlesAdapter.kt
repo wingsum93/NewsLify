@@ -1,26 +1,25 @@
 package com.crushtech.newslify.adapter
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
-import com.crushtech.newslify.ui.fragments.savedNewsFragment
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import getTimeAgo
 import kotlinx.android.synthetic.main.saved_article_items.view.*
 import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SavedArticlesAdapter() :
     RecyclerView.Adapter<SavedArticlesAdapter.SavedArticlesViewHolder>() {
+    var streakCount = 1
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -38,6 +37,7 @@ class SavedArticlesAdapter() :
         return differ.currentList.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
         holder: SavedArticlesAdapter.SavedArticlesViewHolder,
         position: Int
@@ -50,22 +50,31 @@ class SavedArticlesAdapter() :
                 Picasso.get().load(article.urlToImage).fit().centerCrop()
                     .into(saved_news_image)
             }
-            val formattedJsonDate = article.publishedAt?.substring(0, 10)
-            val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            var date: Date? = null
+            val formatted = article.publishedAt
             try {
-                date = dateformat.parse(formattedJsonDate!!)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            val calendar = Calendar.getInstance()
-            calendar.time = date!!
-            val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val pasTime = dateFormat.parse(formatted!!)
+                val agoTime = getTimeAgo(pasTime!!)
+                saved_news_publishedAt_and_source.text = "$agoTime      ${article.source?.name}"
 
-            saved_news_publishedAt_and_source.text = "$formatted      ${article.source?.name}"
+            } catch (e: Exception) {
+
+            }
+
             saved_news_title.text = article?.title
             saved_news_description.text = article?.description
-            category_tag.text = "Featured in ${article.category}"
+
+            val articleTime = article.timeInsertedToRoomDatabase
+            try {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault())
+                val pasTime = dateFormat.parse(articleTime!!)
+                val agoTime = getTimeAgo(pasTime!!)
+                article?.category = agoTime
+                category_tag.text = "featured in ${article?.category} "
+            } catch (e: Exception) {
+
+            }
+
 
             setOnClickListener {
                 onItemClickListener?.let {

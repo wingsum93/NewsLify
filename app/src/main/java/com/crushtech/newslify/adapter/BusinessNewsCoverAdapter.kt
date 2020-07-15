@@ -12,6 +12,7 @@ import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import getTimeAgo
 import kotlinx.android.synthetic.main.cover_item.view.*
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 import java.text.DateFormat
@@ -59,19 +60,15 @@ class BusinessNewsCoverAdapter :
                     Picasso.get().load(article.urlToImage).fit().centerCrop()
                         .into(bnews_picture)
                 }
-                val formattedJsonDate = article.publishedAt?.substring(0, 10)
-                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                var date: Date? = null
+                val formatted = article.publishedAt
                 try {
-                    date = dateformat.parse(formattedJsonDate!!)
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-                val calendar = Calendar.getInstance()
-                calendar.time = date!!
-                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.getDefault())
+                    val pasTime = dateFormat.parse(formatted!!)
+                    val agoTime = getTimeAgo(pasTime!!)
+                    b_publishedAt.text = agoTime
+                } catch (e: Exception) {
 
-                b_publishedAt.text = formatted
+                }
                 b_title.text = article.title
 
                 setOnClickListener {

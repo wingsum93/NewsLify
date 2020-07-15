@@ -2,6 +2,7 @@ package com.crushtech.newslify.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,7 +18,12 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
+import currentDate
+import getTimeAgo
 import kotlinx.android.synthetic.main.fragment_saved_news.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
@@ -26,7 +32,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
-
+        retainInstance = true
         setUpRecyclerView()
 
 
@@ -39,6 +45,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 bundle
             )
         }
+
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -108,7 +115,6 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         (activity as NewsActivity).showBottomNavigation()
         super.onResume()
     }
-
 
 }
 

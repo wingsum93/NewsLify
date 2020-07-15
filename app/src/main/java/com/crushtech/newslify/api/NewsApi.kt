@@ -1,6 +1,6 @@
 package com.crushtech.newslify.api
 
-import com.crushtech.newslify.GENERATOR.haha.Companion.API_KEY
+import com.crushtech.newslify.GENERATOR.GenerateRandomApiKey.Companion.API_KEY
 import com.crushtech.newslify.models.NewsResponse
 import retrofit2.Response
 import retrofit2.http.GET

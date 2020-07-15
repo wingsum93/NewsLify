@@ -9,7 +9,7 @@ import com.crushtech.newslify.models.Article
 
 @Database(
     entities = [Article::class],
-    version = 4
+    version = 9
 )
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {

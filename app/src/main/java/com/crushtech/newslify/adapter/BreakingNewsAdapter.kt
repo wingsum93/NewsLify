@@ -1,5 +1,6 @@
 package com.crushtech.newslify.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import getTimeAgo
 import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.item_article_preview.view.*
 import java.text.DateFormat
@@ -35,6 +37,7 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
         return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: BreakingNewsHolder, position: Int) {
         holder.itemView.apply {
             if (showShimmer) {
@@ -57,19 +60,15 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
                         .into(breaking_news_image)
                 }
 
-                val formattedJsonDate = article.publishedAt?.substring(0, 10)
-                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                var date: Date? = null
+                val formatted = article.publishedAt
                 try {
-                    date = dateformat.parse(formattedJsonDate!!)
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                }
-                val calendar = Calendar.getInstance()
-                calendar.time = date!!
-                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val pasTime = dateFormat.parse(formatted!!)
+                    val agoTime = getTimeAgo(pasTime!!)
+                    publishedAt_and_source.text = "$agoTime      ${article.source?.name}"
+                } catch (e: Exception) {
 
-                publishedAt_and_source.text = "$formatted      ${article.source?.name}"
+                }
                 title.text = article?.title
                 description.text = article?.description
 

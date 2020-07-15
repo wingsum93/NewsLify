@@ -11,7 +11,9 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import getTimeAgo
 import kotlinx.android.synthetic.main.item_article_preview.view.*
+import kotlinx.android.synthetic.main.science_list_item.view.*
 import kotlinx.android.synthetic.main.sport_list_item.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -49,20 +51,18 @@ class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHold
                     Picasso.get().load(article.urlToImage).fit().centerCrop()
                         .into(sport_news_picture)
                 }
-                val formattedJsonDate = article.publishedAt?.substring(0, 10)
-                val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                var date: Date? = null
+                val formatted = article.publishedAt
                 try {
-                    date = dateformat.parse(formattedJsonDate!!)
-                } catch (e: ParseException) {
-                    e.printStackTrace()
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    val pasTime = dateFormat.parse(formatted!!)
+                    val agoTime = getTimeAgo(pasTime!!)
+                    sport_publishedAt.text = agoTime
+                } catch (e: Exception) {
+
                 }
-                val calendar = Calendar.getInstance()
-                calendar.time = date!!
-                val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
 
                 sport_title.text = article.title
-                sport_publishedAt.text = formatted
+
 
                 setOnClickListener {
                     onItemClickListener?.let {

@@ -24,6 +24,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
+import getTimeAgo
+import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.explore_bottom_items.view.*
 import kotlinx.android.synthetic.main.explore_news_options_layout.view.*
 import java.text.DateFormat
@@ -36,6 +38,8 @@ class ExploreBottomAdapter(
     val viewModel: NewsViewModel,
     val category: String
 ) : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBottomViewHolder>() {
+    private var btnCount = 0
+    private var isClicked = false
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -66,19 +70,15 @@ class ExploreBottomAdapter(
                 Picasso.get().load(items.urlToImage).fit().centerCrop()
                     .into(news_source_image)
             }
-            val formattedJsonDate = items.publishedAt?.substring(0, 10)
-            val dateformat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            var date: Date? = null
+            val formatted = items.publishedAt
             try {
-                date = dateformat.parse(formattedJsonDate!!)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-            val calendar = Calendar.getInstance()
-            calendar.time = date!!
-            val formatted = DateFormat.getDateInstance(DateFormat.LONG).format(calendar.time)
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val pasTime = dateFormat.parse(formatted!!)
+                val agoTime = getTimeAgo(pasTime!!)
+                source_publishedAt.text = agoTime
+            } catch (e: Exception) {
 
-            source_publishedAt.text = formatted
+            }
             source_title.text = items.title
             source_des.text = items?.description
             items.category = category
@@ -93,20 +93,33 @@ class ExploreBottomAdapter(
                 bottomDialog.show()
             }
             view.saveExArticle.setOnClickListener {
-                viewModel.saveArticle(items)
-                val customSnackListener: View.OnClickListener = View.OnClickListener {
-                    exploreFragment.findNavController().navigate(
-                        R.id.action_exploreFragment_to_savedNewsFragment
-                    )
+                isClicked = true
+                if (isClicked && btnCount == 0) {
+                    viewModel.saveArticle(items)
+                    val customSnackListener: View.OnClickListener = View.OnClickListener {
+                        exploreFragment.findNavController().navigate(
+                            R.id.action_exploreFragment_to_savedNewsFragment
+                        )
+                    }
+                    SimpleCustomSnackbar.make(
+                        this, "Article saved successfully", Snackbar.LENGTH_LONG,
+                        customSnackListener, R.drawable.snack_fav,
+                        "View", ContextCompat.getColor(context, R.color.mygrey)
+                    )?.show()
+                    if (bottomDialog.isShowing) {
+                        bottomDialog.hide()
+                    }
+                } else {
+                    SimpleCustomSnackbar.make(
+                        this, "Article saved already", Snackbar.LENGTH_LONG,
+                        null, R.drawable.snack_fav,
+                        "View", ContextCompat.getColor(context, R.color.mygrey)
+                    )?.show()
+                    if (bottomDialog.isShowing) {
+                        bottomDialog.hide()
+                    }
                 }
-                SimpleCustomSnackbar.make(
-                    this, "Article saved successfully", Snackbar.LENGTH_LONG,
-                    customSnackListener, R.drawable.snack_fav,
-                    "View", ContextCompat.getColor(context, R.color.mygrey)
-                )?.show()
-                if (bottomDialog.isShowing) {
-                    bottomDialog.hide()
-                }
+                btnCount++
             }
             view.copyExArticleLink.setOnClickListener {
                 this.context.copyToClipboard(items.url.toString(), this.context)

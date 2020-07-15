@@ -12,9 +12,10 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.coroutineContext
 
-class RetrofitInstance() {
+class RetrofitInstance {
     companion object {
         private val retrofit by lazy {
 
@@ -22,7 +23,9 @@ class RetrofitInstance() {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .addNetworkInterceptor(loggingInterceptor)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .build()
 
             Retrofit.Builder()

@@ -61,7 +61,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         rvBreakingNews.apply {
             adapter = groupAdapter
             layoutManager = LinearLayoutManager(activity)
-            // addOnScrollListener(myScrollListener)
         }
 
     }
@@ -100,7 +99,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
-                            brk_coordinator, it,
+                            brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
                             ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
@@ -136,7 +135,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
-                            brk_coordinator, it,
+                            brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
                             ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
@@ -160,11 +159,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         try {
                             groupAdapter!!.entertainmentNews.differ.submitList(newsResponse.articles.toList())
                             groupAdapter!!.entertainmentNews.notifyDataSetChanged()
-                            val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                            isLastPage = viewModel.allBreakingNewsPage == totalPages
-//                            if (isLastPage) {
-//                                rvBreakingNews.setPadding(0, 0, 0, 0)
-//                            }
                         } catch (e: Exception) {
                         }
                     }
@@ -175,7 +169,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
-                            brk_coordinator, it,
+                            brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
                             ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
@@ -208,7 +202,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
-                            brk_coordinator, it,
+                            brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
                             ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
@@ -231,11 +225,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         try {
                             groupAdapter!!.breakingNews.differ.submitList(newsResponse.articles.toList())
                             groupAdapter!!.breakingNews.notifyDataSetChanged()
-                            val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                            isLastPage = viewModel.allBreakingNewsPage == totalPages
-                            if (isLastPage) {
-                                rvBreakingNews.setPadding(0, 0, 0, 0)
-                            }
                         } catch (e: Exception) {
                         }
                     }
@@ -246,7 +235,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
-                            brk_coordinator, it,
+                            brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
                             ContextCompat.getColor(requireContext(), R.color.mygrey)
                         )?.show()
@@ -262,41 +251,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     }
 
-
-    var isLoading = false
-    var isLastPage = false
-    var isScrolling = false
-
-    val myScrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-            val visibleItemCount = layoutManager.childCount
-            val totalItemCount = layoutManager.itemCount
-
-            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
-            val isNotAtBeginning = firstVisibleItemPosition >= 0
-            val isTotalMoreThanVisible = totalItemCount >= QUERY_PAGE_SIZE
-            val shouldPaginate =
-                isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
-                        isTotalMoreThanVisible && isScrolling
-
-//            if (shouldPaginate) {
-//                viewModel.getAllBreakingNews("us")
-//                isScrolling = false
-//            }
-        }
-
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                isScrolling = true
-            }
-        }
-    }
 
     override fun onAttach(context: Context) {
         (activity as NewsActivity).showBottomNavigation()
