@@ -46,15 +46,7 @@ class NewsActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(newsNavHostFragment.findNavController(), appBarConfig)
-// get fragment
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsNavHostFragment)!!
-//        val navController=findNavController(R.id.newsNavHostFragment)
-//        // setup custom navigator
-//        val navigator = KeepStateNavigator(this, navHostFragment.childFragmentManager, R.id.newsNavHostFragment)
-//        navController.navigatorProvider += navigator
-//
-//        navController.setGraph(R.navigation.news_nav_graph)
-//        bottomNavigationView.setupWithNavController(navController)
+
     }
 
     fun hideBottomNavigation() {

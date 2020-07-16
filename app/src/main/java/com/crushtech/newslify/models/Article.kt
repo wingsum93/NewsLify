@@ -19,5 +19,6 @@ data class Article(
     val url: String?,
     val urlToImage: String?,
     var category: String?,
-    var timeInsertedToRoomDatabase: String?
+    var timeInsertedToRoomDatabase: String?,
+    var savedTime: String?
 ) : Serializable

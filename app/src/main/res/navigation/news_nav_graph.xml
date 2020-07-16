@@ -56,12 +56,24 @@
             app:argType="com.crushtech.newslify.models.Article" />
         <action
             android:id="@+id/action_articleFragment_to_savedNewsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/savedNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.crushtech.newslify.ui.fragments.settingsFragment"
-        android:label="Settings" />
+        android:label="Settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_breakingNewsFragment"
+            app:destination="@id/breakingNewsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/exploreFragment"
         android:name="com.crushtech.newslify.ui.fragments.exploreFragment"
@@ -82,6 +94,10 @@
             app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_exploreFragment_to_savedNewsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/savedNewsFragment" />
     </fragment>
     <fragment

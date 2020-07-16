@@ -2,6 +2,7 @@ package com.crushtech.newslify.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +11,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
+import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
 import com.squareup.picasso.Picasso
 import getTimeAgo
 import kotlinx.android.synthetic.main.saved_article_items.view.*
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SavedArticlesAdapter() :
+
+class SavedArticlesAdapter :
     RecyclerView.Adapter<SavedArticlesAdapter.SavedArticlesViewHolder>() {
-    var streakCount = 1
+    var streakCount = 0
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -63,14 +65,16 @@ class SavedArticlesAdapter() :
 
             saved_news_title.text = article?.title
             saved_news_description.text = article?.description
+            category_tag.text = "featured in ${article?.category} "
 
             val articleTime = article.timeInsertedToRoomDatabase
             try {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault())
                 val pasTime = dateFormat.parse(articleTime!!)
                 val agoTime = getTimeAgo(pasTime!!)
-                article?.category = agoTime
-                category_tag.text = "featured in ${article?.category} "
+                article?.savedTime = agoTime
+                timeInserted.text = "saved: ${article?.savedTime}"
+
             } catch (e: Exception) {
 
             }
