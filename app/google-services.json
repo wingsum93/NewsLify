@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "275853477527",
+    "firebase_url": "https://newslify-5821c.firebaseio.com",
+    "project_id": "newslify-5821c",
+    "storage_bucket": "newslify-5821c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275853477527:android:1e0eb70d124e597e368bd2",
+        "android_client_info": {
+          "package_name": "com.crushtech.newslify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275853477527-94dso0thd5n3ivqplfmcmlccd1i2v49j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCencTPhlJd1UsZwzwcQujXfvd315u_Bqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275853477527-94dso0thd5n3ivqplfmcmlccd1i2v49j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

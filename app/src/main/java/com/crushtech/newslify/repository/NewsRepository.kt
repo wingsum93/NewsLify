@@ -37,5 +37,8 @@ class NewsRepository(
     suspend fun upsert(article: Article) = db.getArticleDao().upsert(article)
 
     fun getSavedNews() = db.getArticleDao().getAllArticle()
+
+    suspend fun deleteAllArticles() = db.getArticleDao().deleteAllSavedArticles()
+
     suspend fun deleteArticle(article: Article) = db.getArticleDao().delete(article)
 }

@@ -1,6 +1,4 @@
-import kotlinx.android.synthetic.main.saved_article_items.view.*
-import java.text.DateFormat
-import java.text.ParseException
+import android.text.format.DateUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,35 +51,20 @@ fun main() {
 //    }catch (e:Exception){
 //
 //    }
-//    val formatted =  "2020-07-14T20:40:23Z"
-//    try {
-//        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'K:mm:ss a", Locale.getDefault())
-//        val pasTime = dateFormat.parse(formatted)
-//        val agoTime = getTimeAgo(pasTime!!)
-//       println(agoTime)
-//    }catch (e:Exception){
-//
-//    }
 
-//    val date = Calendar.getInstance().timeInMillis
-    // val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a")
+
 //    val strDate = "2020-07-15 07:54:02 PM"
-//    println(strDate)
-//    try {
-//        val dateFormat1 = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a")
-//        val pasTime = dateFormat1.parse(strDate)
-//        val agoTime = getTimeAgo(pasTime!!)
+//    val dateFormat1 = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a")
+//    val pasTime = dateFormat1.parse(strDate)
+//    val agoTime = getTimeAgo(pasTime!!)
 //
-//        if(agoTime == "7 minutes ago"){
-//            println("time expired")
-//        }
-//        else{
-//            println(agoTime)
-//        }
-//
-//    }catch (e:Exception){
-//
-//    }
-    val w = 15
-    println(w / 5)
+
+    val cal = 188
+    val now = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
+    if (now > cal) {
+        print("value resetted")
+    } else {
+        println("value plus 1")
+    }
+
 }

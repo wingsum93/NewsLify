@@ -15,17 +15,27 @@ import com.crushtech.newslify.KeepStateNavigator
 import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
 import com.crushtech.newslify.repository.NewsRepository
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_news.*
 
 class NewsActivity : AppCompatActivity() {
     lateinit var newsViewModel: NewsViewModel
+    lateinit var mAdView: AdView
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-        //  getCountryDataFromPrefs()
+// Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = Firebase.analytics
+
         supportActionBar?.show()
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository, application)
@@ -52,6 +62,7 @@ class NewsActivity : AppCompatActivity() {
     fun hideBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.GONE
+            //adView.visibility =View.GONE
         } catch (e: Exception) {
         }
     }
@@ -59,6 +70,7 @@ class NewsActivity : AppCompatActivity() {
     fun showBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.VISIBLE
+            // adView.visibility = View.GONE
         } catch (e: Exception) {
         }
     }

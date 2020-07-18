@@ -17,6 +17,8 @@ import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.crushtech.newslify.ui.util.Resource
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +38,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
         retainInstance = true
-
+//        MobileAds.initialize(requireContext()) {}
+//        val adRequest = AdRequest.Builder().build()
+//        adView.loadAd(adRequest)
     }
 
     private fun initGroupData() {

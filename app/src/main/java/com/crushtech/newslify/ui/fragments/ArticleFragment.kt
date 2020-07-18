@@ -1,11 +1,12 @@
 package com.crushtech.newslify.ui.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,23 +14,21 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.*
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.crushtech.newslify.R
-import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
+import com.crushtech.newslify.receiver.StreakReset
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoastlibrary.StyleableToast
-import getTimeAgo
 import kotlinx.android.synthetic.main.fragment_article.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -99,6 +98,14 @@ class ArticleFragment : Fragment() {
                     customSnackListener, R.drawable.snack_fav,
                     "View", ContextCompat.getColor(requireContext(), R.color.mygrey)
                 )?.show()
+                val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
+                streakCount = prefs.getInt(STREAK, 0)
+                streakCount++
+                requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
+                    .edit().putInt(STREAK, streakCount).apply()
+                val cal = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
+                requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE).edit()
+                    .putInt("TIME", cal).apply()
             } else {
                 SimpleCustomSnackbar.make(
                     viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
@@ -107,11 +114,7 @@ class ArticleFragment : Fragment() {
                 )?.show()
             }
             btnCount++
-            val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-            streakCount = prefs.getInt(STREAK, 0)
-            streakCount++
-            requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-                .edit().putInt(STREAK, streakCount).apply()
+
         }
 
 
@@ -121,35 +124,25 @@ class ArticleFragment : Fragment() {
         viewModel.getSavedNews().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             GlobalScope.launch(Dispatchers.Main) {
                 delay(200L)
+                val sharedprefs =
+                    requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE)
+                val previousDay = sharedprefs.getInt("TIME", 0)
 
-                if (isClicked && streakCount == 1) {
-                    val cal = Calendar.getInstance().time
-                    val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US)
-                    requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE).edit()
-                        .putString("TIME", sdf.format(cal)).apply()
+                val currentDay = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
 
-                    //reset streak
-                    val sharedprefs =
-                        requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE)
-                    val time = sharedprefs.getString("TIME", "ok")
-                    try {
-                        val dateFormat1 = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.US)
-                        val pasTime = dateFormat1.parse(time!!)
-                        val agoTime = getTimeAgo(pasTime!!)
-                        // i set up two if statements to counter this:)
-                        if (agoTime == "yesterday" || agoTime.contains("days")) {
-                            streakCount = 0
-                            requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-                                .edit().putInt(STREAK, streakCount).apply()
-                        }
-                        if (isTomorrow(pasTime)) {
-                            streakCount = 0
-                            requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-                                .edit().putInt(STREAK, streakCount).apply()
-                        }
-                    } catch (e: Exception) {
-                    }
-                } else if (isClicked && streakCount == 5) {
+                if (currentDay > previousDay) {
+                    context?.getSharedPreferences(STREAK, Context.MODE_PRIVATE)?.edit()?.clear()
+                        ?.apply()
+                    requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
+                        .edit().putInt(STREAK, streakCount).apply()
+                    context?.getSharedPreferences("TIME", Context.MODE_PRIVATE)?.edit()?.clear()
+                        ?.apply()
+                    requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE)
+                        .edit().putInt("TIME", currentDay).apply()
+                    resetStreakAtMidnight()
+                }
+
+                if (isClicked && streakCount == 5) {
                     SimpleCustomSnackbar.make(
                         viewPos, "Daily news article goal reached :) ", Snackbar.LENGTH_LONG,
                         null, R.drawable.streak_icon,
@@ -167,6 +160,7 @@ class ArticleFragment : Fragment() {
                         ContextCompat.getColor(requireContext(), R.color.mygrey)
                     )?.show()
                 }
+
             }
         })
 
@@ -226,8 +220,32 @@ class ArticleFragment : Fragment() {
         return view
     }
 
-    fun isTomorrow(d: Date): Boolean {
-        return DateUtils.isToday(d.time - DateUtils.DAY_IN_MILLIS)
+    private fun resetStreakAtMidnight() {
+        val intent = Intent(context, StreakReset::class.java)
+        val mSrvcPendingingIntent: PendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            0,
+            intent, 0
+        )
+        val c = Calendar.getInstance()
+        val now = c.timeInMillis
+        c.add(Calendar.DATE, 1)
+        c[Calendar.HOUR_OF_DAY] = 0
+        c[Calendar.MINUTE] = 0
+        c[Calendar.SECOND] = 0
+        c[Calendar.MILLISECOND] = 0
+
+        val millisecondsUntilMidnight = c.timeInMillis - now
+
+        val mAlarmManager: AlarmManager =
+            requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        mAlarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            millisecondsUntilMidnight,
+            c.timeInMillis,
+            mSrvcPendingingIntent
+
+        )
     }
 
     override fun onAttach(context: Context) {
@@ -238,7 +256,6 @@ class ArticleFragment : Fragment() {
         }
 
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         retainInstance = true
@@ -263,3 +280,4 @@ class ArticleFragment : Fragment() {
         super.onStop()
     }
 }
+

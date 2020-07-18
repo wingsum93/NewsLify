@@ -795,6 +795,7 @@ class NewsViewModel(
 
     fun getSavedNews() = newsRepository.getSavedNews()
 
+    suspend fun deleteAllArticles() = newsRepository.deleteAllArticles()
 
     private fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<NewsApplication>().getSystemService(

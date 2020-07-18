@@ -20,7 +20,8 @@
     <string name="share_app">Share App</string>
     <string name="support_us">Support Us</string>
     <string name="premium_coins_balance">Premium Coins Balance</string>
-    <string name="push_notification">Push Notification</string>
-    <string name="purchase_themes">Purchase Themes</string>
+    <string name="push_notification">Push Notification: coming soon</string>
+    <string name="purchase_themes">Purchase Themes: coming soon</string>
     <string name="change_country">Change Country</string>
+    <string name="delete_all_alert">please bear in mind that this method can\'t be reverted when done, do you wish to continue?</string>
 </resources>
