@@ -46,6 +46,7 @@
                 android:fontFamily="sans-serif-black"
                 android:maxLength="15"
                 android:text="View All"
+                android:drawableEnd="@drawable/chevron_ic"
                 android:textColor="@color/colorPrimary"
                 android:textSize="13sp"
                 android:textStyle="bold" />

@@ -18,14 +18,15 @@ import com.crushtech.newslify.repository.NewsRepository
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_news.*
+import java.util.*
 
 class NewsActivity : AppCompatActivity() {
     lateinit var newsViewModel: NewsViewModel
-    lateinit var mAdView: AdView
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     @SuppressLint("RestrictedApi")
@@ -33,7 +34,8 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
 
-// Obtain the FirebaseAnalytics instance.
+
+        // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = Firebase.analytics
 
         supportActionBar?.show()
@@ -79,5 +81,6 @@ class NewsActivity : AppCompatActivity() {
         val navController = newsNavHostFragment.findNavController()
         return navController.navigateUp()
     }
+
 
 }

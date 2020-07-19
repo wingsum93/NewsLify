@@ -25,6 +25,11 @@ import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.receiver.StreakReset
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -39,13 +44,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ArticleFragment : Fragment() {
+class ArticleFragment : Fragment(), RewardedVideoAdListener {
     private lateinit var viewModel: NewsViewModel
     private var isClicked = false
     private var btnCount = 0
-    var streakCount = 0
+    private var streakCount = 0
+    private lateinit var mRewardedVideoAd: RewardedVideoAd
 
-    // private var streakCount = 1
     private val args: ArticleFragmentArgs by navArgs()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
@@ -72,10 +77,13 @@ class ArticleFragment : Fragment() {
             context,
             android.R.anim.fade_in
         )
+        MobileAds.initialize(context, "ca-app-pub-3940256099942544~3347511713")
+        // Use an activity context to get the rewarded video instance.
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activity)
+        mRewardedVideoAd.rewardedVideoAdListener = this
 
 
         view.findViewById<FloatingActionButton>(R.id.fab_favorite).setOnClickListener {
-            //article.articleIsSaved = true
             val customSnackListener: View.OnClickListener = View.OnClickListener {
                 findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
             }
@@ -119,8 +127,6 @@ class ArticleFragment : Fragment() {
 
 
         //streak logic
-
-
         viewModel.getSavedNews().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             GlobalScope.launch(Dispatchers.Main) {
                 delay(200L)
@@ -139,10 +145,11 @@ class ArticleFragment : Fragment() {
                         ?.apply()
                     requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE)
                         .edit().putInt("TIME", currentDay).apply()
-                    resetStreakAtMidnight()
+                    //   resetStreakAtMidnight(currentDay)
                 }
 
                 if (isClicked && streakCount == 5) {
+                    loadRewardedVideoAd()
                     SimpleCustomSnackbar.make(
                         viewPos, "Daily news article goal reached :) ", Snackbar.LENGTH_LONG,
                         null, R.drawable.streak_icon,
@@ -220,8 +227,17 @@ class ArticleFragment : Fragment() {
         return view
     }
 
-    private fun resetStreakAtMidnight() {
+    private fun loadRewardedVideoAd() {
+        mRewardedVideoAd.loadAd(
+            "ca-app-pub-3940256099942544/5224354917",
+            AdRequest.Builder().build()
+        )
+    }
+
+    private fun resetStreakAtMidnight(currentDay: Int) {
         val intent = Intent(context, StreakReset::class.java)
+//        intent.putExtra(STREAK,streakCount)
+//        intent.putExtra("TIME",currentDay)
         val mSrvcPendingingIntent: PendingIntent = PendingIntent.getBroadcast(
             requireContext(),
             0,
@@ -278,6 +294,36 @@ class ArticleFragment : Fragment() {
         } catch (e: Exception) {
         }
         super.onStop()
+    }
+
+    override fun onRewardedVideoAdClosed() {
+
+    }
+
+    override fun onRewardedVideoAdLeftApplication() {
+
+    }
+
+    override fun onRewardedVideoAdLoaded() {
+
+    }
+
+    override fun onRewardedVideoAdOpened() {
+    }
+
+    override fun onRewardedVideoCompleted() {
+    }
+
+    override fun onRewarded(p0: RewardItem?) {
+
+    }
+
+    override fun onRewardedVideoStarted() {
+
+    }
+
+    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
+
     }
 }
 

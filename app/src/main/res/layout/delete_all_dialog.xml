@@ -12,22 +12,23 @@
 
     <TextView
         android:id="@+id/delete_all_text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/averia_libre"
         android:gravity="center"
         android:text="Delete All Saved Articles?"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.086" />
 
     <TextView
         android:id="@+id/delete_all_text1"
@@ -68,15 +69,16 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/explore_item5_bg"
+        android:background="@drawable/btn_no_bg"
         android:fontFamily="@font/averia_libre"
         android:text="No"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="#DD2C00"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delete_all_text1" />
+        app:layout_constraintTop_toBottomOf="@+id/delete_all_text1"
+        app:layout_constraintVertical_bias="0.41000003" />
 </androidx.constraintlayout.widget.ConstraintLayout>

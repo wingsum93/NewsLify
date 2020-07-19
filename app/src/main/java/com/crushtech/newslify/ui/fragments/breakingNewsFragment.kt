@@ -18,6 +18,7 @@ import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
@@ -29,6 +30,7 @@ import java.util.*
 
 class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private var groups: ArrayList<Group>? = null
+    lateinit var mAdView: AdView
     private lateinit var viewModel: NewsViewModel
     private val TAG = "BreakingNewsFragment"
     private var groupAdapter: GroupAdapter? = null
@@ -38,9 +40,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
         retainInstance = true
-//        MobileAds.initialize(requireContext()) {}
-//        val adRequest = AdRequest.Builder().build()
-//        adView.loadAd(adRequest)
+        MobileAds.initialize(activity) {}
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
     }
 
     private fun initGroupData() {
@@ -90,7 +92,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     groupAdapter!!.sportNews.showShimmer = false
                     response.data?.let { newsResponse ->
                         try {
-                            groupAdapter!!.sportNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.sportNews.differ.submitList(
+                                newsResponse.articles.toList().subList(0, 7)
+                            )
                             groupAdapter!!.sportNews.notifyDataSetChanged()
 
                         } catch (e: Exception) {
@@ -125,7 +129,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     response.data?.let { newsResponse ->
 
                         try {
-                            groupAdapter!!.businessNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.businessNews.differ.submitList(
+                                newsResponse.articles.toList().subList(0, 7)
+                            )
                             groupAdapter!!.businessNews.notifyDataSetChanged()
 
 
@@ -161,7 +167,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     response.data?.let { newsResponse ->
 
                         try {
-                            groupAdapter!!.entertainmentNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.entertainmentNews.differ.submitList(
+                                newsResponse.articles.toList().subList(0, 7)
+                            )
                             groupAdapter!!.entertainmentNews.notifyDataSetChanged()
                         } catch (e: Exception) {
                         }
@@ -194,7 +202,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                     response.data?.let { newsResponse ->
 
                         try {
-                            groupAdapter!!.scienceNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.scienceNews.differ.submitList(
+                                newsResponse.articles.toList().subList(0, 7)
+                            )
                             groupAdapter!!.scienceNews.notifyDataSetChanged()
                         } catch (e: Exception) {
                         }
@@ -227,7 +237,9 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
                     response.data?.let { newsResponse ->
                         try {
-                            groupAdapter!!.breakingNews.differ.submitList(newsResponse.articles.toList())
+                            groupAdapter!!.breakingNews.differ.submitList(
+                                newsResponse.articles.toList().subList(0, 7)
+                            )
                             groupAdapter!!.breakingNews.notifyDataSetChanged()
                         } catch (e: Exception) {
                         }

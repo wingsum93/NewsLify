@@ -55,7 +55,7 @@
         android:id="@+id/no_saved_article_text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/averia_libre"
         android:text="@string/no_news_article_saved"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -71,7 +71,7 @@
         android:id="@+id/no_saved_article_text2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/averia_libre"
         android:text="@string/news_articles_you_ve_saved_will_appear_here"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -121,21 +121,6 @@
     <!--            android:src="@drawable/copy_link"/>-->
 
     <!--    </LinearLayout>-->
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-7292512767354152/6298610695"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

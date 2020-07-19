@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -46,9 +48,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        MobileAds.initialize(this.context)
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+
         viewModel = (activity as NewsActivity).newsViewModel
         retainInstance = true
         setUpRecyclerView()
@@ -147,11 +147,18 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 dialog.setContentView(R.layout.delete_all_dialog)
                 val dismissDialog = dialog.findViewById<Button>(R.id.btn_no)
                 val deleteAll = dialog.findViewById<Button>(R.id.btn_yes)
+                val Anim: Animation = AnimationUtils.loadAnimation(
+                    context,
+                    android.R.anim.fade_in
+                )
 
                 dismissDialog.setOnClickListener {
+                    dismissDialog.animation = Anim
+
                     dialog.dismiss()
                 }
                 deleteAll.setOnClickListener {
+                    deleteAll.animation = Anim
                     val noSavedItem = newsAdapter.differ.currentList.isEmpty()
                     if (noSavedItem) {
                         view?.let { it1 ->

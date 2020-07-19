@@ -122,7 +122,9 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(newsResponse.articles.toList())
+                                        exploreTopItemAdapter.differ.submitList(
+                                            newsResponse.articles.toList().subList(20, 50)
+                                        )
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -164,7 +166,9 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(newsResponse.articles.toList())
+                                        exploreTopItemAdapter.differ.submitList(
+                                            newsResponse.articles.toList().subList(20, 50)
+                                        )
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -206,7 +210,9 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(newsResponse.articles.toList())
+                                        exploreTopItemAdapter.differ.submitList(
+                                            newsResponse.articles.toList().subList(20, 50)
+                                        )
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -290,7 +296,9 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(newsResponse.articles.toList())
+                                        exploreTopItemAdapter.differ.submitList(
+                                            newsResponse.articles.toList().subList(20, 50)
+                                        )
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
