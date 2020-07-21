@@ -10,13 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.entertainment_news.view.*
-import kotlinx.android.synthetic.main.item_article_preview.view.*
-import java.text.DateFormat
-import java.text.ParseException
+import kotlinx.android.synthetic.main.breaking_news_items.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,7 +22,7 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreakingNewsHolder {
         return BreakingNewsHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_article_preview,
+                R.layout.breaking_news_items,
                 parent,
                 false
             )

@@ -56,10 +56,9 @@ class GroupAdapter
         textView.text = text
     }
 
-    private fun setGroupButtonTitle(button: Button, text: String) {
-        button.text = text
+    private fun setGroupButtonTitle(textView: TextView, text: String) {
+        textView.text = text
     }
-
 
 
     private fun setLists(recyclerView: RecyclerView, position: Int) {
@@ -67,7 +66,7 @@ class GroupAdapter
         when (position) {
             0 -> setSportList(recyclerView)
             1 -> setBusinessList(recyclerView)
-            2-> setEntertainmentList(recyclerView)
+            2 -> setEntertainmentList(recyclerView)
             3-> setScienceList(recyclerView)
             4-> setBreakingNews(recyclerView)
 
@@ -185,7 +184,7 @@ class GroupAdapter
     inner class GroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var head_parent: RelativeLayout = itemView.findViewById(R.id.head_parent)
         var group_title: TextView = itemView.findViewById(R.id.group_title)
-        var view_all: Button = itemView.findViewById(R.id.view_all)
+        var view_all: TextView = itemView.findViewById(R.id.view_all)
         var group_recycler_view: RecyclerView = itemView.findViewById(R.id.group_recycler_view)
 
         fun setOnClickViewAll(groupTitle: String) {

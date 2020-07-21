@@ -15,13 +15,16 @@
     <string name="share_article">\t\t\t\t\t\tShare</string>
     <string name="upgrade_to_newslify_premium">Upgrade to NewsLify Premium</string>
     <string name="offers">Start your 7-Days free trial to remove all Ads and lot\'s more</string>
+    <string name="offers_for_dialog">Start your 7-Days free trial and get:</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="rate_app">Rate App</string>
     <string name="share_app">Share App</string>
     <string name="support_us">Support Us</string>
+    <string name="my_banner_id">ca-app-pub-7292512767354152/6298610695</string>
     <string name="premium_coins_balance">Premium Coins Balance</string>
     <string name="push_notification">Push Notification: coming soon</string>
     <string name="purchase_themes">Purchase Themes: coming soon</string>
     <string name="change_country">Change Country</string>
     <string name="delete_all_alert">please bear in mind that this method can\'t be reverted when done, do you wish to continue?</string>
+    <string name="goal_alert">set the number of news articles you need to read every day, you can reset any time, please bear in mind that the default news goal for every user is 5</string>
 </resources>

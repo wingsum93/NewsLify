@@ -14,7 +14,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
 import kotlinx.android.synthetic.main.cover_item.view.*
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import kotlinx.android.synthetic.main.breaking_news_items.view.*
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat

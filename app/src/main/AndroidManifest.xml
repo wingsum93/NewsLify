@@ -12,11 +12,11 @@
         android:name=".ui.NewsApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher_foreground"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/PremiumThemeOne"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.WelcomeScreen"
@@ -49,8 +49,6 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7292512767354152~4226039170" />
-
-        <receiver android:name=".receiver.StreakReset" />
     </application>
 
 </manifest>

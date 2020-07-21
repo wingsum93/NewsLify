@@ -1,8 +1,10 @@
 package com.crushtech.newslify.ui
+
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -15,10 +17,7 @@ import com.crushtech.newslify.KeepStateNavigator
 import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
 import com.crushtech.newslify.repository.NewsRepository
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.ads.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
@@ -33,7 +32,12 @@ class NewsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_news)
-
+        MobileAds.initialize(this) {}
+        val testDeviceIds = listOf("3001A61A70E03E82A3CD3B4A7DB8A906", AdRequest.DEVICE_ID_EMULATOR)
+        val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+        MobileAds.setRequestConfiguration(configuration)
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = Firebase.analytics
@@ -47,7 +51,15 @@ class NewsActivity : AppCompatActivity() {
 
         bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
 
-
+//        adView.adListener = object :AdListener(){
+//            override fun onAdLoaded() {
+//                adParent.visibility = View.VISIBLE
+//                close_ad.setOnClickListener {
+//                    adParent.visibility = View.GONE
+//                }
+//                super.onAdLoaded()
+//            }
+//        }
         val appBarConfig = AppBarConfiguration(
             setOf(
                 R.id.breakingNewsFragment,
@@ -64,7 +76,7 @@ class NewsActivity : AppCompatActivity() {
     fun hideBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.GONE
-            //adView.visibility =View.GONE
+            adView.visibility = View.GONE
         } catch (e: Exception) {
         }
     }
@@ -72,7 +84,7 @@ class NewsActivity : AppCompatActivity() {
     fun showBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.VISIBLE
-            // adView.visibility = View.GONE
+            adView.visibility = View.GONE
         } catch (e: Exception) {
         }
     }
@@ -82,5 +94,19 @@ class NewsActivity : AppCompatActivity() {
         return navController.navigateUp()
     }
 
+    override fun onPause() {
+        adView.pause()
+        super.onPause()
+    }
+
+    override fun onResume() {
+        adView.resume()
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        adView.destroy()
+        super.onDestroy()
+    }
 
 }

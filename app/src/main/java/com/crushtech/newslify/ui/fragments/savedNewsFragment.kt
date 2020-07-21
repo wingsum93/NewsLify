@@ -1,18 +1,14 @@
 package com.crushtech.newslify.ui.fragments
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
-import android.widget.Toast
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,20 +22,11 @@ import com.crushtech.newslify.adapter.SavedArticlesAdapter
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
-import com.crushtech.newslify.ui.util.Constants
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
-import currentDate
-import getTimeAgo
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
@@ -88,7 +75,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                 SimpleCustomSnackbar.make(
                     view, "article deleted",
                     Snackbar.LENGTH_LONG, snackListener, R.drawable.delete_article, "Undo",
-                    ContextCompat.getColor(requireContext(), R.color.mygrey)
+                   null
                 )?.show()
             }
 
@@ -165,7 +152,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                             SimpleCustomSnackbar.make(
                                 it1, "Sorry: no item saved!",
                                 Snackbar.LENGTH_LONG, null, R.drawable.no_item_icon, "",
-                                ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                null
                             )?.show()
                         }
                     } else {
@@ -176,7 +163,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                             SimpleCustomSnackbar.make(
                                 it1, "all saved articles deleted",
                                 Snackbar.LENGTH_LONG, null, R.drawable.delete_article, "",
-                                ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                null
                             )?.show()
                         }
                     }

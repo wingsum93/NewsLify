@@ -3,23 +3,18 @@ package com.crushtech.newslify.ui.fragments
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.AbsListView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.GroupAdapter
 import com.crushtech.newslify.models.Group
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
-import com.crushtech.newslify.ui.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.crushtech.newslify.ui.util.Resource
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.coroutines.Dispatchers
@@ -40,9 +35,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
         retainInstance = true
-        MobileAds.initialize(activity) {}
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
     }
 
     private fun initGroupData() {
@@ -109,7 +101,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                          null
                         )?.show()
 
                     }
@@ -147,7 +139,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
                     }
                 }
@@ -183,7 +175,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
                     }
                 }
@@ -218,7 +210,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
                     }
                 }
@@ -253,7 +245,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
                     }
                 }

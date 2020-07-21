@@ -6,15 +6,12 @@ import android.view.View
 import android.widget.AbsListView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
-import com.crushtech.newslify.adapter.ExploreItemsAdapter
 import com.crushtech.newslify.adapter.ExploreTopItemAdapter
-import com.crushtech.newslify.adapter.ViewAllAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
@@ -22,8 +19,6 @@ import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_explore_top_items_news.*
-import kotlinx.android.synthetic.main.fragment_view_all_news.*
-import kotlinx.android.synthetic.main.group_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -98,7 +93,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                     SimpleCustomSnackbar.make(
                                         explore_top_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -142,7 +137,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                     SimpleCustomSnackbar.make(
                                         explore_top_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -186,7 +181,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                     SimpleCustomSnackbar.make(
                                         explore_top_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -230,7 +225,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                     SimpleCustomSnackbar.make(
                                         explore_top_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -272,7 +267,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                     SimpleCustomSnackbar.make(
                                         explore_top_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -316,7 +311,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                     SimpleCustomSnackbar.make(
                                         explore_top_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }

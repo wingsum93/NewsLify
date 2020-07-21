@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="8dp"
+        app:cardBackgroundColor="?attr/eTAndBreakingNewsBgColor"
         app:cardCornerRadius="9dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp">
@@ -40,11 +41,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="7dp"
                 android:id="@+id/entertainment_news_title"
-                android:fontFamily="@font/averia_libre"
-              android:background="@color/shimmer_color"
-                android:textColor="@android:color/black"
+                android:fontFamily="@font/roboto_bold"
+                android:background="@color/shimmer_color"
+                android:textColor="?attr/titleTextColorForEtAndBrkNews"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
@@ -52,23 +53,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:layout_marginTop="5dp"
-                android:id="@+id/entertainment_news_publishedAt"
-                android:fontFamily="sans-serif-black"
-               android:background="@color/shimmer_color"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/entertainment_news_source"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/roboto_medium"
+                android:background="@color/shimmer_color"
+                android:textColor="?attr/sourceAndPublishedAtColorForEtBrkNews"
                 android:layout_marginBottom="2dp"
-                android:textSize="15sp"/>
+                android:textSize="16sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:id="@+id/entertainment_news_source"
-                android:fontFamily="sans-serif-black"
-               android:background="@color/shimmer_color"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/entertainment_news_publishedAt"
+                android:layout_marginTop="5dp"
+                android:background="@color/shimmer_color"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="?attr/sourceAndPublishedAtColorForEtBrkNews"
                 android:layout_marginBottom="2dp"
-                android:textSize="19sp"/>
+                android:textSize="14sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

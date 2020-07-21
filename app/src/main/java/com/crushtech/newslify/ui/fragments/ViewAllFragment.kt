@@ -101,7 +101,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -145,7 +145,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -189,7 +189,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -234,7 +234,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }
@@ -275,7 +275,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
                                     SimpleCustomSnackbar.make(
                                         view_all_coordinator, it,
                                         Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                                        null
                                     )?.show()
 
                                 }

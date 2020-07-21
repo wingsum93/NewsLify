@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="7dp"
             android:elevation="8dp"
-            app:cardBackgroundColor="@android:color/white"
+            app:cardBackgroundColor="?attr/categoryTextColor"
             app:cardCornerRadius="5dp">
 
             <RelativeLayout
@@ -40,13 +40,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:ellipsize="end"
-                    android:maxLines="4"
+                    android:fontFamily="@font/roboto_bold"
                     android:layout_alignParentBottom="true"
                     android:background="@color/shimmer_color"
                     android:layout_marginBottom="50dp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/averia_libre"
-                    android:textColor="@android:color/white"
+                    android:maxLines="3"
+                    android:textColor="?attr/textColorForSportScienceAndBusiness"
                     android:textSize="15sp" />
 
                 <TextView
@@ -56,11 +56,12 @@
                     android:layout_marginStart="7dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:fontFamily="sans-serif"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="?attr/textColorForSportScienceAndBusiness"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
-                   android:background="@color/shimmer_color"
-                    android:textColor="@android:color/white" />
+                    android:background="@color/shimmer_color"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

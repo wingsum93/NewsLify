@@ -31,7 +31,7 @@
         android:fontFamily="@font/averia_libre"
         android:text="Technology News"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="?attr/textColorForSportScienceAndBusiness"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

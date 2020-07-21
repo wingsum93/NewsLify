@@ -13,7 +13,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
 import kotlinx.android.synthetic.main.explore_bottom_items.view.*
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import kotlinx.android.synthetic.main.breaking_news_items.view.*
 import kotlinx.android.synthetic.main.view_all_news_items.view.*
 import java.text.DateFormat
 import java.text.ParseException

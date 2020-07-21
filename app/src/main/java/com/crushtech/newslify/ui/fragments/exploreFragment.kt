@@ -164,7 +164,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }
@@ -199,7 +199,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }
@@ -233,7 +233,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }
@@ -265,7 +265,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }
@@ -297,7 +297,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }
@@ -329,7 +329,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }
@@ -360,7 +360,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
                         SimpleCustomSnackbar.make(
                             requireView(), "an error occurred :$it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
 
                     }

@@ -5,7 +5,7 @@
     android:id="@+id/brk_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="?attr/mainBackground">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/brk_coordinator"
@@ -65,21 +65,5 @@
         app:layout_constraintTop_toBottomOf="@+id/lottie_no_internet"
         app:layout_constraintVertical_bias="0.104" />
 
-
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:elevation="50dp"
-        app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-7292512767354152/6298610695"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

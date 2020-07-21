@@ -1,8 +1,6 @@
 package com.crushtech.newslify.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -23,13 +21,8 @@ import com.crushtech.newslify.R
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
-import com.crushtech.newslify.receiver.StreakReset
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.gms.ads.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -44,12 +37,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ArticleFragment : Fragment(), RewardedVideoAdListener {
+class ArticleFragment : Fragment() {
     private lateinit var viewModel: NewsViewModel
     private var isClicked = false
     private var btnCount = 0
     private var streakCount = 0
-    private lateinit var mRewardedVideoAd: RewardedVideoAd
+    private lateinit var mInterstitialAd: InterstitialAd
 
     private val args: ArticleFragmentArgs by navArgs()
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
@@ -77,10 +70,15 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
             context,
             android.R.anim.fade_in
         )
-        MobileAds.initialize(context, "ca-app-pub-3940256099942544~3347511713")
-        // Use an activity context to get the rewarded video instance.
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(activity)
-        mRewardedVideoAd.rewardedVideoAdListener = this
+        MobileAds.initialize(context) {}
+        val testDeviceIds = listOf("3001A61A70E03E82A3CD3B4A7DB8A906", AdRequest.DEVICE_ID_EMULATOR)
+        val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+        MobileAds.setRequestConfiguration(configuration)
+
+        mInterstitialAd = InterstitialAd(context)
+        mInterstitialAd.adUnitId = "ca-app-pub-7292512767354152/3859686593"
+        val adRequest1: AdRequest = AdRequest.Builder().build()
+        mInterstitialAd.loadAd(adRequest1)
 
 
         view.findViewById<FloatingActionButton>(R.id.fab_favorite).setOnClickListener {
@@ -100,11 +98,26 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
                     setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
                     startAnimation(logoAnim)
                 }
+                GlobalScope.launch(Dispatchers.Main) {
+                    try {
+                        lottie_saved_anim.visibility = View.VISIBLE
+                        lottie_webview_loading.visibility = View.INVISIBLE
+                        webview_loading_text1.visibility = View.INVISIBLE
+                    } catch (e: Exception) {
+                    }
+                    delay(3000L)
+                    try {
+                        lottie_saved_anim.visibility = View.GONE
+                        lottie_webview_loading.visibility = View.VISIBLE
+                        webview_loading_text1.visibility = View.VISIBLE
+                    } catch (e: Exception) {
+                    }
+                }
 
                 SimpleCustomSnackbar.make(
                     viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
                     customSnackListener, R.drawable.snack_fav,
-                    "View", ContextCompat.getColor(requireContext(), R.color.mygrey)
+                    "View", null
                 )?.show()
                 val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
                 streakCount = prefs.getInt(STREAK, 0)
@@ -115,10 +128,11 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
                 requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE).edit()
                     .putInt("TIME", cal).apply()
             } else {
+                lottie_saved_anim.visibility = View.GONE
                 SimpleCustomSnackbar.make(
-                    viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
+                    viewPos, "Article already saved", Snackbar.LENGTH_LONG,
                     customSnackListener, R.drawable.snack_fav,
-                    "View", ContextCompat.getColor(requireContext(), R.color.mygrey)
+                    "View", null
                 )?.show()
             }
             btnCount++
@@ -134,6 +148,9 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
                     requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE)
                 val previousDay = sharedprefs.getInt("TIME", 0)
 
+                val usersGoalPrefs =
+                    requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
+                val getUsersGoalSet = usersGoalPrefs.getInt("Goal Count", 5)
                 val currentDay = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
 
                 if (currentDay > previousDay) {
@@ -148,24 +165,35 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
                     //   resetStreakAtMidnight(currentDay)
                 }
 
-                if (isClicked && streakCount == 5) {
-                    loadRewardedVideoAd()
+                if (isClicked && streakCount == getUsersGoalSet) {
                     SimpleCustomSnackbar.make(
                         viewPos, "Daily news article goal reached :) ", Snackbar.LENGTH_LONG,
                         null, R.drawable.streak_icon,
-                        "", ContextCompat.getColor(requireContext(), R.color.mygrey)
+                        "", null
                     )?.show()
+                    mInterstitialAd.adListener = object : AdListener() {
+                        override fun onAdLoaded() {
+                            mInterstitialAd.show()
+                            super.onAdLoaded()
+                        }
+                    }
 
-                } else if (isClicked && streakCount > 5 && streakCount % 5 == 0) {
+                } else if (isClicked && streakCount > getUsersGoalSet && streakCount % getUsersGoalSet == 0) {
                     SimpleCustomSnackbar.make(
                         viewPos,
-                        "x${streakCount / 5} of daily goals reached: you're on fire ",
+                        "x${streakCount / getUsersGoalSet} of daily goals reached: you're on fire ",
                         Snackbar.LENGTH_LONG,
                         null,
                         R.drawable.rocket,
                         "",
-                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                        null
                     )?.show()
+                    mInterstitialAd.adListener = object : AdListener() {
+                        override fun onAdLoaded() {
+                            mInterstitialAd.show()
+                            super.onAdLoaded()
+                        }
+                    }
                 }
 
             }
@@ -227,43 +255,6 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
         return view
     }
 
-    private fun loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(
-            "ca-app-pub-3940256099942544/5224354917",
-            AdRequest.Builder().build()
-        )
-    }
-
-    private fun resetStreakAtMidnight(currentDay: Int) {
-        val intent = Intent(context, StreakReset::class.java)
-//        intent.putExtra(STREAK,streakCount)
-//        intent.putExtra("TIME",currentDay)
-        val mSrvcPendingingIntent: PendingIntent = PendingIntent.getBroadcast(
-            requireContext(),
-            0,
-            intent, 0
-        )
-        val c = Calendar.getInstance()
-        val now = c.timeInMillis
-        c.add(Calendar.DATE, 1)
-        c[Calendar.HOUR_OF_DAY] = 0
-        c[Calendar.MINUTE] = 0
-        c[Calendar.SECOND] = 0
-        c[Calendar.MILLISECOND] = 0
-
-        val millisecondsUntilMidnight = c.timeInMillis - now
-
-        val mAlarmManager: AlarmManager =
-            requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        mAlarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            millisecondsUntilMidnight,
-            c.timeInMillis,
-            mSrvcPendingingIntent
-
-        )
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
@@ -294,36 +285,6 @@ class ArticleFragment : Fragment(), RewardedVideoAdListener {
         } catch (e: Exception) {
         }
         super.onStop()
-    }
-
-    override fun onRewardedVideoAdClosed() {
-
-    }
-
-    override fun onRewardedVideoAdLeftApplication() {
-
-    }
-
-    override fun onRewardedVideoAdLoaded() {
-
-    }
-
-    override fun onRewardedVideoAdOpened() {
-    }
-
-    override fun onRewardedVideoCompleted() {
-    }
-
-    override fun onRewarded(p0: RewardItem?) {
-
-    }
-
-    override fun onRewardedVideoStarted() {
-
-    }
-
-    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
-
     }
 }
 

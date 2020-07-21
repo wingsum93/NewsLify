@@ -1,16 +1,23 @@
 package com.crushtech.newslify.ui.fragments
 
+import android.app.Activity
+import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
@@ -43,12 +50,59 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
         val conPrefs = requireContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE)
         val country = conPrefs.getString("Country", "")
-        change_country.text = "Change Country: ${country?.toLowerCase()}"
-
+        change_country.text = "Change Country: ${country?.capitalize()}"
+        setupDailyGoals()
         setupCountry()
         setupPrivacyPolicy()
         setUpShareFunction()
         setUpRateApp()
+    }
+
+    private fun setupDailyGoals() {
+        setnewsGoals.setOnClickListener {
+            val dialog = Dialog(requireContext())
+            dialog.setContentView(R.layout.news_goals_dialog)
+            val dismissDialog = dialog.findViewById<Button>(R.id.btn_cancel)
+            val setDailyCount = dialog.findViewById<Button>(R.id.btn_set)
+            val goalCount = dialog.findViewById<EditText>(R.id.goal_count)
+            val Anim: Animation = AnimationUtils.loadAnimation(
+                context,
+                android.R.anim.fade_in
+            )
+            val prefs = requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
+            val getPrefsCount = prefs.getInt("Goal Count", 5)
+            goalCount.setText(getPrefsCount.toString())
+
+            dismissDialog.setOnClickListener {
+                dismissDialog.animation = Anim
+                dialog.dismiss()
+            }
+            setDailyCount.setOnClickListener {
+                setDailyCount.animation = Anim
+                goalCount.let {
+                    var goalCountText = it.text.toString()
+                    if (TextUtils.isEmpty(goalCountText) || goalCountText == "0") {
+                        goalCountText = "5"
+                    }
+                    requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
+                        .edit().putInt("Goal Count", goalCountText.toInt()).apply()
+                }
+                view?.let { it1 ->
+                    SimpleCustomSnackbar.make(
+                        it1, "Your Goal is set: you're good to go",
+                        Snackbar.LENGTH_LONG, null, R.drawable.rocket, "",
+                        null
+                    )?.show()
+                }
+                if (dialog.isShowing) {
+                    dialog.dismiss()
+                }
+                hideKeyboard()
+            }
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+            dialog.setCancelable(false)
+        }
     }
 
     private fun setupCountry() {
@@ -65,7 +119,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                         settings_coordinator, "Country changed: please RESTART the app",
                         Snackbar.LENGTH_INDEFINITE, null,
                         R.drawable.country_changed_icon, "",
-                        ContextCompat.getColor(requireContext(), R.color.mygrey)
+                        null
                     )?.show()
                 }, false, 0
             )
@@ -142,5 +196,15 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
     override fun onStop() {
         countryPicker?.dismiss()
         super.onStop()
+    }
+
+    private fun Fragment.hideKeyboard() {
+        view?.let { activity?.hideKeyboard(it) }
+    }
+
+    private fun Context.hideKeyboard(view: View) {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.crushtech.newslify.R
 import com.google.android.material.snackbar.BaseTransientBottomBar
 
@@ -25,7 +24,7 @@ class SimpleCustomSnackbar(
         fun make(
             view: View,
             message: String, duration: Int,
-            listener: View.OnClickListener?, icon: Int, action_label: String?, bg_color: Int
+            listener: View.OnClickListener?, icon: Int, action_label: String?, bg_color: Int?
         ): SimpleCustomSnackbar? {
 
             // First we find a suitable parent for our custom view
@@ -49,7 +48,9 @@ class SimpleCustomSnackbar(
                     }
                 }
                 customView.imLeft.setImageResource(icon)
-                customView.layRoot.setBackgroundColor(bg_color)
+                if (bg_color != null) {
+                    customView.layRoot.setBackgroundColor(bg_color)
+                }
 
 
                 return SimpleCustomSnackbar(

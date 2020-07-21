@@ -79,7 +79,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
                         SimpleCustomSnackbar.make(
                             search_coordinator, it, Snackbar.LENGTH_SHORT, null,
                             R.drawable.network_off, "",
-                            ContextCompat.getColor(requireContext(), R.color.mygrey)
+                            null
                         )?.show()
                     }
                     showEmptySearchView()

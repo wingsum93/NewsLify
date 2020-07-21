@@ -4,12 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.viewpager.widget.PagerAdapter
 import com.airbnb.lottie.LottieAnimationView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.ScreenItems
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.saved_article_items.view.*
 
 class IntroViewPagerAdapter(val context: Context, val screenItems: List<ScreenItems>) :
     PagerAdapter() {
@@ -33,6 +36,7 @@ class IntroViewPagerAdapter(val context: Context, val screenItems: List<ScreenIt
         val title = view.findViewById<TextView>(R.id.select_country)
         val introImage = view.findViewById<LottieAnimationView>(R.id.intro_img)
         val introDesc = view.findViewById<TextView>(R.id.intro_description)
+        val logoimg = view.findViewById<ImageView>(R.id.logo_img)
 
         val currentItem = screenItems[position]
 
@@ -43,8 +47,10 @@ class IntroViewPagerAdapter(val context: Context, val screenItems: List<ScreenIt
             introDesc.text = currentItem.Description
         }
         introImage.let {
-            if(currentItem.Title=="Welcome to Newslify"){
-                introImage.setBackgroundResource(R.drawable.mylogo)
+            if(currentItem.Title=="Welcome to Newslify") {
+                Picasso.get().load(R.drawable.logo_a).fit().centerCrop()
+                    .into(logoimg)
+                introImage.setBackgroundResource(android.R.color.transparent)
             }
             introImage.apply {
                 currentItem.ScreenImg?.let {

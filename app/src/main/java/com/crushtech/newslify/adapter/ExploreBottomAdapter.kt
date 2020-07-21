@@ -4,12 +4,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -22,14 +19,10 @@ import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.exploreFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.explore_bottom_items.view.*
 import kotlinx.android.synthetic.main.explore_news_options_layout.view.*
-import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -104,7 +97,7 @@ class ExploreBottomAdapter(
                     SimpleCustomSnackbar.make(
                         this, "Article saved successfully", Snackbar.LENGTH_LONG,
                         customSnackListener, R.drawable.snack_fav,
-                        "View", ContextCompat.getColor(context, R.color.mygrey)
+                        "View", null
                     )?.show()
                     if (bottomDialog.isShowing) {
                         bottomDialog.hide()
@@ -113,7 +106,7 @@ class ExploreBottomAdapter(
                     SimpleCustomSnackbar.make(
                         this, "Article saved already", Snackbar.LENGTH_LONG,
                         null, R.drawable.snack_fav,
-                        "View", ContextCompat.getColor(context, R.color.mygrey)
+                        "View", null
                     )?.show()
                     if (bottomDialog.isShowing) {
                         bottomDialog.hide()
@@ -126,7 +119,7 @@ class ExploreBottomAdapter(
                 SimpleCustomSnackbar.make(
                     this, "Article Link Copied", Snackbar.LENGTH_LONG,
                     null, R.drawable.link_copied_icon,
-                    "", ContextCompat.getColor(context, R.color.mygrey)
+                    "", null
                 )?.show()
                 if (bottomDialog.isShowing) {
                     bottomDialog.dismiss()

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="navbackgroundColor" format="color" />
+        <attr name="mainBackground" format="color" />
+        <attr name="categoryTextColor" format="color" />
+        <attr name="upgradeBtnTextColor" format="color" />
+        <attr name="upgradeBtnColor" format="color" />
+        <attr name="exploretitleTextColor" format="color" />
+        <attr name="snackBgColor" format="color" />
+        <attr name="exploreMottotextColor" format="color" />
+        <attr name="exploreMottoBgColor" format="color" />
+        <attr name="snackBarViewTextColor" format="color" />
+        <attr name="imagePlaceHolderColor" format="color" />
+        <attr name="textColorForSportScienceAndBusiness" format="color" />
+        <attr name="titleTextColorForEtAndBrkNews" format="color" />
+        <attr name="sourceAndPublishedAtColorForEtBrkNews" format="color" />
+        <attr name="desColorForBrkNews" format="color" />
+        <attr name="streakSettingsColor" format="color" />
+        <attr name="exploreNewsBg" format="color" />
+        <attr name="deleteAllBgColor" format="color" />
+        <attr name="deleteAllBgText" format="color" />
+        <attr name="iconTintOnSelect" format="color" />
+        <attr name="iconTintUnselected" format="color" />
+        <attr name="exploreChooseMoreIconColor" format="color" />
+        <attr name="exploreIconMoreOptionsColor" format="color" />
+        <attr name="eTAndBreakingNewsBgColor" format="color" />
+        <attr name="seeMoreIconColor" format="color" />
+        <attr name="savedTimeTxtColor" format="color" />
+        <attr name="deleteAllBtnYesTxtColor" format="color" />
+        <attr name="deleteAllBtnNoTxtColor" format="color" />
+    </declare-styleable>
+</resources>

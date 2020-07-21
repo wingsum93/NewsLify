@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--default colors-->
     <color name="colorPrimary">#FFC107</color>
-    <color name="colorPrimaryDark">#FFC107</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#4CAF50</color>
     <color name="mygrey">#5A5A5A</color>
     <color name="shimmer_color">#DDDCDC</color>
@@ -9,4 +10,21 @@
     <color name="black">#000000</color>
     <color name="color_red_AA">#F03C2E</color>
     <color name="white">#FFFFFF</color>
+    <color name="rv2items">#2B2A2A</color>
+    <color name="delete_all_btn_no_color">#DD2C00</color>
+
+    <!--premiumOneColors -->
+    <color name="pOneColorPrimary">#45046A</color>
+    <color name="pOneColorPrimaryDark">#5C2A9D</color>
+    <color name="pOneColorAccent">#B5076B</color>
+    <color name="pOneColor1">#F1EBBB</color>
+    <color name="pOneColor2">#EFECCF</color>
+
+    <!--premiumTwoColors -->
+    <color name="pTwoColorPrimary">#150130</color>
+    <color name="pTwoColorPrimaryDark">#150130</color>
+    <color name="pTwoColorPrimaryDark1">#5D4978</color>
+    <color name="pTwoColorAccent">#FF6D00</color>
+    <color name="pTwoColorWhite">#FFFF</color>
+    <color name="pTwoColorgrey">#4E4A4A</color>
 </resources>

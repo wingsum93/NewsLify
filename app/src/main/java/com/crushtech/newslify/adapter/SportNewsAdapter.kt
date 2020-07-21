@@ -12,7 +12,7 @@ import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.item_article_preview.view.*
+import kotlinx.android.synthetic.main.breaking_news_items.view.*
 import kotlinx.android.synthetic.main.science_list_item.view.*
 import kotlinx.android.synthetic.main.sport_list_item.view.*
 import java.text.DateFormat

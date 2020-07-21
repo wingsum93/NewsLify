@@ -35,7 +35,7 @@ class WelcomeScreen : AppCompatActivity() {
 
         val intent= Intent(this,NewsActivity::class.java)
         GlobalScope.launch(Dispatchers.Main) {
-            delay(5000)
+            delay(2000)
             startActivity(intent)
             overridePendingTransition(R.anim.button_anim,R.anim.slide_out_left)
             finish()

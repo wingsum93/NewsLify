@@ -2,17 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    android:id="@+id/parent_layout"
+    android:background="?attr/mainBackground"
     tools:context="com.crushtech.newslify.ui.NewsActivity">
 
     <FrameLayout
         android:id="@+id/flFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#FDF9F9"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -29,14 +28,54 @@
 
     </FrameLayout>
 
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/adParent"-->
+    <!--        android:visibility="visible"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:background="@color/black"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/flFragment"-->
+    <!--        app:layout_constraintVertical_bias="1.0">-->
+
+    <!--        <com.google.android.gms.ads.AdView-->
+    <!--            android:id="@+id/adView"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_centerHorizontal="true"-->
+    <!--            android:elevation="50dp"-->
+    <!--            app:adSize="BANNER"-->
+    <!--            app:adUnitId="@string/my_banner_id"/>-->
+    <!--        <ImageView-->
+    <!--            android:layout_width="50dp"-->
+    <!--            android:src="@drawable/no_item_icon"-->
+    <!--            android:id="@+id/close_ad"-->
+    <!--           android:layout_alignParentEnd="true"-->
+    <!--            android:layout_height="wrap_content"/>-->
+    <!--    </RelativeLayout>-->
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:elevation="50dp"
+        app:adSize="BANNER"
+        app:adUnitId="@string/my_banner_id"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:background="@drawable/nav_bg"
         app:itemIconTint="@color/nav_color"
         app:itemTextColor="@color/nav_color"
-        android:background="@drawable/nav_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -1,5 +1,3 @@
-import android.text.format.DateUtils
-import java.text.SimpleDateFormat
 import java.util.*
 
 private const val SECOND_MILLIS = 1000
@@ -36,35 +34,12 @@ fun getTimeAgo(date: Date): String {
 }
 
 fun main() {
+    val q = "https://www.instagram.com/p/CCwWzPXId9-/?igshid=168v569ffmqk8"
+    print(urlShortener(q))
 
-//    val c=Calendar.getInstance()
-//    val date =c.time
-//    val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss a", Locale.getDefault())
-//    val strDate: String = dateFormat.format(date)
-//
-//
-//    try {
-//        val dateFormat1 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss a", Locale.getDefault())
-//        val pasTime = dateFormat1.parse(strDate)
-//        val agoTime = getTimeAgo(pasTime!!)
-//        print(agoTime)
-//    }catch (e:Exception){
-//
-//    }
+}
 
-
-//    val strDate = "2020-07-15 07:54:02 PM"
-//    val dateFormat1 = SimpleDateFormat("yyyy-MM-dd hh:mm:ss a")
-//    val pasTime = dateFormat1.parse(strDate)
-//    val agoTime = getTimeAgo(pasTime!!)
-//
-
-    val cal = 188
-    val now = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
-    if (now > cal) {
-        print("value resetted")
-    } else {
-        println("value plus 1")
-    }
-
+fun urlShortener(url: String): String {
+    val index = url.indexOf("?")
+    return url.substring(0, index)
 }
