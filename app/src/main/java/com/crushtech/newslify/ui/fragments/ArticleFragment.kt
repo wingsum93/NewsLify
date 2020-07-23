@@ -1,6 +1,7 @@
 package com.crushtech.newslify.ui.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -12,6 +13,7 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.*
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -27,7 +29,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoastlibrary.StyleableToast
-import kotlinx.android.synthetic.main.fragment_article.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.cover_item.view.*
+import kotlinx.android.synthetic.main.customized_article_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -42,10 +46,10 @@ class ArticleFragment : Fragment() {
     private var isClicked = false
     private var btnCount = 0
     private var streakCount = 0
+    private var loadinghasFinished = false
     private lateinit var mInterstitialAd: InterstitialAd
 
     private val args: ArticleFragmentArgs by navArgs()
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
@@ -53,19 +57,23 @@ class ArticleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as NewsActivity).window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        val view = layoutInflater.inflate(R.layout.fragment_article, container, false)
+        val view = layoutInflater.inflate(R.layout.customized_article_layout, container, false)
         viewModel = (activity as NewsActivity).newsViewModel
-        (activity as NewsActivity).supportActionBar?.hide()
-        (activity as NewsActivity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
+        val imageHolder = view.findViewById<ImageView>(R.id.articleimages)
         retainInstance = true
+
         //get the argument from the generated arg class
         val article = args.article
-        val viewPos: View = view.findViewById(R.id.myCord)
+        try {
+            if (article.urlToImage.isNullOrEmpty()) {
+                imageHolder.setBackgroundResource(R.drawable.mylogo)
+            } else {
+                Picasso.get().load(article.urlToImage).fit().centerCrop()
+                    .into(imageHolder)
+            }
+        } catch (e: Exception) {
+        }
+        val viewPos: View = view.findViewById(R.id.myCord1)
         val logoAnim: Animation = AnimationUtils.loadAnimation(
             context,
             android.R.anim.fade_in
@@ -81,7 +89,7 @@ class ArticleFragment : Fragment() {
         mInterstitialAd.loadAd(adRequest1)
 
 
-        view.findViewById<FloatingActionButton>(R.id.fab_favorite).setOnClickListener {
+        view.findViewById<FloatingActionButton>(R.id.fab_favorite1).setOnClickListener {
             val customSnackListener: View.OnClickListener = View.OnClickListener {
                 findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
             }
@@ -94,22 +102,25 @@ class ArticleFragment : Fragment() {
                 article.timeInsertedToRoomDatabase = strDate
                 viewModel.saveArticle(article)
 
-                view.findViewById<FloatingActionButton>(R.id.fab_favorite).apply {
+                view.findViewById<FloatingActionButton>(R.id.fab_favorite1).apply {
                     setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
                     startAnimation(logoAnim)
                 }
                 GlobalScope.launch(Dispatchers.Main) {
                     try {
-                        lottie_saved_anim.visibility = View.VISIBLE
-                        lottie_webview_loading.visibility = View.INVISIBLE
-                        webview_loading_text1.visibility = View.INVISIBLE
+                        lottie_saved_anim1.visibility = View.VISIBLE
+                        lottie_webview_loading1.visibility = View.INVISIBLE
+                        webview_loading_text2.visibility = View.INVISIBLE
                     } catch (e: Exception) {
                     }
                     delay(3000L)
                     try {
-                        lottie_saved_anim.visibility = View.GONE
-                        lottie_webview_loading.visibility = View.VISIBLE
-                        webview_loading_text1.visibility = View.VISIBLE
+                        lottie_saved_anim1.visibility = View.GONE
+                        //check if loading lottie has already appeared and has finished loading
+                        if (!loadinghasFinished) {
+                            lottie_webview_loading1.visibility = View.VISIBLE
+                            webview_loading_text2.visibility = View.VISIBLE
+                        }
                     } catch (e: Exception) {
                     }
                 }
@@ -128,7 +139,7 @@ class ArticleFragment : Fragment() {
                 requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE).edit()
                     .putInt("TIME", cal).apply()
             } else {
-                lottie_saved_anim.visibility = View.GONE
+                lottie_saved_anim1.visibility = View.GONE
                 SimpleCustomSnackbar.make(
                     viewPos, "Article already saved", Snackbar.LENGTH_LONG,
                     customSnackListener, R.drawable.snack_fav,
@@ -162,7 +173,6 @@ class ArticleFragment : Fragment() {
                         ?.apply()
                     requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE)
                         .edit().putInt("TIME", currentDay).apply()
-                    //   resetStreakAtMidnight(currentDay)
                 }
 
                 if (isClicked && streakCount == getUsersGoalSet) {
@@ -200,7 +210,7 @@ class ArticleFragment : Fragment() {
         })
 
 
-        view.findViewById<FloatingActionButton>(R.id.fab_share).setOnClickListener {
+        view.findViewById<FloatingActionButton>(R.id.fab_share1).setOnClickListener {
             val articleUrl = "From NewsLify:  ${article.url}"
             val shareSub = "APP NAME/TITLE"
             val intent = Intent(Intent.ACTION_SEND).apply {
@@ -211,11 +221,7 @@ class ArticleFragment : Fragment() {
             startActivity(Intent.createChooser(intent, "Share Using"))
         }
 
-        val bottomSheet: NestedScrollView = view.findViewById(R.id.my_bottom_sheet)
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
-        view.findViewById<WebView>(R.id.scrollwebView).apply {
+        view.findViewById<WebView>(R.id.scrollwebView1).apply {
             this.settings.cacheMode = WebSettings.LOAD_DEFAULT
             this.settings.javaScriptEnabled = true
 
@@ -223,8 +229,9 @@ class ArticleFragment : Fragment() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     try {
-                        lottie_webview_loading.visibility = View.INVISIBLE
-                        webview_loading_text1.visibility = View.INVISIBLE
+                        loadinghasFinished = true
+                        lottie_webview_loading1.visibility = View.INVISIBLE
+                        webview_loading_text2.visibility = View.INVISIBLE
                     } catch (e: Exception) {
                     }
                     super.onPageFinished(view, url)
@@ -237,8 +244,9 @@ class ArticleFragment : Fragment() {
                 ) {
 
                     try {
-                        lottie_webview_loading.visibility = View.GONE
-                        webview_loading_text1.visibility = View.GONE
+                        loadinghasFinished = true
+                        lottie_webview_loading1.visibility = View.GONE
+                        webview_loading_text2.visibility = View.GONE
                         StyleableToast.makeText(
                             requireContext(),
                             "An error occurred",
@@ -274,17 +282,5 @@ class ArticleFragment : Fragment() {
         super.onResume()
     }
 
-    override fun onStop() {
-        try {
-            (activity as NewsActivity).supportActionBar?.show()
-            (activity as NewsActivity).window.clearFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-            )
-            (activity as NewsActivity).requestedOrientation =
-                ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        } catch (e: Exception) {
-        }
-        super.onStop()
-    }
 }
 

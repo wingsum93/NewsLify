@@ -334,7 +334,10 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
     }
 
     private fun showProgressBar() {
-        viewall_loading_lottie.visibility = View.VISIBLE
+        try {
+            viewall_loading_lottie.visibility = View.VISIBLE
+        } catch (e: Exception) {
+        }
         isLoading = true
     }
 

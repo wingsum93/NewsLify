@@ -23,7 +23,7 @@
     <string name="my_banner_id">ca-app-pub-7292512767354152/6298610695</string>
     <string name="premium_coins_balance">Premium Coins Balance</string>
     <string name="push_notification">Push Notification: coming soon</string>
-    <string name="purchase_themes">Purchase Themes: coming soon</string>
+    <string name="purchase_themes">Purchase Themes: click to view available themes</string>
     <string name="change_country">Change Country</string>
     <string name="delete_all_alert">please bear in mind that this method can\'t be reverted when done, do you wish to continue?</string>
     <string name="goal_alert">set the number of news articles you need to read every day, you can reset any time, please bear in mind that the default news goal for every user is 5</string>

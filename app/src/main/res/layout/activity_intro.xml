@@ -48,7 +48,7 @@
       android:layout_marginTop="14dp"
       android:layout_marginEnd="16dp"
       android:layout_marginBottom="64dp"
-      android:background="@drawable/next_page_bg"
+      android:background="@drawable/intro_next_bg"
       android:text="Next"
       android:textAllCaps="false"
       android:textSize="16sp"

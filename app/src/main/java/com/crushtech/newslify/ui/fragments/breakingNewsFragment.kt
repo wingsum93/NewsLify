@@ -2,7 +2,9 @@ package com.crushtech.newslify.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,12 +31,25 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private lateinit var viewModel: NewsViewModel
     private val TAG = "BreakingNewsFragment"
     private var groupAdapter: GroupAdapter? = null
+    private var mView: View? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        if (mView == null) {
+            mView = inflater.inflate(R.layout.fragment_breaking_news, container, false)
+        }
         retainInstance = true
+        return mView
     }
 
     private fun initGroupData() {
@@ -64,20 +79,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun setUpData() {
-        val getCountryCode =
-            context?.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
-        val countryIsoCode = getCountryCode?.getString("countryIsoCode", "us")
-
-        if (countryIsoCode != null) {
-            viewModel.getSportNews(countryIsoCode.toLowerCase(Locale.ROOT), "sport")
-            viewModel.getBusinessNews(countryIsoCode.toLowerCase(Locale.ROOT), "business")
-            viewModel.getAllBreakingNews(countryIsoCode.toLowerCase(Locale.ROOT))
-            viewModel.getEntertainmentNews(
-                countryIsoCode.toLowerCase(Locale.ROOT), "entertainment",
-                requireContext()
-            )
-            viewModel.getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
-        }
         viewModel.sportNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {

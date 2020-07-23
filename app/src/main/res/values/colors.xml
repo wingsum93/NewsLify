@@ -27,4 +27,18 @@
     <color name="pTwoColorAccent">#FF6D00</color>
     <color name="pTwoColorWhite">#FFFF</color>
     <color name="pTwoColorgrey">#4E4A4A</color>
+
+    <!--premiumThreeColors -->
+    <color name="pThreeColorPrimary">#FBFBF2</color>
+    <color name="pThreeColorPrimaryDark">#E5E6E4</color>
+    <color name="pThreeColorAccent">#CFD2CD</color>
+    <color name="pThreeColor1">#A6A2A2</color>
+    <color name="pThreeColor2">#847577</color>
+
+    <!--premiumFourColors -->
+    <color name="pFourColorPrimary">#BF0404</color>
+    <color name="pFourColorPrimaryDark">#8C0303</color>
+    <color name="pFourColorAccent">#590202</color>
+    <color name="pFourColor1">#260101</color>
+    <color name="pFourColor2">#0D0D0D</color>
 </resources>

@@ -56,7 +56,7 @@
         android:fontFamily="@font/averia_libre"
         android:text="@string/opps_couldn_t_load_feed_have_you_tried_switching_on_your_data"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="?attr/categoryTextColor"
         android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

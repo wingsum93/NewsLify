@@ -76,6 +76,20 @@ class NewsViewModel(
     var searchNewsResponse: NewsResponse? = null
 
     init {
+        val getCountryCode =
+            app.applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
+        val countryIsoCode = getCountryCode?.getString("countryIsoCode", "us")
+
+        if (countryIsoCode != null) {
+            getSportNews(countryIsoCode.toLowerCase(Locale.ROOT), "sport")
+            getBusinessNews(countryIsoCode.toLowerCase(Locale.ROOT), "business")
+            getAllBreakingNews(countryIsoCode.toLowerCase(Locale.ROOT))
+            getEntertainmentNews(
+                countryIsoCode.toLowerCase(Locale.ROOT), "entertainment",
+                app.applicationContext
+            )
+            getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
+        }
 //        val getCountryCode =
 //            app.applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
 //        val countryIsoCode = getCountryCode.getString("countryIsoCode", "us")
