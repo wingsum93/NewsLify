@@ -46,7 +46,7 @@ class NewsActivity : AppCompatActivity() {
 
         //show upgrade dialog
         close_ad.setOnClickListener {
-            ShowUpgradePopUpDialog.showPopupDialog(this)
+            ShowUpgradePopUpDialog.showPopupDialog(this, this)
         }
 
         supportActionBar?.show()

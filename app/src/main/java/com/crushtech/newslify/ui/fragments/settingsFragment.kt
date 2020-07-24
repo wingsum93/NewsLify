@@ -6,6 +6,8 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -41,47 +43,24 @@ import kotlinx.android.synthetic.main.settings_layout.*
 import org.w3c.dom.Text
 import java.util.ArrayList
 
-data class ThemeItems(val themeName: String, val lottieRaw: Int, var switchState: Boolean)
+data class ThemeItems(val themeName: String, val lottieRaw: Int)
 
-class settingsFragment : Fragment() {
+class settingsFragment : Fragment(R.layout.settings_layout) {
     private var countryPicker: CountryPickerDialog? = null
     private var countryIsoCode: String? = null
     private var myCountry: String? = null
     private var textAnim: Animation? = null
     private var isPremiumUser = false
-    private lateinit var setnewsGoals: TextView
-    private lateinit var change_country: TextView
-    private lateinit var privacy_policy: TextView
-    private lateinit var rate_app: TextView
-    private lateinit var shareApp: TextView
-    private lateinit var whyUgrade: MaterialButton
-    private lateinit var purchaseThemes: TextView
     private lateinit var viewModel: NewsViewModel
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
 
-
-        val myView = inflater.inflate(R.layout.settings_layout, container, false)
-
-        setnewsGoals = myView.findViewById(R.id.setnewsGoals)
-        change_country = myView.findViewById(R.id.change_country)
-        privacy_policy = myView.findViewById(R.id.privacy_policy)
-        rate_app = myView.findViewById(R.id.rate_app)
-        shareApp = myView.findViewById(R.id.shareApp)
-        whyUgrade = myView.findViewById(R.id.whyUpgrade)
-        purchaseThemes = myView.findViewById(R.id.purchaseThemes)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
-        try {
-            val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-            val streakCount = prefs.getInt(STREAK, 0)
-            myView.findViewById<TextView>(R.id.dailynewsGoals).text =
-                "Goals reached: $streakCount news articles read today"
-        } catch (e: Exception) {
-        }
+
+        val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
+        val streakCount = prefs.getInt(STREAK, 0)
+        dailynewsGoals.text = "Goals reached: $streakCount news articles read today"
+
 
         textAnim = AnimationUtils.loadAnimation(
             context,
@@ -90,8 +69,7 @@ class settingsFragment : Fragment() {
 
         val conPrefs = requireContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE)
         val country = conPrefs.getString("Country", "")
-        myView.findViewById<TextView>(R.id.change_country).text =
-            "Change Country: ${country?.capitalize()}"
+        change_country.text = "Change Country: ${country?.capitalize()}"
         setupDailyGoals()
         setupCountry()
         setupPrivacyPolicy()
@@ -99,13 +77,13 @@ class settingsFragment : Fragment() {
         setUpRateApp()
         setupWhyUpgradePopUp()
         setupPurchaseThemes()
-        return myView
+
     }
 
     private fun setupDailyGoals() {
         setnewsGoals.setOnClickListener {
             if (!isPremiumUser) {
-                showPopupDialog(requireContext())
+                activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
             } else {
                 val dialog = Dialog(requireContext())
                 dialog.setContentView(R.layout.news_goals_dialog)
@@ -243,13 +221,13 @@ class settingsFragment : Fragment() {
     }
 
     private fun setupWhyUpgradePopUp() {
-        whyUgrade.setOnClickListener {
-            showPopupDialog(requireContext())
+        whyUpgrade.setOnClickListener {
+            this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
         }
     }
 
     object ShowUpgradePopUpDialog {
-        fun showPopupDialog(context: Context) {
+        fun showPopupDialog(context: Context, activity: Activity) {
             val animation = AnimationUtils.loadAnimation(
                 context,
                 R.anim.button_anim
@@ -260,9 +238,12 @@ class settingsFragment : Fragment() {
             val upgradeTxt = dialog.findViewById<TextView>(R.id.popup_ugrade_txt)
             upgradeTxt.animation = animation
             dismissDialog.setOnClickListener {
+                //set orientation to unspecified
+                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 dialog.dismiss()
             }
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             dialog.show()
             dialog.setCancelable(false)
         }
@@ -271,7 +252,7 @@ class settingsFragment : Fragment() {
     private fun setupPurchaseThemes() {
         purchaseThemes.setOnClickListener {
             if (!isPremiumUser) {
-                showPopupDialog(requireContext())
+                this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
             } else {
                 val dialog =
                     Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
@@ -280,11 +261,11 @@ class settingsFragment : Fragment() {
                 val recyclerView = dialog.findViewById<RecyclerView>(R.id.customThemesRv)
                 val themesItems: ArrayList<ThemeItems>? = ArrayList()
                 val themesAdapter = PremiumThemesAdapter()
-                themesItems!!.add(ThemeItems("Premium Theme 1", R.raw.themes, false))
-                themesItems.add(ThemeItems("Premium Theme 2", R.raw.themes, false))
-                themesItems.add(ThemeItems("Premium Theme 3", R.raw.themes, false))
-                themesItems.add(ThemeItems("Premium Theme 4", R.raw.themes, false))
-                themesItems.add(ThemeItems("Default AppTheme", R.raw.themes, false))
+                themesItems!!.add(ThemeItems("Premium Theme 1", R.raw.themes))
+                themesItems.add(ThemeItems("Premium Theme 2", R.raw.themes))
+                themesItems.add(ThemeItems("Premium Theme 3", R.raw.themes))
+                themesItems.add(ThemeItems("Premium Theme 4", R.raw.themes))
+                themesItems.add(ThemeItems("Default AppTheme", R.raw.themes))
 
                 themesAdapter.differ.submitList(themesItems)
                 recyclerView.apply {
@@ -304,6 +285,7 @@ class settingsFragment : Fragment() {
 
     override fun onStop() {
         countryPicker?.dismiss()
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onStop()
     }
 

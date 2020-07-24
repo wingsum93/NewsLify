@@ -40,8 +40,10 @@ class PremiumThemesAdapter : RecyclerView.Adapter<PremiumThemesAdapter.ThemesVie
         holder.itemView.apply {
             premiumThemeText.text = themeItems.themeName
             lottie_theme.setAnimation(themeItems.lottieRaw)
-            themeIsActivated.isChecked = selectedSwitchPosition == position
-            themeItems.switchState = themeIsActivated.isChecked
+            val sharedprefs: SharedPreferences =
+                context.getSharedPreferences("switchState", Context.MODE_PRIVATE)
+            val isChecked = sharedprefs.getInt("switchPos", selectedSwitchPosition)
+            themeIsActivated.isChecked = isChecked == position
 
 
 
@@ -52,19 +54,12 @@ class PremiumThemesAdapter : RecyclerView.Adapter<PremiumThemesAdapter.ThemesVie
                         Context.MODE_PRIVATE
                     )
                     selectedSwitchPosition = holder.adapterPosition
+                    themeIsActivated.isChecked = true
                     editor.edit().putInt("switchPos", selectedSwitchPosition).apply()
                     notifyDataSetChanged()
                     val intent = Intent(context, NewsActivity::class.java)
                     context.startActivity(intent)
                 }
-                //else{
-//                    themeIsActivated.isChecked = false
-//                    val editor = holder.itemView.context.getSharedPreferences(
-//                        "switchState",
-//                        Context.MODE_PRIVATE
-//                    )
-//                    editor.edit().putBoolean(themeItems.themeName,false).apply()
-                //         }
             }
         }
     }
