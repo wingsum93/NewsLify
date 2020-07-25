@@ -3,26 +3,28 @@ package com.crushtech.newslify.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
 import com.crushtech.newslify.repository.NewsRepository
-import com.crushtech.newslify.ui.fragments.settingsFragment
-import com.google.android.gms.ads.*
+import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_news.*
-import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog
+import java.lang.reflect.Method
+
 
 class NewsActivity : AppCompatActivity() {
     lateinit var newsViewModel: NewsViewModel
@@ -137,6 +139,7 @@ class NewsActivity : AppCompatActivity() {
             }
             2 -> {
                 setTheme(R.style.PremiumThemeThree)
+                // close_ad.setBackgroundResource(R.color.black)
             }
             3 -> {
                 setTheme(R.style.PremiumThemeFour)

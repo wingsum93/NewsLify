@@ -6,10 +6,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="mainBackground">@color/black</item>
+        <item name="menuIconTintColor">@color/white</item>
         <item name="exploreMottotextColor">@color/black</item>
         <item name="exploreMottoBgColor">@color/colorPrimary</item>
         <item name="snackBarViewTextColor">@color/colorPrimary</item>
         <item name="exploretitleTextColor">@color/black</item>
+        <item name="closeAdColor">@color/white</item>
         <item name="navbackgroundColor">@color/colorPrimary</item>
         <item name="categoryTextColor">@color/white</item>
         <item name="upgradeBtnColor">@color/colorPrimary</item>
@@ -40,11 +42,13 @@
     <style name="PremiumThemeOne" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/pOneColorPrimary</item>
         <item name="exploreMottotextColor">@color/pOneColor1</item>
+        <item name="closeAdColor">@color/white</item>
         <item name="exploreMottoBgColor">@color/pOneColorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/pOneColorPrimaryDark</item>
         <item name="colorAccent">@color/pOneColorAccent</item>
         <item name="snackBarViewTextColor">@color/pOneColorAccent</item>
         <item name="mainBackground">@color/pOneColor1</item>
+        <item name="menuIconTintColor">@color/white</item>
         <item name="snackBgColor">@color/pOneColor1</item>
         <item name="savedTimeTxtColor">@color/pOneColorAccent</item>
         <item name="exploretitleTextColor">@color/pOneColorPrimaryDark</item>
@@ -76,6 +80,8 @@
         <item name="colorPrimary">@color/pTwoColorPrimary</item>
         <item name="colorPrimaryDark">@color/pTwoColorPrimaryDark</item>
         <item name="colorAccent">@color/pTwoColorAccent</item>
+        <item name="closeAdColor">@color/white</item>
+        <item name="menuIconTintColor">@color/white</item>
         <item name="savedTimeTxtColor">@color/pTwoColorWhite</item>
         <item name="snackBarViewTextColor">@color/pTwoColorAccent</item>
         <item name="exploretitleTextColor">@color/pTwoColorPrimary</item>
@@ -107,10 +113,14 @@
     </style>
 
     <!--Premium Theme 3 -->
-    <style name="PremiumThemeThree" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="PremiumThemeThree" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/pThreeColorPrimary</item>
         <item name="colorPrimaryDark">@color/pThreeColorPrimaryDark</item>
         <item name="colorAccent">@color/pThreeColorAccent</item>
+        <item name="titleTextColor">@color/black</item>
+        <item name="menuIconTintColor">@color/black</item>
+        <item name="closeAdColor">@color/black</item>
+        <item name="actionMenuTextColor">@color/black</item>
         <item name="savedTimeTxtColor">@color/black</item>
         <item name="snackBarViewTextColor">@color/pThreeColor2</item>
         <item name="exploretitleTextColor">@color/black</item>
@@ -123,14 +133,14 @@
         <item name="exploreMottoBgColor">@color/pThreeColorPrimaryDark</item>
         <item name="streakSettingsColor">@color/pThreeColorAccent</item>
         <item name="imagePlaceHolderColor">@color/pThreeColorPrimaryDark</item>
-        <item name="textColorForSportScienceAndBusiness">@color/pThreeColorPrimary</item>
+        <item name="textColorForSportScienceAndBusiness">@color/white</item>
         <item name="titleTextColorForEtAndBrkNews">@color/black</item>
         <item name="sourceAndPublishedAtColorForEtBrkNews">@color/pThreeColor1</item>
         <item name="desColorForBrkNews">@color/black</item>
         <item name="exploreNewsBg">@color/pThreeColorPrimary</item>
         <item name="deleteAllBgColor">@color/pThreeColorAccent</item>
         <item name="deleteAllBgText">@color/black</item>
-        <item name="iconTintOnSelect">@color/pThreeColor2</item>
+        <item name="iconTintOnSelect">@color/white</item>
         <item name="iconTintUnselected">@color/pThreeColor1</item>
         <item name="exploreChooseMoreIconColor">@color/pThreeColor2</item>
         <item name="exploreIconMoreOptionsColor">@color/pThreeColor2</item>
@@ -146,6 +156,8 @@
         <item name="colorPrimary">@color/pFourColorPrimary</item>
         <item name="colorPrimaryDark">@color/pFourColorPrimaryDark</item>
         <item name="colorAccent">@color/pFourColorAccent</item>
+        <item name="closeAdColor">@color/white</item>
+        <item name="menuIconTintColor">@color/white</item>
         <item name="savedTimeTxtColor">@color/pFourColor2</item>
         <item name="snackBarViewTextColor">@color/black</item>
         <item name="exploretitleTextColor">@color/pFourColor2</item>

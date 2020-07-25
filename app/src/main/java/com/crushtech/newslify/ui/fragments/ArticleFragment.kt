@@ -1,21 +1,16 @@
 package com.crushtech.newslify.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.util.TypedValue
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,12 +20,11 @@ import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
 import com.google.android.gms.ads.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.cover_item.view.*
 import kotlinx.android.synthetic.main.customized_article_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -78,6 +72,11 @@ class ArticleFragment : Fragment() {
             context,
             android.R.anim.fade_in
         )
+        val slideInAnim: Animation = AnimationUtils.loadAnimation(
+            context,
+            R.anim.button_anim
+        )
+
         MobileAds.initialize(context) {}
         val testDeviceIds = listOf("3001A61A70E03E82A3CD3B4A7DB8A906", AdRequest.DEVICE_ID_EMULATOR)
         val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
@@ -88,6 +87,33 @@ class ArticleFragment : Fragment() {
         val adRequest1: AdRequest = AdRequest.Builder().build()
         mInterstitialAd.loadAd(adRequest1)
 
+        val collapseArticleView =
+            view.findViewById<ExtendedFloatingActionButton>(R.id.collapseArticleView)
+        val extendArticleView =
+            view.findViewById<ExtendedFloatingActionButton>(R.id.extendArticleView)
+        collapseArticleView.animation = slideInAnim
+        extendArticleView.animation = slideInAnim
+
+        //extend article logic
+        extendArticleView.setOnClickListener {
+            (activity as NewsActivity).supportActionBar?.hide()
+            imageHolder.visibility = View.GONE
+            nestedScrollView.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+            nestedScrollView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            extendArticleView.visibility = View.GONE
+            collapseArticleView.visibility = View.VISIBLE
+        }
+        //collapse article logic
+        val dpInPixels =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 600f, resources.displayMetrics)
+        collapseArticleView.setOnClickListener {
+            (activity as NewsActivity).supportActionBar?.show()
+            imageHolder.visibility = View.VISIBLE
+            nestedScrollView.layoutParams.height = dpInPixels.toInt()
+            nestedScrollView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            extendArticleView.visibility = View.VISIBLE
+            collapseArticleView.visibility = View.GONE
+        }
 
         view.findViewById<FloatingActionButton>(R.id.fab_favorite1).setOnClickListener {
             val customSnackListener: View.OnClickListener = View.OnClickListener {
@@ -272,6 +298,12 @@ class ArticleFragment : Fragment() {
 
     }
 
+
+    override fun onStop() {
+        (activity as NewsActivity).supportActionBar?.show()
+        super.onStop()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         retainInstance = true
         super.onViewCreated(view, savedInstanceState)
@@ -281,6 +313,7 @@ class ArticleFragment : Fragment() {
         (activity as NewsActivity).hideBottomNavigation()
         super.onResume()
     }
+
 
 }
 

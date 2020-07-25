@@ -20,14 +20,14 @@
         android:layout_width="match_parent"
         android:layout_height="650dp"
         android:background="@drawable/customized_article_top_bg"
-        android:elevation="20dp"
+        android:elevation="2dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/articleimages"
         app:layout_constraintVertical_bias="0.16000003">
-
 
         <WebView
             android:id="@+id/scrollwebView1"
@@ -38,6 +38,27 @@
             android:layout_marginEnd="20dp" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extendArticleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/averia_libre"
+        android:text="Extend Article"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/black"
+        app:elevation="50dp"
+        app:icon="@drawable/extend_icon"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/articleimages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.548"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811"
+        app:rippleColor="@color/pFourColorPrimary" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_webview_loading1"
@@ -53,6 +74,25 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/newsloading" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/collapseArticleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:fontFamily="@font/averia_libre"
+        android:text="Collapse Article"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:elevation="50dp"
+        app:icon="@drawable/collapse_icon"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toTopOf="@+id/myCord1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/colorAccent" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_saved_anim1"
@@ -106,11 +146,32 @@
         app:layout_constraintVertical_bias="0.87"
         app:tint="@null" />
 
+
+    <!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+    <!--        android:id="@+id/collapseActionbarView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="16dp"-->
+    <!--        android:backgroundTint="@color/colorPrimaryDark"-->
+    <!--        android:clickable="true"-->
+    <!--        android:contentDescription="Collapse Action Bar"-->
+    <!--        android:focusable="true"-->
+    <!--        android:text="Collapse"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        app:elevation="120dp"-->
+    <!--        android:elevation="90dp"-->
+    <!--        app:icon="@drawable/no_item_icon"-->
+    <!--        app:iconTint="@null"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintVertical_bias="0.93"-->
+    <!--        app:tint="@null" />-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_share1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:backgroundTint="@color/colorPrimaryDark"
         android:clickable="true"
         android:focusable="true"
@@ -137,5 +198,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.993" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

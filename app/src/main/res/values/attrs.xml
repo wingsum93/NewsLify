@@ -11,6 +11,8 @@
         <attr name="exploreMottotextColor" format="color" />
         <attr name="exploreMottoBgColor" format="color" />
         <attr name="snackBarViewTextColor" format="color" />
+        <attr name="closeAdColor" format="color" />
+        <attr name="menuIconTintColor" format="color" />
         <attr name="imagePlaceHolderColor" format="color" />
         <attr name="textColorForSportScienceAndBusiness" format="color" />
         <attr name="titleTextColorForEtAndBrkNews" format="color" />

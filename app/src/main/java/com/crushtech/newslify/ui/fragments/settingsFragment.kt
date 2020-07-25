@@ -43,7 +43,7 @@ import kotlinx.android.synthetic.main.settings_layout.*
 import org.w3c.dom.Text
 import java.util.ArrayList
 
-data class ThemeItems(val themeName: String, val lottieRaw: Int)
+data class ThemeItems(val themeName: String, val lottieRaw: Int, val themeBackground: Int)
 
 class settingsFragment : Fragment(R.layout.settings_layout) {
     private var countryPicker: CountryPickerDialog? = null
@@ -251,35 +251,65 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setupPurchaseThemes() {
         purchaseThemes.setOnClickListener {
-            if (!isPremiumUser) {
-                this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
-            } else {
-                val dialog =
-                    Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-                dialog.setContentView(R.layout.customthemes_popup_dialog)
-                val dismissDialog = dialog.findViewById<ImageView>(R.id.theme_close_popup)
-                val recyclerView = dialog.findViewById<RecyclerView>(R.id.customThemesRv)
-                val themesItems: ArrayList<ThemeItems>? = ArrayList()
-                val themesAdapter = PremiumThemesAdapter()
-                themesItems!!.add(ThemeItems("Premium Theme 1", R.raw.themes))
-                themesItems.add(ThemeItems("Premium Theme 2", R.raw.themes))
-                themesItems.add(ThemeItems("Premium Theme 3", R.raw.themes))
-                themesItems.add(ThemeItems("Premium Theme 4", R.raw.themes))
-                themesItems.add(ThemeItems("Default AppTheme", R.raw.themes))
+//            if (!isPremiumUser) {
+//                this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
+//            }else {
+            val dialog =
+                Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+            dialog.setContentView(R.layout.customthemes_popup_dialog)
+            val dismissDialog = dialog.findViewById<ImageView>(R.id.theme_close_popup)
+            val recyclerView = dialog.findViewById<RecyclerView>(R.id.customThemesRv)
+            val themesItems: ArrayList<ThemeItems>? = ArrayList()
+            val themesAdapter = PremiumThemesAdapter()
+            themesItems!!.add(
+                ThemeItems(
+                    "Premium Theme 1",
+                    R.raw.themes,
+                    R.drawable.explore_item1_bg
+                )
+            )
+            themesItems.add(
+                ThemeItems(
+                    "Premium Theme 2",
+                    R.raw.themes,
+                    R.drawable.explore_item2_bg
+                )
+            )
+            themesItems.add(
+                ThemeItems(
+                    "Premium Theme 3",
+                    R.raw.themes,
+                    R.drawable.explore_item3_bg
+                )
+            )
+            themesItems.add(
+                ThemeItems(
+                    "Premium Theme 4",
+                    R.raw.themes,
+                    R.drawable.explore_item4_bg
+                )
+            )
+            themesItems.add(
+                ThemeItems(
+                    "Default AppTheme",
+                    R.raw.themes,
+                    R.drawable.explore_item5_bg
+                )
+            )
 
-                themesAdapter.differ.submitList(themesItems)
-                recyclerView.apply {
-                    adapter = themesAdapter
-                    layoutManager = LinearLayoutManager(requireContext())
-                }
+            themesAdapter.differ.submitList(themesItems)
+            recyclerView.apply {
+                adapter = themesAdapter
+                layoutManager = GridLayoutManager(requireContext(), 2)
+            }
 
-                dismissDialog.setOnClickListener {
-                    dialog.dismiss()
-                }
+            dismissDialog.setOnClickListener {
+                dialog.dismiss()
+            }
                 dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 dialog.show()
                 dialog.setCancelable(false)
-            }
+            // }
         }
     }
 

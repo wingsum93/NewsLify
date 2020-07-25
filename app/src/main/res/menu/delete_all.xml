@@ -4,7 +4,8 @@
 
     <item
         android:id="@+id/deleteAllArticles"
-        android:icon="@drawable/choose_more_icon"
+        android:icon="@drawable/delete_article"
+        app:iconTint="?attr/menuIconTintColor"
         android:title="delete all saved articles"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>

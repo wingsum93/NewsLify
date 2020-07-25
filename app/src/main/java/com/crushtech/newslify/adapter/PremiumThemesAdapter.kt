@@ -44,7 +44,7 @@ class PremiumThemesAdapter : RecyclerView.Adapter<PremiumThemesAdapter.ThemesVie
                 context.getSharedPreferences("switchState", Context.MODE_PRIVATE)
             val isChecked = sharedprefs.getInt("switchPos", selectedSwitchPosition)
             themeIsActivated.isChecked = isChecked == position
-
+            themeBackground.setBackgroundResource(themeItems.themeBackground)
 
 
             themeIsActivated.setOnCheckedChangeListener { _, isChecked ->

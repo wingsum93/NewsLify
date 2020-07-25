@@ -90,7 +90,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/dot_icon"
         android:drawablePadding="6dp"
         android:fontFamily="@font/averia_libre"
@@ -99,10 +98,10 @@
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.84"
+        app:layout_constraintHorizontal_bias="0.961"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popup_ugrade_txt"
-        app:layout_constraintVertical_bias="0.573" />
+        app:layout_constraintVertical_bias="0.578" />
 
     <TextView
         android:id="@+id/textView3"
@@ -127,19 +126,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/dot_icon"
         android:drawablePadding="6dp"
         android:fontFamily="@font/averia_libre"
-        android:text="set Article Goals per day \nand track them"
+        android:text="set Article Goals per \nday and track them"
         android:textColor="#0091EA"
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/paymentButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.962"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/popup_ugrade_txt"
-        app:layout_constraintVertical_bias="0.617" />
+        app:layout_constraintVertical_bias="0.621" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/paymentButton"
