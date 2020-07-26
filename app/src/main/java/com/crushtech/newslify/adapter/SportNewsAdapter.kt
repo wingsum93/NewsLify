@@ -46,15 +46,20 @@ class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHold
                 sport_title.background = null
                 sport_publishedAt.background = null
 
-                if (article?.urlToImage.isNullOrEmpty()) {
-                    sport_news_picture.setBackgroundResource(R.color.colorPrimary)
-                } else {
-                    Picasso.get().load(article.urlToImage).fit().centerCrop()
-                        .into(sport_news_picture)
+                try {
+                    if (article?.urlToImage.isNullOrEmpty()) {
+                        sport_news_picture.setBackgroundResource(R.color.colorPrimary)
+                    } else {
+                        Picasso.get().load(article.urlToImage).fit().centerCrop()
+                            .into(sport_news_picture)
+                    }
+                } catch (e: Exception) {
                 }
+
                 val formatted = article.publishedAt
                 try {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                     val pasTime = dateFormat.parse(formatted!!)
                     val agoTime = getTimeAgo(pasTime!!)
                     sport_publishedAt.text = agoTime

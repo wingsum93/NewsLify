@@ -49,16 +49,20 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
                 title.background = null
                 description.background = null
 
-                if (article?.urlToImage.isNullOrEmpty()) {
-                    breaking_news_image.setBackgroundResource(R.color.colorPrimary)
-                } else {
-                    Picasso.get().load(article.urlToImage).fit().centerCrop()
-                        .into(breaking_news_image)
+                try {
+                    if (article?.urlToImage.isNullOrEmpty()) {
+                        breaking_news_image.setBackgroundResource(R.color.colorPrimary)
+                    } else {
+                        Picasso.get().load(article.urlToImage).fit().centerCrop()
+                            .into(breaking_news_image)
+                    }
+                } catch (e: Exception) {
                 }
 
                 val formatted = article.publishedAt
                 try {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                     val pasTime = dateFormat.parse(formatted!!)
                     val agoTime = getTimeAgo(pasTime!!)
                     publishedAt_and_source.text = "$agoTime      ${article.source?.name}"

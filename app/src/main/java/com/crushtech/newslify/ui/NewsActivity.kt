@@ -16,6 +16,7 @@ import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
 import com.crushtech.newslify.repository.NewsRepository
 import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
@@ -36,10 +37,7 @@ class NewsActivity : AppCompatActivity() {
         setUpThemes()
         setContentView(R.layout.activity_news)
 
-        MobileAds.initialize(this) {}
-        val testDeviceIds = listOf("3001A61A70E03E82A3CD3B4A7DB8A906", AdRequest.DEVICE_ID_EMULATOR)
-        val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
-        MobileAds.setRequestConfiguration(configuration)
+        MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
 
@@ -68,15 +66,12 @@ class NewsActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemReselectedListener {}
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
-//        adView.adListener = object :AdListener(){
-//            override fun onAdLoaded() {
-//                adParent.visibility = View.VISIBLE
-//                close_ad.setOnClickListener {
-//                    adParent.visibility = View.GONE
-//                }
-//                super.onAdLoaded()
-//            }
-//        }
+        adView.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                adParent.visibility = View.VISIBLE
+                super.onAdLoaded()
+            }
+        }
 
         val appBarConfig = AppBarConfiguration(
             setOf(
@@ -130,7 +125,7 @@ class NewsActivity : AppCompatActivity() {
     private fun setUpThemes() {
         val sharedprefs: SharedPreferences =
             this.getSharedPreferences("switchState", Context.MODE_PRIVATE)
-        when (sharedprefs.getInt("switchPos", 4)) {
+        when (sharedprefs.getInt("switchPos", 5)) {
             0 -> {
                 setTheme(R.style.PremiumThemeOne)
             }
@@ -139,12 +134,14 @@ class NewsActivity : AppCompatActivity() {
             }
             2 -> {
                 setTheme(R.style.PremiumThemeThree)
-                // close_ad.setBackgroundResource(R.color.black)
             }
             3 -> {
                 setTheme(R.style.PremiumThemeFour)
             }
-            else -> {
+            4 -> {
+                setTheme(R.style.PremiumThemeFive)
+            }
+            5 -> {
                 setTheme(R.style.DefaultTheme)
             }
         }

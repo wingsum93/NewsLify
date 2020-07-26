@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.PremiumThemesAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
@@ -36,9 +37,12 @@ import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDial
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.mikelau.countrypickerx.CountryPickerCallbacks
 import com.mikelau.countrypickerx.CountryPickerDialog
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.entertainment_news.view.*
 import kotlinx.android.synthetic.main.settings_layout.*
 import org.w3c.dom.Text
 import java.util.ArrayList
@@ -66,6 +70,8 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             context,
             android.R.anim.fade_in
         )
+        Picasso.get().load(R.drawable.news_bbb).fit().centerCrop()
+            .into(image_settings)
 
         val conPrefs = requireContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE)
         val country = conPrefs.getString("Country", "")
@@ -82,19 +88,19 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setupDailyGoals() {
         setnewsGoals.setOnClickListener {
-            if (!isPremiumUser) {
-                activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
-            } else {
-                val dialog = Dialog(requireContext())
-                dialog.setContentView(R.layout.news_goals_dialog)
-                val dismissDialog = dialog.findViewById<Button>(R.id.btn_cancel)
-                val setDailyCount = dialog.findViewById<Button>(R.id.btn_set)
-                val goalCount = dialog.findViewById<EditText>(R.id.goal_count)
-                val Anim: Animation = AnimationUtils.loadAnimation(
-                    context,
-                    android.R.anim.fade_in
-                )
-                val prefs =
+//            if (!isPremiumUser) {
+//                activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
+//            } else {
+            val dialog = Dialog(requireContext())
+            dialog.setContentView(R.layout.news_goals_dialog)
+            val dismissDialog = dialog.findViewById<Button>(R.id.btn_cancel)
+            val setDailyCount = dialog.findViewById<Button>(R.id.btn_set)
+            val goalCount = dialog.findViewById<EditText>(R.id.goal_count)
+            val Anim: Animation = AnimationUtils.loadAnimation(
+                context,
+                android.R.anim.fade_in
+            )
+            val prefs =
                     requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
                 val getPrefsCount = prefs.getInt("Goal Count", 5)
                 goalCount.setText(getPrefsCount.toString())
@@ -128,7 +134,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                 dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 dialog.show()
                 dialog.setCancelable(false)
-            }
+            // }
         }
     }
 
@@ -245,7 +251,6 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             dialog.show()
-            dialog.setCancelable(false)
         }
     }
 
@@ -257,7 +262,13 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             val dialog =
                 Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
             dialog.setContentView(R.layout.customthemes_popup_dialog)
-            val dismissDialog = dialog.findViewById<ImageView>(R.id.theme_close_popup)
+            val dismissDialog =
+                dialog.findViewById<ExtendedFloatingActionButton>(R.id.close_theme_popup)
+            val slideInAnim: Animation = AnimationUtils.loadAnimation(
+                context,
+                R.anim.button_anim
+            )
+            dismissDialog.animation = slideInAnim
             val recyclerView = dialog.findViewById<RecyclerView>(R.id.customThemesRv)
             val themesItems: ArrayList<ThemeItems>? = ArrayList()
             val themesAdapter = PremiumThemesAdapter()
@@ -272,28 +283,35 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                 ThemeItems(
                     "Premium Theme 2",
                     R.raw.themes,
-                    R.drawable.explore_item2_bg
+                    R.drawable.themes_item2_bg
                 )
             )
             themesItems.add(
                 ThemeItems(
                     "Premium Theme 3",
                     R.raw.themes,
-                    R.drawable.explore_item3_bg
+                    R.drawable.explore_item2_bg
                 )
             )
             themesItems.add(
                 ThemeItems(
                     "Premium Theme 4",
                     R.raw.themes,
-                    R.drawable.explore_item4_bg
+                    R.drawable.theme_item4_bg
                 )
             )
             themesItems.add(
                 ThemeItems(
-                    "Default AppTheme",
+                    "Premium Theme 5",
                     R.raw.themes,
-                    R.drawable.explore_item5_bg
+                    R.drawable.explore_item3_bg
+                )
+            )
+            themesItems.add(
+                ThemeItems(
+                    "Default App Theme",
+                    R.raw.themes,
+                    R.drawable.default_theme_item_bg
                 )
             )
 
@@ -302,13 +320,17 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                 adapter = themesAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
             }
+            // to update the current switch item
+            if (!recyclerView.isComputingLayout && recyclerView.scrollState == SCROLL_STATE_IDLE) {
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
 
             dismissDialog.setOnClickListener {
                 dialog.dismiss()
             }
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.show()
-                dialog.setCancelable(false)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+
             // }
         }
     }

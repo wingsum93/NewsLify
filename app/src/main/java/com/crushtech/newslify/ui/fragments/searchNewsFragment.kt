@@ -3,6 +3,7 @@ package com.crushtech.newslify.ui.fragments
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -156,9 +157,16 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
                     isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate) {
-                viewModel.getSearchNews(queryText!!)
-                showProgressBar()
-                isScrolling = false
+                if (TextUtils.isEmpty(queryText)) {
+                    viewModel.searchNewsResponse = null
+                    //showEmptySearchView()
+                } else {
+                    queryText?.let { viewModel.getSearchNews(it) }
+                    showProgressBar()
+                    hideEmptySearchView()
+                    isScrolling = false
+                }
+
             }
         }
 
@@ -212,5 +220,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         search_article_text1.visibility = View.VISIBLE
         search_article_text2.visibility = View.VISIBLE
     }
+
+
 }
 

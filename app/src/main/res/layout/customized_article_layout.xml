@@ -43,7 +43,7 @@
         android:id="@+id/extendArticleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/averia_libre"
+        android:fontFamily="@font/rubik_bold"
         android:text="Extend Article"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/black"
-        android:fontFamily="@font/averia_libre"
+        android:fontFamily="@font/rubik_bold"
         android:text="Collapse Article"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -115,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:elevation="50dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/rubik_bold"
         android:text="Loading please wait..."
         android:textAlignment="center"
         android:textColor="@color/mygrey"
@@ -147,27 +147,6 @@
         app:tint="@null" />
 
 
-    <!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-    <!--        android:id="@+id/collapseActionbarView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="16dp"-->
-    <!--        android:backgroundTint="@color/colorPrimaryDark"-->
-    <!--        android:clickable="true"-->
-    <!--        android:contentDescription="Collapse Action Bar"-->
-    <!--        android:focusable="true"-->
-    <!--        android:text="Collapse"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        app:elevation="120dp"-->
-    <!--        android:elevation="90dp"-->
-    <!--        app:icon="@drawable/no_item_icon"-->
-    <!--        app:iconTint="@null"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="0.93"-->
-    <!--        app:tint="@null" />-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_share1"
         android:layout_width="wrap_content"

@@ -57,15 +57,20 @@ class ExploreBottomAdapter(
         holder.itemView.apply {
             val items = differ.currentList[position]
 
-            if (items?.urlToImage.isNullOrEmpty()) {
-                news_source_image.setBackgroundResource(R.color.colorPrimary)
-            } else {
-                Picasso.get().load(items.urlToImage).fit().centerCrop()
-                    .into(news_source_image)
+            try {
+                if (items?.urlToImage.isNullOrEmpty()) {
+                    news_source_image.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(items.urlToImage).fit().centerCrop()
+                        .into(news_source_image)
+                }
+            } catch (e: Exception) {
             }
+
             val formatted = items.publishedAt
             try {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                 val pasTime = dateFormat.parse(formatted!!)
                 val agoTime = getTimeAgo(pasTime!!)
                 source_publishedAt.text = agoTime

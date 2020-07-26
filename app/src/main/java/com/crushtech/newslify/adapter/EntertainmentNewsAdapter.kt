@@ -11,7 +11,7 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.cover_item.view.*
+import kotlinx.android.synthetic.main.business_news_item.view.*
 import kotlinx.android.synthetic.main.entertainment_news.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -46,21 +46,25 @@ class EntertainmentNewsAdapter : RecyclerView.Adapter<EntertainmentNewsAdapter.E
                     stopShimmer()
                     setShimmer(null)
                 }
-                entertainment_news_title.background=null
-                entertainment_news_image.background=null
-                entertainment_news_publishedAt.background=null
-                entertainment_news_source.background=null
+                entertainment_news_title.background = null
+                entertainment_news_image.background = null
+                entertainment_news_publishedAt.background = null
+                entertainment_news_source.background = null
 
-                if (article?.urlToImage.isNullOrEmpty()) {
-                    entertainment_news_image.setBackgroundResource(R.color.colorPrimary)
-                } else {
-                    Picasso.get().load(article.urlToImage).fit().centerCrop()
-                        .into(entertainment_news_image)
+                try {
+                    if (article?.urlToImage.isNullOrEmpty()) {
+                        entertainment_news_image.setBackgroundResource(R.color.colorPrimary)
+                    } else {
+                        Picasso.get().load(article.urlToImage).fit().centerCrop()
+                            .into(entertainment_news_image)
+                    }
+                } catch (e: Exception) {
                 }
 
                 val formatted = article.publishedAt
                 try {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                     val pasTime = dateFormat.parse(formatted!!)
                     val agoTime = getTimeAgo(pasTime!!)
                     entertainment_news_publishedAt.text = agoTime

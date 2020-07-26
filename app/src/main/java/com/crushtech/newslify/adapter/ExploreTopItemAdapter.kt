@@ -53,15 +53,20 @@ class ExploreTopItemAdapter : RecyclerView.Adapter<ExploreTopItemAdapter.VAdapte
                 view_all_news_publishedAt_and_source.background = null
                 view_all_news_title.background = null
                 view_all_news_description.background = null
-                if (article?.urlToImage.isNullOrEmpty()) {
-                    view_all_news_image.setBackgroundResource(R.color.colorPrimary)
-                } else {
-                    Picasso.get().load(article.urlToImage).fit().centerCrop()
-                        .into(view_all_news_image)
+                try {
+                    if (article?.urlToImage.isNullOrEmpty()) {
+                        view_all_news_image.setBackgroundResource(R.color.colorPrimary)
+                    } else {
+                        Picasso.get().load(article.urlToImage).fit().centerCrop()
+                            .into(view_all_news_image)
+                    }
+                } catch (e: Exception) {
                 }
+
                 val formatted = article.publishedAt
                 try {
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                     val pasTime = dateFormat.parse(formatted!!)
                     val agoTime = getTimeAgo(pasTime!!)
                     view_all_news_publishedAt_and_source.text =

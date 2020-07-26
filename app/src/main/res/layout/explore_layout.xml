@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/averia_libre"
+            android:fontFamily="@font/rubik_bold"
             android:text="@string/ftm"
             android:textColor="?attr/categoryTextColor"
             android:textSize="20sp" />

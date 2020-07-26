@@ -9,14 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.cover_item.view.*
-import kotlinx.android.synthetic.main.breaking_news_items.view.*
-import java.text.DateFormat
-import java.text.ParseException
+import kotlinx.android.synthetic.main.business_news_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +23,7 @@ class BusinessNewsCoverAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BusinessViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.cover_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.business_news_item, parent, false)
         return BusinessViewHolder(view)
     }
 
@@ -54,15 +49,20 @@ class BusinessNewsCoverAdapter :
                 b_title.background = null
                 b_publishedAt.background = null
 
-                if (article?.urlToImage.isNullOrEmpty()) {
-                    bnews_picture.setBackgroundResource(R.color.colorPrimary)
-                } else {
-                    Picasso.get().load(article.urlToImage).fit().centerCrop()
-                        .into(bnews_picture)
+                try {
+                    if (article?.urlToImage.isNullOrEmpty()) {
+                        bnews_picture.setBackgroundResource(R.color.colorPrimary)
+                    } else {
+                        Picasso.get().load(article.urlToImage).fit().centerCrop()
+                            .into(bnews_picture)
+                    }
+                } catch (e: Exception) {
                 }
+
                 val formatted = article.publishedAt
                 try {
-                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss", Locale.getDefault())
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                    dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                     val pasTime = dateFormat.parse(formatted!!)
                     val agoTime = getTimeAgo(pasTime!!)
                     b_publishedAt.text = agoTime

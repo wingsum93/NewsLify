@@ -46,15 +46,20 @@ class SavedArticlesAdapter :
     ) {
         holder.itemView.apply {
             val article = differ.currentList[position]
-            if (article?.urlToImage.isNullOrEmpty()) {
-                saved_news_image.setBackgroundResource(R.color.colorPrimary)
-            } else {
-                Picasso.get().load(article.urlToImage).fit().centerCrop()
-                    .into(saved_news_image)
+            try {
+                if (article?.urlToImage.isNullOrEmpty()) {
+                    saved_news_image.setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    Picasso.get().load(article.urlToImage).fit().centerCrop()
+                        .into(saved_news_image)
+                }
+            } catch (e: Exception) {
             }
+
             val formatted = article.publishedAt
             try {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                dateFormat.timeZone = TimeZone.getTimeZone("GMT")
                 val pasTime = dateFormat.parse(formatted!!)
                 val agoTime = getTimeAgo(pasTime!!)
                 saved_news_publishedAt_and_source.text = "$agoTime      ${article.source?.name}"

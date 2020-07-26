@@ -11,6 +11,8 @@ import android.view.animation.AnimationUtils
 import android.webkit.*
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -78,9 +80,6 @@ class ArticleFragment : Fragment() {
         )
 
         MobileAds.initialize(context) {}
-        val testDeviceIds = listOf("3001A61A70E03E82A3CD3B4A7DB8A906", AdRequest.DEVICE_ID_EMULATOR)
-        val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
-        MobileAds.setRequestConfiguration(configuration)
 
         mInterstitialAd = InterstitialAd(context)
         mInterstitialAd.adUnitId = "ca-app-pub-7292512767354152/3859686593"
@@ -93,7 +92,7 @@ class ArticleFragment : Fragment() {
             view.findViewById<ExtendedFloatingActionButton>(R.id.extendArticleView)
         collapseArticleView.animation = slideInAnim
         extendArticleView.animation = slideInAnim
-
+        val nestedScrollView = view.findViewById<NestedScrollView>(R.id.nestedScrollView)
         //extend article logic
         extendArticleView.setOnClickListener {
             (activity as NewsActivity).supportActionBar?.hide()
@@ -101,9 +100,22 @@ class ArticleFragment : Fragment() {
             nestedScrollView.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
             nestedScrollView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
             extendArticleView.visibility = View.GONE
-            collapseArticleView.visibility = View.VISIBLE
+            // collapseArticleView.visibility = View.VISIBLE
         }
         //collapse article logic
+        nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?,
+                                                     scrollX: Int,
+                                                     scrollY: Int,
+                                                     oldScrollX: Int,
+                                                     oldScrollY: Int ->
+            if (scrollY > oldScrollX) {
+                collapseArticleView.visibility = View.GONE
+            }
+            if (scrollY < oldScrollY && !(extendArticleView.isVisible)) {
+                collapseArticleView.visibility = View.VISIBLE
+            }
+
+        }
         val dpInPixels =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 600f, resources.displayMetrics)
         collapseArticleView.setOnClickListener {

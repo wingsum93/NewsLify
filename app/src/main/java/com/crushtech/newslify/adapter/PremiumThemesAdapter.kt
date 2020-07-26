@@ -56,7 +56,7 @@ class PremiumThemesAdapter : RecyclerView.Adapter<PremiumThemesAdapter.ThemesVie
                     selectedSwitchPosition = holder.adapterPosition
                     themeIsActivated.isChecked = true
                     editor.edit().putInt("switchPos", selectedSwitchPosition).apply()
-                    notifyDataSetChanged()
+
                     val intent = Intent(context, NewsActivity::class.java)
                     context.startActivity(intent)
                 }

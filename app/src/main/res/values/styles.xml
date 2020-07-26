@@ -1,41 +1,41 @@
 <resources>
     <!-- Base application theme. -->
     <style name="DefaultTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="mainBackground">@color/black</item>
-        <item name="menuIconTintColor">@color/white</item>
-        <item name="exploreMottotextColor">@color/black</item>
-        <item name="exploreMottoBgColor">@color/colorPrimary</item>
-        <item name="snackBarViewTextColor">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/mygrey</item>
+        <item name="colorPrimaryDark">@color/pThreeColorPrimaryDark</item>
+        <item name="colorAccent">@color/pThreeColorAccent</item>
+        <item name="closeAdColor">@color/black</item>
+        <item name="actionMenuTextColor">@color/black</item>
+        <item name="savedTimeTxtColor">@color/black</item>
+        <item name="snackBarViewTextColor">@color/pThreeColor2</item>
         <item name="exploretitleTextColor">@color/black</item>
-        <item name="closeAdColor">@color/white</item>
-        <item name="navbackgroundColor">@color/colorPrimary</item>
-        <item name="categoryTextColor">@color/white</item>
-        <item name="upgradeBtnColor">@color/colorPrimary</item>
-        <item name="snackBgColor">@color/mygrey</item>
-        <item name="imagePlaceHolderColor">@color/colorPrimary</item>
+        <item name="mainBackground">@color/pThreeColorPrimary</item>
+        <item name="snackBgColor">@color/pThreeColorPrimaryDark</item>
+        <item name="navbackgroundColor">@color/mygrey</item>
+        <item name="categoryTextColor">@color/black</item>
+        <item name="upgradeBtnColor">@color/pThreeColorAccent</item>
+        <item name="exploreMottotextColor">@color/black</item>
+        <item name="exploreMottoBgColor">@color/pThreeColorPrimaryDark</item>
+        <item name="streakSettingsColor">@color/pThreeColorAccent</item>
+        <item name="imagePlaceHolderColor">@color/pThreeColorPrimaryDark</item>
         <item name="textColorForSportScienceAndBusiness">@color/white</item>
         <item name="titleTextColorForEtAndBrkNews">@color/black</item>
-        <item name="sourceAndPublishedAtColorForEtBrkNews">@color/colorPrimary</item>
-        <item name="desColorForBrkNews">@color/mygrey</item>
-        <item name="exploreNewsBg">@color/rv2items</item>
-        <item name="savedTimeTxtColor">@color/colorAccent</item>
-        <item name="deleteAllBgColor">@color/white</item>
+        <item name="sourceAndPublishedAtColorForEtBrkNews">@color/pThreeColor1</item>
+        <item name="desColorForBrkNews">@color/black</item>
+        <item name="exploreNewsBg">@color/pThreeColorPrimary</item>
+        <item name="deleteAllBgColor">@color/pThreeColorAccent</item>
         <item name="deleteAllBgText">@color/black</item>
         <item name="iconTintOnSelect">@color/white</item>
-        <item name="streakSettingsColor">@color/colorAccent</item>
         <item name="iconTintUnselected">@color/black</item>
-        <item name="exploreChooseMoreIconColor">@color/white</item>
-        <item name="exploreIconMoreOptionsColor">@color/mygrey</item>
+        <item name="exploreChooseMoreIconColor">@color/pThreeColor2</item>
+        <item name="exploreIconMoreOptionsColor">@color/pThreeColor2</item>
         <item name="eTAndBreakingNewsBgColor">@color/white</item>
-        <item name="seeMoreIconColor">@color/white</item>
-        <item name="upgradeBtnTextColor">@color/white</item>
-        <item name="deleteAllBtnYesTxtColor">@color/white</item>
-        <item name="deleteAllBtnNoTxtColor">@color/white</item>
+        <item name="seeMoreIconColor">@color/pThreeColor2</item>
+        <item name="deleteAllBtnYesTxtColor">@color/black</item>
+        <item name="upgradeBtnTextColor">@color/pThreeColor2</item>
+        <item name="deleteAllBtnNoTxtColor">@color/black</item>
     </style>
+
 
 
     <!--Premium Theme1 -->
@@ -48,7 +48,6 @@
         <item name="colorAccent">@color/pOneColorAccent</item>
         <item name="snackBarViewTextColor">@color/pOneColorAccent</item>
         <item name="mainBackground">@color/pOneColor1</item>
-        <item name="menuIconTintColor">@color/white</item>
         <item name="snackBgColor">@color/pOneColor1</item>
         <item name="savedTimeTxtColor">@color/pOneColorAccent</item>
         <item name="exploretitleTextColor">@color/pOneColorPrimaryDark</item>
@@ -81,7 +80,6 @@
         <item name="colorPrimaryDark">@color/pTwoColorPrimaryDark</item>
         <item name="colorAccent">@color/pTwoColorAccent</item>
         <item name="closeAdColor">@color/white</item>
-        <item name="menuIconTintColor">@color/white</item>
         <item name="savedTimeTxtColor">@color/pTwoColorWhite</item>
         <item name="snackBarViewTextColor">@color/pTwoColorAccent</item>
         <item name="exploretitleTextColor">@color/pTwoColorPrimary</item>
@@ -113,43 +111,42 @@
     </style>
 
     <!--Premium Theme 3 -->
-    <style name="PremiumThemeThree" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/pThreeColorPrimary</item>
-        <item name="colorPrimaryDark">@color/pThreeColorPrimaryDark</item>
-        <item name="colorAccent">@color/pThreeColorAccent</item>
-        <item name="titleTextColor">@color/black</item>
-        <item name="menuIconTintColor">@color/black</item>
-        <item name="closeAdColor">@color/black</item>
-        <item name="actionMenuTextColor">@color/black</item>
-        <item name="savedTimeTxtColor">@color/black</item>
-        <item name="snackBarViewTextColor">@color/pThreeColor2</item>
-        <item name="exploretitleTextColor">@color/black</item>
-        <item name="mainBackground">@color/pThreeColorPrimary</item>
-        <item name="snackBgColor">@color/pThreeColorPrimaryDark</item>
-        <item name="navbackgroundColor">@color/pThreeColorAccent</item>
-        <item name="categoryTextColor">@color/black</item>
-        <item name="upgradeBtnColor">@color/pThreeColorAccent</item>
+    <style name="PremiumThemeThree" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="mainBackground">@color/black</item>
         <item name="exploreMottotextColor">@color/black</item>
-        <item name="exploreMottoBgColor">@color/pThreeColorPrimaryDark</item>
-        <item name="streakSettingsColor">@color/pThreeColorAccent</item>
-        <item name="imagePlaceHolderColor">@color/pThreeColorPrimaryDark</item>
+        <item name="exploreMottoBgColor">@color/colorPrimary</item>
+        <item name="snackBarViewTextColor">@color/colorPrimary</item>
+        <item name="exploretitleTextColor">@color/black</item>
+        <item name="closeAdColor">@color/white</item>
+        <item name="navbackgroundColor">@color/colorPrimary</item>
+        <item name="categoryTextColor">@color/white</item>
+        <item name="upgradeBtnColor">@color/colorPrimary</item>
+        <item name="snackBgColor">@color/mygrey</item>
+        <item name="imagePlaceHolderColor">@color/colorPrimary</item>
         <item name="textColorForSportScienceAndBusiness">@color/white</item>
         <item name="titleTextColorForEtAndBrkNews">@color/black</item>
-        <item name="sourceAndPublishedAtColorForEtBrkNews">@color/pThreeColor1</item>
-        <item name="desColorForBrkNews">@color/black</item>
-        <item name="exploreNewsBg">@color/pThreeColorPrimary</item>
-        <item name="deleteAllBgColor">@color/pThreeColorAccent</item>
+        <item name="sourceAndPublishedAtColorForEtBrkNews">@color/colorPrimary</item>
+        <item name="desColorForBrkNews">@color/mygrey</item>
+        <item name="exploreNewsBg">@color/rv2items</item>
+        <item name="savedTimeTxtColor">@color/colorAccent</item>
+        <item name="deleteAllBgColor">@color/white</item>
         <item name="deleteAllBgText">@color/black</item>
         <item name="iconTintOnSelect">@color/white</item>
-        <item name="iconTintUnselected">@color/pThreeColor1</item>
-        <item name="exploreChooseMoreIconColor">@color/pThreeColor2</item>
-        <item name="exploreIconMoreOptionsColor">@color/pThreeColor2</item>
+        <item name="streakSettingsColor">@color/colorAccent</item>
+        <item name="iconTintUnselected">@color/black</item>
+        <item name="exploreChooseMoreIconColor">@color/white</item>
+        <item name="exploreIconMoreOptionsColor">@color/mygrey</item>
         <item name="eTAndBreakingNewsBgColor">@color/white</item>
-        <item name="seeMoreIconColor">@color/pThreeColor2</item>
-        <item name="deleteAllBtnYesTxtColor">@color/black</item>
-        <item name="upgradeBtnTextColor">@color/pThreeColor2</item>
-        <item name="deleteAllBtnNoTxtColor">@color/black</item>
+        <item name="seeMoreIconColor">@color/white</item>
+        <item name="upgradeBtnTextColor">@color/white</item>
+        <item name="deleteAllBtnYesTxtColor">@color/white</item>
+        <item name="deleteAllBtnNoTxtColor">@color/white</item>
     </style>
+
 
     <!--Premium Theme 4 -->
     <style name="PremiumThemeFour" parent="Theme.MaterialComponents.Light.DarkActionBar">
@@ -157,7 +154,6 @@
         <item name="colorPrimaryDark">@color/pFourColorPrimaryDark</item>
         <item name="colorAccent">@color/pFourColorAccent</item>
         <item name="closeAdColor">@color/white</item>
-        <item name="menuIconTintColor">@color/white</item>
         <item name="savedTimeTxtColor">@color/pFourColor2</item>
         <item name="snackBarViewTextColor">@color/black</item>
         <item name="exploretitleTextColor">@color/pFourColor2</item>
@@ -173,7 +169,7 @@
         <item name="textColorForSportScienceAndBusiness">@color/white</item>
         <item name="titleTextColorForEtAndBrkNews">@color/white</item>
         <item name="sourceAndPublishedAtColorForEtBrkNews">@color/pFourColorAccent</item>
-        <item name="desColorForBrkNews">@color/mygrey</item>
+        <item name="desColorForBrkNews">@color/white</item>
         <item name="exploreNewsBg">@color/pFourColorPrimary</item>
         <item name="deleteAllBgColor">@color/pFourColorAccent</item>
         <item name="deleteAllBgText">@color/black</item>
@@ -188,13 +184,48 @@
         <item name="deleteAllBtnNoTxtColor">@color/black</item>
     </style>
 
+    <style name="PremiumThemeFive" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/pFiveColorPrimary</item>
+        <item name="colorPrimaryDark">@color/pFiveColorPrimary</item>
+        <item name="colorAccent">@color/pFiveColorAccent</item>
+        <item name="closeAdColor">@color/white</item>
+        <item name="savedTimeTxtColor">@color/pFiveColorAccent</item>
+        <item name="snackBarViewTextColor">@color/pFiveColorPrimary</item>
+        <item name="exploretitleTextColor">@color/pFiveColorPrimaryDark</item>
+        <item name="mainBackground">@color/pFiveColor1</item>
+        <item name="snackBgColor">@color/pFiveColor1</item>
+        <item name="navbackgroundColor">@color/pFiveColorPrimary</item>
+        <item name="categoryTextColor">@color/pFiveColorPrimaryDark</item>
+        <item name="upgradeBtnColor">@color/pFiveColorAccent</item>
+        <item name="exploreMottotextColor">@color/pFiveColor1</item>
+        <item name="exploreMottoBgColor">@color/pFiveColorPrimary</item>
+        <item name="streakSettingsColor">@color/pFiveColorAccent</item>
+        <item name="imagePlaceHolderColor">@color/pFiveColorPrimaryDark</item>
+        <item name="textColorForSportScienceAndBusiness">@color/white</item>
+        <item name="titleTextColorForEtAndBrkNews">@color/pFiveColor1</item>
+        <item name="sourceAndPublishedAtColorForEtBrkNews">@color/pFiveColorPrimary</item>
+        <item name="desColorForBrkNews">@color/pFiveColor1</item>
+        <item name="exploreNewsBg">@color/pFiveColorPrimaryDark</item>
+        <item name="deleteAllBgColor">@color/pFiveColorPrimaryDark</item>
+        <item name="deleteAllBgText">@color/pFiveColor1</item>
+        <item name="iconTintOnSelect">@color/pFiveColorPrimaryDark</item>
+        <item name="iconTintUnselected">@color/pFiveColor1</item>
+        <item name="exploreChooseMoreIconColor">@color/pFiveColorPrimary</item>
+        <item name="exploreIconMoreOptionsColor">@color/pFiveColorPrimary</item>
+        <item name="eTAndBreakingNewsBgColor">@color/pFiveColorPrimaryDark</item>
+        <item name="seeMoreIconColor">@color/pFiveColorPrimaryDark</item>
+        <item name="deleteAllBtnYesTxtColor">@color/pFiveColorPrimaryDark</item>
+        <item name="upgradeBtnTextColor">@color/pFiveColorPrimaryDark</item>
+        <item name="deleteAllBtnNoTxtColor">@color/pFiveColor1</item>
+    </style>
+
 
     <style name="customToast">
         <item name="colorBackground">@color/mygrey</item>
         <item name="textColor">@color/white</item>
         <item name="iconRight">@drawable/error_ic</item>
         <item name="strokeColor">@color/colorPrimary</item>
-        <item name="fontFamily">@font/amaranth_bold</item>
+        <item name="fontFamily">@font/rubik_bold</item>
         <item name="strokeWidth">3dp</item>
         <item name="length">LONG</item>
         <item name="cornerRadius">5dp</item>

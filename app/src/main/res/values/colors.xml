@@ -41,4 +41,10 @@
     <color name="pFourColorAccent">#590202</color>
     <color name="pFourColor1">#260101</color>
     <color name="pFourColor2">#0D0D0D</color>
+
+    <!--premiumFiveColors -->
+    <color name="pFiveColorPrimary">#F7444E</color>
+    <color name="pFiveColorPrimaryDark">#F8F7F7</color>
+    <color name="pFiveColorAccent">#43C7FF</color>
+    <color name="pFiveColor1">#141E1F</color>
 </resources>
