@@ -1,5 +1,6 @@
 package com.crushtech.newslify.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -59,6 +60,7 @@ class PremiumThemesAdapter : RecyclerView.Adapter<PremiumThemesAdapter.ThemesVie
 
                     val intent = Intent(context, NewsActivity::class.java)
                     context.startActivity(intent)
+                    (context as Activity).finish()
                 }
             }
         }
