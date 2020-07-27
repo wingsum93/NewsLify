@@ -1,5 +1,6 @@
 package com.crushtech.newslify.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ class BusinessNewsCoverAdapter :
     }
 
     override fun getItemCount(): Int {
-        return if(showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
+        return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
     override fun onBindViewHolder(
@@ -39,7 +40,7 @@ class BusinessNewsCoverAdapter :
         holder.itemView.apply {
             if (showShimmer) {
                 bs_shimmer.startShimmer()
-            }else {
+            } else {
                 val article = differ.currentList[position]
                 bs_shimmer.apply {
                     stopShimmer()
@@ -48,6 +49,7 @@ class BusinessNewsCoverAdapter :
                 bnews_picture.background = null
                 b_title.background = null
                 b_publishedAt.background = null
+
 
                 try {
                     if (article?.urlToImage.isNullOrEmpty()) {
@@ -79,7 +81,6 @@ class BusinessNewsCoverAdapter :
             }
         }
     }
-
 
 
     private var onItemClickListener: ((Article) -> Unit)? = null

@@ -2,11 +2,13 @@ package com.crushtech.newslify.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -60,9 +62,18 @@ class PremiumThemesAdapter : RecyclerView.Adapter<PremiumThemesAdapter.ThemesVie
 
                     val intent = Intent(context, NewsActivity::class.java)
                     context.startActivity(intent)
-                    (context as Activity).finish()
+                    getActivity(context).finish()
                 }
             }
+        }
+    }
+
+    //checks for available context
+    private fun getActivity(context: Context): Activity {
+        return when (context) {
+            is Activity -> context
+            is ContextWrapper -> getActivity(context.baseContext)
+            else -> error("Non Activity based context")
         }
     }
 

@@ -47,6 +47,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="50dp"
                     android:textStyle="bold"
+                    style="@style/SportScienceAndBusNewsOverlayText"
                     android:maxLines="3"
                     android:textColor="?attr/textColorForSportScienceAndBusiness"
                     android:textSize="15sp" />
@@ -58,6 +59,7 @@
                     android:layout_marginStart="7dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    style="@style/SportScienceAndBusNewsOverlayText"
                     android:fontFamily="@font/rubik_medium"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
