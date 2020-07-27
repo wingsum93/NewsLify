@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/mainBackground"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/emailSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/feeback_bg"
+        android:fontFamily="@font/rubik_medium"
+        android:hint="email subject"
+        android:inputType="text|textAutoComplete|textCapSentences"
+        android:maxLines="2"
+        android:padding="12dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/black" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/emailBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/feeback_bg"
+        android:fontFamily="@font/rubik_medium"
+        android:gravity="start"
+        android:hint="Enter message here..."
+        android:inputType="text|textCapSentences"
+        android:maxLines="5"
+        android:minHeight="150dp"
+        android:padding="10dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/black" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sendEmailFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/rubik_bold"
+        android:text="Send Feedback"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:cornerRadius="19dp"
+        app:rippleColor="@android:color/holo_green_light" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelFeedback"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/rubik_bold"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        app:cornerRadius="19dp"
+        app:rippleColor="@color/color_red_AA" />
+</LinearLayout>

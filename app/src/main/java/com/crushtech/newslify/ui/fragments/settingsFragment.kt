@@ -20,6 +20,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
@@ -29,12 +30,16 @@ import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog.showPopupDialog
+import com.crushtech.newslify.ui.util.Constants.Companion.MY_EMAIL
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.mikelau.countrypickerx.CountryPickerCallbacks
 import com.mikelau.countrypickerx.CountryPickerDialog
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.settings_layout.*
 import java.util.ArrayList
@@ -77,6 +82,10 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         setupWhyUpgradePopUp()
         setupPurchaseThemes()
 
+        sendFeedback.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_sendFeebackFragment)
+        }
+
     }
 
     private fun setupDailyGoals() {
@@ -84,7 +93,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 //            if (!isPremiumUser) {
 //                activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
 //            } else {
-            val dialog = Dialog(requireContext())
+            val dialog = Dialog(requireContext(), R.style.PauseDialog)
             dialog.setContentView(R.layout.news_goals_dialog)
             val dismissDialog = dialog.findViewById<Button>(R.id.btn_cancel)
             val setDailyCount = dialog.findViewById<Button>(R.id.btn_set)
@@ -95,38 +104,38 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             )
             val prefs =
                 requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
-                val getPrefsCount = prefs.getInt("Goal Count", 5)
-                goalCount.setText(getPrefsCount.toString())
+            val getPrefsCount = prefs.getInt("Goal Count", 5)
+            goalCount.setText(getPrefsCount.toString())
 
-                dismissDialog.setOnClickListener {
-                    dismissDialog.animation = animation
+            dismissDialog.setOnClickListener {
+                dismissDialog.animation = animation
+                dialog.dismiss()
+            }
+            setDailyCount.setOnClickListener {
+                setDailyCount.animation = animation
+                goalCount.let {
+                    var goalCountText = it.text.toString()
+                    if (TextUtils.isEmpty(goalCountText) || goalCountText == "0") {
+                        goalCountText = "5"
+                    }
+                    requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
+                        .edit().putInt("Goal Count", goalCountText.toInt()).apply()
+                }
+                view?.let { it1 ->
+                    SimpleCustomSnackbar.make(
+                        it1, "Your Goal is set: you're good to go",
+                        Snackbar.LENGTH_LONG, null, R.drawable.rocket, "",
+                        null
+                    )?.show()
+                }
+                if (dialog.isShowing) {
                     dialog.dismiss()
                 }
-                setDailyCount.setOnClickListener {
-                    setDailyCount.animation = animation
-                    goalCount.let {
-                        var goalCountText = it.text.toString()
-                        if (TextUtils.isEmpty(goalCountText) || goalCountText == "0") {
-                            goalCountText = "5"
-                        }
-                        requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
-                            .edit().putInt("Goal Count", goalCountText.toInt()).apply()
-                    }
-                    view?.let { it1 ->
-                        SimpleCustomSnackbar.make(
-                            it1, "Your Goal is set: you're good to go",
-                            Snackbar.LENGTH_LONG, null, R.drawable.rocket, "",
-                            null
-                        )?.show()
-                    }
-                    if (dialog.isShowing) {
-                        dialog.dismiss()
-                    }
-                    hideKeyboard()
-                }
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.show()
-                dialog.setCancelable(false)
+                hideKeyboard()
+            }
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+            dialog.setCancelable(false)
             // }
         }
     }
@@ -328,10 +337,16 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         }
     }
 
+
     override fun onStop() {
         countryPicker?.dismiss()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onStop()
+    }
+
+    override fun onResume() {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onResume()
     }
 
     private fun Fragment.hideKeyboard() {

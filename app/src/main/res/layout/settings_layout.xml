@@ -69,15 +69,15 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="50dp"
-            android:fontFamily="@font/rubik_bold"
             android:elevation="24dp"
-            android:textColor="?attr/upgradeBtnTextColor"
+            android:fontFamily="@font/rubik_bold"
             android:padding="20dp"
             android:text="Why Upgrade?"
             android:textAllCaps="false"
-            app:backgroundTint="?attr/upgradeBtnColor"
+            android:textColor="?attr/upgradeBtnTextColor"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:backgroundTint="?attr/upgradeBtnColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upgrade_to_premium" />
@@ -180,6 +180,18 @@
                 android:fontFamily="@font/rubik_bold"
                 android:padding="20dp"
                 android:text="@string/change_country"
+                android:textColor="?attr/categoryTextColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sendFeedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/chevron_ic"
+                android:fontFamily="@font/rubik_bold"
+                android:padding="20dp"
+                android:text="Send feedback"
                 android:textColor="?attr/categoryTextColor"
                 android:textSize="18sp"
                 android:textStyle="bold" />

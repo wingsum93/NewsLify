@@ -221,14 +221,21 @@
 
 
     <style name="customToast">
-        <item name="colorBackground">@color/mygrey</item>
+        <item name="colorBackground">@color/colorPrimary</item>
         <item name="textColor">@color/white</item>
         <item name="iconRight">@drawable/error_ic</item>
-        <item name="strokeColor">@color/colorPrimary</item>
         <item name="fontFamily">@font/rubik_bold</item>
-        <item name="strokeWidth">3dp</item>
         <item name="length">LONG</item>
-        <item name="cornerRadius">5dp</item>
+        <item name="cornerRadius">15dp</item>
+    </style>
+
+    <style name="customToast1">
+        <item name="colorBackground">@color/colorPrimary</item>
+        <item name="textColor">@color/white</item>
+        <item name="iconRight">@drawable/email_sent_icon</item>
+        <item name="fontFamily">@font/rubik_bold</item>
+        <item name="length">LONG</item>
+        <item name="cornerRadius">10dp</item>
     </style>
 
     <style name="SportScienceAndBusNewsOverlayText">
@@ -242,4 +249,12 @@
         <item name="android:shadowRadius">1</item>
     </style>
 
+    <style name="PauseDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+    </style>
+
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
+    </style>
 </resources>
