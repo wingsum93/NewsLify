@@ -10,6 +10,8 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
+import android.widget.CheckedTextView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -23,12 +25,16 @@ import com.crushtech.newslify.adapter.SavedArticlesAdapter
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
@@ -41,6 +47,8 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         viewModel = (activity as NewsActivity).newsViewModel
         retainInstance = true
         setUpRecyclerView()
+        setupSpannerLikeFilter()
+        setUpSpinnerLikeForCategories()
 
 
         newsAdapter.setOnItemClickListener { article ->
@@ -127,6 +135,187 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             updateUI(article)
         })
         setHasOptionsMenu(true)
+    }
+
+    private fun setupSpannerLikeFilter() {
+        val spinnerBottomDialog = BottomSheetDialog(
+            requireContext(),
+            R.style.Theme_MaterialComponents_BottomSheetDialog
+        )
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.saved_items_spinner, null)
+        spinnerBottomDialog.setContentView(view)
+        val allSavedItems = view.findViewById<TextView>(R.id.All_saved_items)
+        val oldestSavedItems = view.findViewById<TextView>(R.id.oldest_saved_items)
+        val newestSavedItems = view.findViewById<TextView>(R.id.newest_saved_items)
+        val ascSavedItems = view.findViewById<TextView>(R.id.asc_saved_items)
+        val cancelDialog = view.findViewById<MaterialButton>(R.id.cancel_filter)
+
+        allSavedItems.setOnClickListener {
+            spinnerFilter.text = allSavedItems.text
+            spinnerBottomDialog.dismiss()
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                newsAdapter.differ.submitList(article)
+                updateUI(article)
+            })
+        }
+        oldestSavedItems.setOnClickListener {
+            spinnerFilter.text = oldestSavedItems.text
+            spinnerBottomDialog.dismiss()
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                newsAdapter.differ.submitList(article)
+                updateUI(article)
+            })
+        }
+        newestSavedItems.setOnClickListener {
+            spinnerFilter.text = newestSavedItems.text
+            spinnerBottomDialog.dismiss()
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                newsAdapter.differ.submitList(article.reversed())
+                updateUI(article)
+            })
+        }
+        ascSavedItems.setOnClickListener {
+            spinnerFilter.text = ascSavedItems.text
+            spinnerBottomDialog.dismiss()
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val ascOrder = article.sortedBy {
+                    it.title
+                }
+                newsAdapter.differ.submitList(ascOrder)
+                updateUI(article)
+            })
+        }
+
+        cancelDialog.setOnClickListener {
+            spinnerBottomDialog.dismiss()
+        }
+        spinnerFilter.setOnClickListener {
+            spinnerBottomDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            spinnerBottomDialog.show()
+        }
+    }
+
+    private fun setUpSpinnerLikeForCategories() {
+        val spinnerBottomDialog = BottomSheetDialog(
+            requireContext(),
+            R.style.Theme_MaterialComponents_BottomSheetDialog
+        )
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.saved_items_spinner_categories, null)
+        spinnerBottomDialog.setContentView(view)
+
+        val tech = view.findViewById<TextView>(R.id.tech_saved_items)
+        val gen = view.findViewById<TextView>(R.id.gen_saved_items)
+        val sport = view.findViewById<TextView>(R.id.sport_saved_items)
+        val bus = view.findViewById<TextView>(R.id.bus_saved_items)
+        val sci = view.findViewById<TextView>(R.id.science_saved_items)
+        val health = view.findViewById<TextView>(R.id.health_saved_items)
+        val enter = view.findViewById<TextView>(R.id.ent_saved_items)
+        val dismissDialog = view.findViewById<MaterialButton>(R.id.cancel_category)
+
+
+        tech.setOnClickListener {
+            spinnerFilter1.text = tech.text
+            spinnerBottomDialog.dismiss()
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val techNews = article.filter {
+                    it.category!!.contains("Technology")
+                }
+                noCategoryFoundErrorMessage(techNews)
+                newsAdapter.differ.submitList(techNews)
+            })
+        }
+        gen.setOnClickListener {
+            spinnerFilter1.text = gen.text
+            spinnerBottomDialog.dismiss()
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val genNews = article.filter {
+                    it.category!!.contains("General")
+                }
+                noCategoryFoundErrorMessage(genNews)
+                newsAdapter.differ.submitList(genNews)
+            })
+        }
+        sport.setOnClickListener {
+            spinnerFilter1.text = sport.text
+            spinnerBottomDialog.dismiss()
+
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val sportNews = article.filter {
+                    it.category!!.contains("Sports")
+                }
+                noCategoryFoundErrorMessage(sportNews)
+                newsAdapter.differ.submitList(sportNews)
+            })
+        }
+        bus.setOnClickListener {
+            spinnerFilter1.text = bus.text
+            spinnerBottomDialog.dismiss()
+
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val busNews = article.filter {
+                    it.category!!.contains("Business")
+                }
+                noCategoryFoundErrorMessage(busNews)
+                newsAdapter.differ.submitList(busNews)
+            })
+        }
+        sci.setOnClickListener {
+            spinnerFilter1.text = sci.text
+            spinnerBottomDialog.dismiss()
+
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val sciNews = article.filter {
+                    it.category!!.contains("Science")
+                }
+                noCategoryFoundErrorMessage(sciNews)
+                newsAdapter.differ.submitList(sciNews)
+            })
+        }
+        health.setOnClickListener {
+            spinnerFilter1.text = health.text
+            spinnerBottomDialog.dismiss()
+
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val healthNews = article.filter {
+                    it.category!!.contains("Health")
+                }
+                noCategoryFoundErrorMessage(healthNews)
+                newsAdapter.differ.submitList(healthNews)
+            })
+        }
+        enter.setOnClickListener {
+            spinnerFilter1.text = enter.text
+            spinnerBottomDialog.dismiss()
+
+            viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+                val enterNews = article.filter {
+                    it.category!!.contains("Entertainment")
+                }
+                noCategoryFoundErrorMessage(enterNews)
+                newsAdapter.differ.submitList(enterNews)
+            })
+        }
+
+        dismissDialog.setOnClickListener {
+            spinnerBottomDialog.dismiss()
+        }
+        spinnerFilter1.setOnClickListener {
+            spinnerBottomDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            spinnerBottomDialog.show()
+        }
+    }
+
+    private fun noCategoryFoundErrorMessage(article: List<Article>) {
+        if (article.isEmpty()) {
+            SimpleCustomSnackbar.make(
+                requireView(),
+                "No saved news for this category",
+                Snackbar.LENGTH_LONG, null, R.drawable.no_item_icon, "", null
+            )?.show()
+        }
+        updateUI(article)
     }
 
     private fun setUpRecyclerView() {
@@ -216,5 +405,8 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }
+
+
 

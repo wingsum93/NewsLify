@@ -67,10 +67,6 @@ class NewsActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
         adView.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                adParent.visibility = View.VISIBLE
-                super.onAdLoaded()
-            }
         }
 
         val appBarConfig = AppBarConfiguration(
@@ -97,7 +93,7 @@ class NewsActivity : AppCompatActivity() {
     fun showBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.VISIBLE
-            adParent.visibility = View.VISIBLE
+           // adParent.visibility = View.VISIBLE
         } catch (e: Exception) {
         }
     }
