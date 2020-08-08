@@ -202,7 +202,7 @@ class ArticleFragment : Fragment() {
                 val getUsersGoalSet = usersGoalPrefs.getInt("Goal Count", 5)
                 val currentDay = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
 
-                if (currentDay > previousDay) {
+                if (currentDay > previousDay || previousDay == 365 || previousDay == 366) {
                     context?.getSharedPreferences(STREAK, Context.MODE_PRIVATE)?.edit()?.clear()
                         ?.apply()
                     requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)

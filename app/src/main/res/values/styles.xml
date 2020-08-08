@@ -191,7 +191,7 @@
         <item name="closeAdColor">@color/white</item>
         <item name="savedTimeTxtColor">@color/pFiveColorAccent</item>
         <item name="snackBarViewTextColor">@color/pFiveColorPrimary</item>
-        <item name="exploretitleTextColor">@color/pFiveColorPrimaryDark</item>
+        <item name="exploretitleTextColor">@color/black</item>
         <item name="mainBackground">@color/pFiveColor1</item>
         <item name="snackBgColor">@color/pFiveColor1</item>
         <item name="navbackgroundColor">@color/pFiveColorPrimary</item>
@@ -205,12 +205,12 @@
         <item name="titleTextColorForEtAndBrkNews">@color/pFiveColor1</item>
         <item name="sourceAndPublishedAtColorForEtBrkNews">@color/pFiveColorPrimary</item>
         <item name="desColorForBrkNews">@color/pFiveColor1</item>
-        <item name="exploreNewsBg">@color/pFiveColorPrimaryDark</item>
+        <item name="exploreNewsBg">@color/pFiveColor1</item>
         <item name="deleteAllBgColor">@color/pFiveColorPrimaryDark</item>
         <item name="deleteAllBgText">@color/pFiveColor1</item>
         <item name="iconTintOnSelect">@color/pFiveColorPrimaryDark</item>
         <item name="iconTintUnselected">@color/pFiveColor1</item>
-        <item name="exploreChooseMoreIconColor">@color/pFiveColorPrimary</item>
+        <item name="exploreChooseMoreIconColor">@color/white</item>
         <item name="exploreIconMoreOptionsColor">@color/pFiveColorPrimary</item>
         <item name="eTAndBreakingNewsBgColor">@color/pFiveColorPrimaryDark</item>
         <item name="seeMoreIconColor">@color/pFiveColorPrimaryDark</item>
@@ -244,9 +244,9 @@
         <item name="android:textColor">?attr/textColorForSportScienceAndBusiness</item>
         <item name="android:textSize">12sp</item>
         <item name="android:shadowColor">#000000</item>
-        <item name="android:shadowDx">1</item>
-        <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
     </style>
 
     <style name="PauseDialog" parent="@android:style/Theme.Dialog">

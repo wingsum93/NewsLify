@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Group
 import com.crushtech.newslify.ui.fragments.breakingNewsFragment
@@ -126,7 +123,7 @@ class GroupAdapter
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = entertainmentNews
             isNestedScrollingEnabled = true
         }

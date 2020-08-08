@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.BusinessNewsCoverAdapter
+import com.crushtech.newslify.adapter.SearchNewsAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants
@@ -32,16 +33,17 @@ import kotlinx.coroutines.*
 
 class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.OnQueryTextListener {
     private lateinit var viewModel: NewsViewModel
-    private lateinit var newsAdapter: BusinessNewsCoverAdapter
-    var TAG = "searchNewsFragment"
+    private lateinit var searchNewsAdapter: SearchNewsAdapter
+
     private var queryText: String? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
+        (activity as NewsActivity).showBottomNavigation()
 
         setUpRecyclerView()
 
-        newsAdapter.setOnItemClickListener { article ->
+        searchNewsAdapter.setOnItemClickListener { article ->
             article.category = "General News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
@@ -61,9 +63,9 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
                     response.data?.let {
                         GlobalScope.launch(Dispatchers.Main) {
                             delay(4000)
-                            newsAdapter.differ.submitList(it.articles.toList())
-                            newsAdapter.showShimmer = false
-                            newsAdapter.notifyDataSetChanged()
+                            searchNewsAdapter.differ.submitList(it.articles.toList())
+                            searchNewsAdapter.showShimmer = false
+                            searchNewsAdapter.notifyDataSetChanged()
                             val totalPages = it.totalResults / Constants.QUERY_PAGE_SIZE + 2
                             isLastPage = viewModel.searchNewsPage == totalPages
                             if (isLastPage) {
@@ -74,7 +76,7 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
                 }
                 is Resource.Error -> {
                     hideEmptySearchView()
-                    newsAdapter.showShimmer = false
+                    searchNewsAdapter.showShimmer = false
                     hideProgressBar()
                     response.message?.let {
                         SimpleCustomSnackbar.make(
@@ -96,18 +98,18 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
 
     private fun setUpRecyclerView() {
         // newsAdapter = BreakingNewsAdapter()
-        newsAdapter = BusinessNewsCoverAdapter()
-        newsAdapter.showShimmer = false
+        searchNewsAdapter = SearchNewsAdapter()
+        searchNewsAdapter.showShimmer = false
         rvSearchNews.apply {
-            adapter = newsAdapter
+            adapter = searchNewsAdapter
             layoutManager = LinearLayoutManager(activity)
             addOnScrollListener(myScrollListener)
         }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        newsAdapter.differ.submitList(null)
-        newsAdapter.showShimmer = true
+        searchNewsAdapter.differ.submitList(null)
+        searchNewsAdapter.showShimmer = true
         hideEmptySearchView()
         viewModel.searchNewsResponse = null
         performSearch(query)
@@ -221,6 +223,9 @@ class searchNewsFragment : Fragment(R.layout.fragment_search_news), SearchView.O
         search_article_text2.visibility = View.VISIBLE
     }
 
-
+    override fun onAttach(context: Context) {
+        (activity as NewsActivity).showBottomNavigation()
+        super.onAttach(context)
+    }
 }
 

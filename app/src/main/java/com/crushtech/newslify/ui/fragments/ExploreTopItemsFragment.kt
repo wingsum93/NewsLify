@@ -64,6 +64,9 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
 
 
     private fun setUpViewAllMagic() {
+        val getCountryCode =
+            requireContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE)
+        val countryIsoCode = getCountryCode.getString("countryIsoCode", "us")
         when (exploreItemCategory) {
             "Technology" -> {
                 viewModel.getTechnologyNews("us", "technology")
@@ -75,7 +78,15 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(newsResponse.articles.toList())
+                                        if (countryIsoCode == "us") {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList()
+                                            )
+                                        } else {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList().subList(20, 50)
+                                            )
+                                        }
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -117,9 +128,15 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(
-                                            newsResponse.articles.toList().subList(20, 50)
-                                        )
+                                        if (countryIsoCode == "us") {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList()
+                                            )
+                                        } else {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList().subList(20, 50)
+                                            )
+                                        }
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -161,9 +178,15 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(
-                                            newsResponse.articles.toList().subList(20, 50)
-                                        )
+                                        if (countryIsoCode == "us") {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList()
+                                            )
+                                        } else {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList().subList(20, 50)
+                                            )
+                                        }
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -205,9 +228,15 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(
-                                            newsResponse.articles.toList().subList(20, 50)
-                                        )
+                                        if (countryIsoCode == "us") {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList()
+                                            )
+                                        } else {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList().subList(20, 50)
+                                            )
+                                        }
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -291,9 +320,15 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        exploreTopItemAdapter.differ.submitList(
-                                            newsResponse.articles.toList().subList(20, 50)
-                                        )
+                                        if (countryIsoCode == "us") {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList()
+                                            )
+                                        } else {
+                                            exploreTopItemAdapter.differ.submitList(
+                                                newsResponse.articles.toList().subList(20, 50)
+                                            )
+                                        }
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2

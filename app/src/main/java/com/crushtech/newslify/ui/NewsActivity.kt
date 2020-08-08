@@ -56,7 +56,7 @@ class NewsActivity : AppCompatActivity() {
             ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
         val navController = Navigation.findNavController(this, R.id.newsNavHostFragment)
-        // bottomNavigationView.setupWithNavController(newsNavHostFragment.findNavController())
+
         bottomNavigationView.setOnNavigationItemSelectedListener {
             if (it.itemId != bottomNavigationView.selectedItemId) {
                 NavigationUI.onNavDestinationSelected(it, navController)

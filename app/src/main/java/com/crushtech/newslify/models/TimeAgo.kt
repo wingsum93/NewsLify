@@ -1,3 +1,5 @@
+import kotlinx.android.synthetic.main.breaking_news_items.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 private const val SECOND_MILLIS = 1000
@@ -5,7 +7,6 @@ private const val MINUTE_MILLIS = 60 * SECOND_MILLIS
 private const val HOUR_MILLIS = 60 * MINUTE_MILLIS
 private const val DAY_MILLIS = 24 * HOUR_MILLIS
 private const val WEEKDAYS = 7
-private const val WEEK = 1
 
 fun currentDate(): Date {
     val calendar = Calendar.getInstance()
@@ -32,13 +33,21 @@ fun getTimeAgo(date: Date): String {
         diff < 24 * HOUR_MILLIS -> "${diff / HOUR_MILLIS} hours ago"
         diff < 48 * HOUR_MILLIS -> "yesterday"
         else -> {
-            if (diff / DAY_MILLIS > 6 || diff / DAY_MILLIS == WEEKDAYS.toLong() && diff / DAY_MILLIS < WEEKDAYS * 2.toLong()) {
+            if (diff / DAY_MILLIS == WEEKDAYS.toLong()
+                && diff / DAY_MILLIS < WEEKDAYS * 2.toLong()
+            ) {
                 "a week ago"
-            } else if (diff / DAY_MILLIS > 13 || diff / DAY_MILLIS == WEEKDAYS * 2.toLong() && diff / DAY_MILLIS < WEEKDAYS * 3.toLong()) {
+            } else if (diff / DAY_MILLIS == WEEKDAYS * 2.toLong()
+                && diff / DAY_MILLIS < WEEKDAYS * 3.toLong()
+            ) {
                 "2 weeks ago"
-            } else if (diff / DAY_MILLIS > 20 || diff / DAY_MILLIS == WEEKDAYS * 3.toLong() && diff / DAY_MILLIS < WEEKDAYS * 4.toLong()) {
+            } else if (diff / DAY_MILLIS == WEEKDAYS * 3.toLong()
+                && diff / DAY_MILLIS < WEEKDAYS * 4.toLong()
+            ) {
                 "3 weeks ago"
-            } else if (diff / DAY_MILLIS > 27 || diff / DAY_MILLIS == WEEKDAYS * 4.toLong() && diff / DAY_MILLIS < WEEKDAYS * 5.toLong()) {
+            } else if (diff / DAY_MILLIS == WEEKDAYS * 4.toLong()
+                && diff / DAY_MILLIS < WEEKDAYS * 5.toLong()
+            ) {
                 "months ago"
             } else {
                 "${diff / DAY_MILLIS} days ago"
@@ -49,17 +58,3 @@ fun getTimeAgo(date: Date): String {
 
 }
 
-fun main() {
-//    val q = "https://www.instagram.com/p/CCwWzPXId9-/?igshid=168v569ffmqk8"
-//    print(urlShortener(q))
-    for (i in 1..14) {
-        if (i in 7..13) {
-            println(i)
-        }
-    }
-}
-
-fun urlShortener(url: String): String {
-    val index = url.indexOf("?")
-    return url.substring(0, index)
-}

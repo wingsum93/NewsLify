@@ -153,7 +153,18 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
         allSavedItems.setOnClickListener {
             spinnerFilter.text = allSavedItems.text
+            allSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.email_sent_icon,
+                0
+            )
+            oldestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            ascSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            newestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+
             spinnerBottomDialog.dismiss()
+            //  allSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0)
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
                 newsAdapter.differ.submitList(article)
                 updateUI(article)
@@ -161,6 +172,16 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
         oldestSavedItems.setOnClickListener {
             spinnerFilter.text = oldestSavedItems.text
+            oldestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.email_sent_icon,
+                0
+            )
+            allSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            ascSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            newestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+
             spinnerBottomDialog.dismiss()
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
                 newsAdapter.differ.submitList(article)
@@ -169,6 +190,18 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
         newestSavedItems.setOnClickListener {
             spinnerFilter.text = newestSavedItems.text
+
+            newestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.email_sent_icon,
+                0
+            )
+            oldestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            ascSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            allSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+
+
             spinnerBottomDialog.dismiss()
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
                 newsAdapter.differ.submitList(article.reversed())
@@ -177,6 +210,17 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
         ascSavedItems.setOnClickListener {
             spinnerFilter.text = ascSavedItems.text
+
+            ascSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                0,
+                0,
+                R.drawable.email_sent_icon,
+                0
+            )
+            oldestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            allSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+            newestSavedItems.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+
             spinnerBottomDialog.dismiss()
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
                 val ascOrder = article.sortedBy {
@@ -302,6 +346,106 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             spinnerBottomDialog.dismiss()
         }
         spinnerFilter1.setOnClickListener {
+            when (spinnerFilter1.text) {
+                "General" -> {
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+                "Sport" -> {
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+                "Technology" -> {
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+                "Science" -> {
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+                "Business" -> {
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+                "Health" -> {
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+                "Entertainment" -> {
+                    enter.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0,
+                        0,
+                        R.drawable.email_sent_icon,
+                        0
+                    )
+                    gen.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sport.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    tech.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    sci.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    bus.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                    health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                }
+            }
             spinnerBottomDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
             spinnerBottomDialog.show()
         }
@@ -311,7 +455,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         if (article.isEmpty()) {
             SimpleCustomSnackbar.make(
                 requireView(),
-                "No saved news for this category",
+                "No saved news was found in this category",
                 Snackbar.LENGTH_LONG, null, R.drawable.no_item_icon, "", null
             )?.show()
         }

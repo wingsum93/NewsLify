@@ -161,7 +161,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
                         try {
                             groupAdapter!!.entertainmentNews.differ.submitList(
-                                newsResponse.articles.toList().subList(0, 7)
+                                newsResponse.articles.toList().subList(0, 8)
                             )
                             groupAdapter!!.entertainmentNews.notifyDataSetChanged()
                         } catch (e: Exception) {
