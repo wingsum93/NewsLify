@@ -90,9 +90,7 @@ class NewsViewModel(
             )
             getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
         }
-//        val getCountryCode =
-//            app.applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
-//        val countryIsoCode = getCountryCode.getString("countryIsoCode", "us")
+
         try {
 
 
@@ -170,7 +168,7 @@ class NewsViewModel(
         try {
             if (hasInternetConnection()) {
                 val response =
-                    newsRepository.getTechnologyNews(countryCode, category, businessNewsPage)
+                    newsRepository.getTechnologyNews(countryCode, category, technologyNewsPage)
                 technologyNews.postValue(handleTechnologyNewsResponse(response))
 
             } else {

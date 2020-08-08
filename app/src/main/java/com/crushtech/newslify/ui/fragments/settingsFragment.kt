@@ -42,7 +42,7 @@ import com.mikelau.countrypickerx.CountryPickerDialog
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.settings_layout.*
-import java.util.ArrayList
+import java.util.*
 
 data class ThemeItems(val themeName: String, val lottieRaw: Int, val themeBackground: Int)
 
@@ -150,12 +150,14 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                     myCountry = country.getCountryName(context)
                     change_country.text = "Change Country: ${myCountry?.capitalize()}"
                     myCountry?.let { saveDataToPref(it) }
-                    SimpleCustomSnackbar.make(
-                        settings_coordinator, "Country changed: please RESTART the app",
-                        Snackbar.LENGTH_INDEFINITE, null,
-                        R.drawable.country_changed_icon, "",
-                        null
-                    )?.show()
+                    view?.let { it1 ->
+                        SimpleCustomSnackbar.make(
+                            it1, "Country changed: please RESTART the app",
+                            Snackbar.LENGTH_SHORT, null,
+                            R.drawable.country_changed_icon, "",
+                            null
+                        )?.show()
+                    }
                 }, false, 0
             )
             countryPicker!!.show()
@@ -167,7 +169,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         requireContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE).apply {
             edit().apply {
                 putString("Country", country)
-                putString("countryIsoCode", countryIsoCode)
+                putString("countryIsoCode", countryIsoCode!!.toLowerCase(Locale.ROOT))
                 apply()
             }
         }

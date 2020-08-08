@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.fragment_explore_top_items_news.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -69,7 +71,6 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
         val countryIsoCode = getCountryCode.getString("countryIsoCode", "us")
         when (exploreItemCategory) {
             "Technology" -> {
-                viewModel.getTechnologyNews("us", "technology")
                 viewModel.technologyNews.observe(
                     viewLifecycleOwner,
                     androidx.lifecycle.Observer { response ->
@@ -78,15 +79,9 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        if (countryIsoCode == "us") {
-                                            exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList()
-                                            )
-                                        } else {
-                                            exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList().subList(20, 50)
-                                            )
-                                        }
+                                        exploreTopItemAdapter.differ.submitList(
+                                            newsResponse.articles.toList()
+                                        )
                                         exploreTopItemAdapter.notifyDataSetChanged()
                                         val totalPages =
                                             newsResponse.totalResults / Constants.QUERY_PAGE_SIZE + 2
@@ -110,9 +105,10 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 }
                             }
                             is Resource.Loading -> {
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    delay(2000)
-                                }
+                                StyleableToast.makeText(
+                                    requireContext(),
+                                    "loading please wait", R.style.customToast1
+                                ).show()
                             }
                         }
                     })
@@ -128,13 +124,11 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 exploreTopItemAdapter.showShimmer = false
                                 response.data?.let { newsResponse ->
                                     try {
-                                        if (countryIsoCode == "us") {
-                                            exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList()
-                                            )
+                                        if (countryIsoCode!!.contains("us")) {
+                                            exploreTopItemAdapter.differ.submitList(newsResponse.articles.toList())
                                         } else {
                                             exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList().subList(20, 50)
+                                                newsResponse.articles.toList().drop(20)
                                             )
                                         }
                                         exploreTopItemAdapter.notifyDataSetChanged()
@@ -160,9 +154,10 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 }
                             }
                             is Resource.Loading -> {
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    delay(2000)
-                                }
+                                StyleableToast.makeText(
+                                    requireContext(),
+                                    "loading please wait", R.style.customToast1
+                                ).show()
                             }
                         }
                     })
@@ -184,7 +179,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                             )
                                         } else {
                                             exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList().subList(20, 50)
+                                                newsResponse.articles.toList().drop(20)
                                             )
                                         }
                                         exploreTopItemAdapter.notifyDataSetChanged()
@@ -210,9 +205,10 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 }
                             }
                             is Resource.Loading -> {
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    delay(2000)
-                                }
+                                StyleableToast.makeText(
+                                    requireContext(),
+                                    "loading please wait", R.style.customToast1
+                                ).show()
                             }
                         }
                     })
@@ -234,7 +230,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                             )
                                         } else {
                                             exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList().subList(20, 50)
+                                                newsResponse.articles.toList().drop(20)
                                             )
                                         }
                                         exploreTopItemAdapter.notifyDataSetChanged()
@@ -260,9 +256,10 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 }
                             }
                             is Resource.Loading -> {
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    delay(2000)
-                                }
+                                StyleableToast.makeText(
+                                    requireContext(),
+                                    "loading please wait", R.style.customToast1
+                                ).show()
                             }
                         }
                     })
@@ -302,9 +299,10 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 }
                             }
                             is Resource.Loading -> {
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    delay(2000)
-                                }
+                                StyleableToast.makeText(
+                                    requireContext(),
+                                    "loading please wait", R.style.customToast1
+                                ).show()
                             }
                         }
                     })
@@ -326,7 +324,7 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                             )
                                         } else {
                                             exploreTopItemAdapter.differ.submitList(
-                                                newsResponse.articles.toList().subList(20, 50)
+                                                newsResponse.articles.toList().drop(20)
                                             )
                                         }
                                         exploreTopItemAdapter.notifyDataSetChanged()
@@ -352,14 +350,17 @@ class ExploreTopItemsFragment : Fragment(R.layout.fragment_explore_top_items_new
                                 }
                             }
                             is Resource.Loading -> {
-                                GlobalScope.launch(Dispatchers.Main) {
-                                    delay(2000)
-                                }
+                                StyleableToast.makeText(
+                                    requireContext(),
+                                    "loading please wait", R.style.customToast1
+                                ).show()
                             }
                         }
                     })
             }
         }
+
+
     }
 
     var isLoading = false
