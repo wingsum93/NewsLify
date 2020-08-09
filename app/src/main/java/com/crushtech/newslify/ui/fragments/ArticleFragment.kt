@@ -1,6 +1,7 @@
 package com.crushtech.newslify.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -251,12 +252,15 @@ class ArticleFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.fab_share1).setOnClickListener {
             val articleUrl = "From NewsLify:  ${article.url}"
             val shareSub = "APP NAME/TITLE"
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = "text/link"
-                putExtra(Intent.EXTRA_SUBJECT, shareSub)
-                putExtra(Intent.EXTRA_TEXT, articleUrl)
+            try {
+                val intent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/link"
+                    putExtra(Intent.EXTRA_SUBJECT, shareSub)
+                    putExtra(Intent.EXTRA_TEXT, articleUrl)
+                }
+                startActivity(Intent.createChooser(intent, "Share Using"))
+            } catch (e: ActivityNotFoundException) {
             }
-            startActivity(Intent.createChooser(intent, "Share Using"))
         }
 
         view.findViewById<WebView>(R.id.scrollwebView1).apply {

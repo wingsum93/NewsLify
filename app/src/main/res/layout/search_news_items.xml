@@ -31,7 +31,6 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="20dp"
                         android:layout_marginTop="3dp"
                         app:cardCornerRadius="10dp">
 
@@ -50,7 +49,6 @@
 
                         <TextView
                             android:id="@+id/search_news_title"
-                            style="@style/SportScienceAndBusNewsOverlayText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
@@ -66,7 +64,6 @@
 
                         <TextView
                             android:id="@+id/search_news_desc"
-                            style="@style/SportScienceAndBusNewsOverlayText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"
@@ -76,12 +73,11 @@
                             android:fontFamily="@font/rubik_bold"
                             android:maxLines="3"
                             android:padding="5dp"
-                            android:textColor="?attr/desColorForBrkNews"
+                            android:textColor="?attr/titleTextColorForEtAndBrkNews"
                             android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/search_news_publishedAt"
-                            style="@style/SportScienceAndBusNewsOverlayText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="7dp"

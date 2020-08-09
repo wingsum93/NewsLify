@@ -22,6 +22,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.crushtech.newslify.R
@@ -33,6 +34,7 @@ import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDial
 import com.crushtech.newslify.ui.util.Constants.Companion.MY_EMAIL
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -264,7 +266,10 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 //                this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
 //            }else {
             premiumDialog =
-                Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+                BottomSheetDialog(
+                    requireContext(),
+                    R.style.Theme_MaterialComponents_BottomSheetDialog
+                )
             premiumDialog.setContentView(R.layout.customthemes_popup_dialog)
             val dismissDialog =
                 premiumDialog.findViewById<ExtendedFloatingActionButton>(R.id.close_theme_popup)
@@ -322,7 +327,8 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             themesAdapter.differ.submitList(themesItems)
             recyclerView.apply {
                 adapter = themesAdapter
-                layoutManager = GridLayoutManager(requireContext(), 2)
+                layoutManager =
+                    GridLayoutManager(requireContext(), 2, LinearLayoutManager.HORIZONTAL, false)
             }
             // to update the current switch item
             if (!recyclerView.isComputingLayout && recyclerView.scrollState == SCROLL_STATE_IDLE) {

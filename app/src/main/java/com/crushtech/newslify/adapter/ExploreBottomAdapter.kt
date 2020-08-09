@@ -1,9 +1,6 @@
 package com.crushtech.newslify.adapter
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,17 +128,20 @@ class ExploreBottomAdapter(
                 }
             }
             view.shareExArticleLink.setOnClickListener {
-                val articleUrl = "From NewsLify:  ${items.url}"
-                val shareSub = "APP NAME/TITLE"
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "text/link"
-                    putExtra(Intent.EXTRA_SUBJECT, shareSub)
-                    putExtra(Intent.EXTRA_TEXT, articleUrl)
+                try {
+                    val articleUrl = "From NewsLify:  ${items.url}"
+                    val shareSub = "APP NAME/TITLE"
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/link"
+                        putExtra(Intent.EXTRA_SUBJECT, shareSub)
+                        putExtra(Intent.EXTRA_TEXT, articleUrl)
+                    }
+                    if (bottomDialog.isShowing) {
+                        bottomDialog.dismiss()
+                    }
+                    context.startActivity(Intent.createChooser(intent, "Share Using"))
+                } catch (e: ActivityNotFoundException) {
                 }
-                if (bottomDialog.isShowing) {
-                    bottomDialog.dismiss()
-                }
-                context.startActivity(Intent.createChooser(intent, "Share Using"))
 
             }
 
