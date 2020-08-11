@@ -250,15 +250,15 @@ class ArticleFragment : Fragment() {
 
 
         view.findViewById<FloatingActionButton>(R.id.fab_share1).setOnClickListener {
-            val articleUrl = "From NewsLify:  ${article.url}"
-            val shareSub = "APP NAME/TITLE"
             try {
+                val articleUrl = "From NewsLify:  ${article.url}"
+                val shareSub = "APP NAME/TITLE"
                 val intent = Intent(Intent.ACTION_SEND).apply {
                     type = "text/link"
                     putExtra(Intent.EXTRA_SUBJECT, shareSub)
                     putExtra(Intent.EXTRA_TEXT, articleUrl)
                 }
-                startActivity(Intent.createChooser(intent, "Share Using"))
+                requireContext().startActivity(Intent.createChooser(intent, "Share Using"))
             } catch (e: ActivityNotFoundException) {
             }
         }
