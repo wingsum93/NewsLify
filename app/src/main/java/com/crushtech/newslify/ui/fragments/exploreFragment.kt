@@ -24,6 +24,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.ArrayList
+import kotlin.math.exp
 
 data class Explore(val name: String, val imageSource: Int, val itemBackground: Int)
 data class ExploreSource(val sourceName: String, val img: Int, val motto: String)

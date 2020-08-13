@@ -14,15 +14,18 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
+import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.repository.NewsRepository
 import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_news.*
 import java.lang.reflect.Method
 
@@ -30,6 +33,7 @@ import java.lang.reflect.Method
 class NewsActivity : AppCompatActivity() {
     lateinit var newsViewModel: NewsViewModel
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    lateinit var newsRepository: NewsRepository
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +54,7 @@ class NewsActivity : AppCompatActivity() {
         }
 
         supportActionBar?.show()
-        val newsRepository = NewsRepository(ArticleDatabase(this))
+        newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository, application)
         newsViewModel =
             ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
@@ -93,7 +97,7 @@ class NewsActivity : AppCompatActivity() {
     fun showBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.VISIBLE
-           // adParent.visibility = View.VISIBLE
+            // adParent.visibility = View.VISIBLE
         } catch (e: Exception) {
         }
     }

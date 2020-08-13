@@ -21,7 +21,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/explore_top_coordinator"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_marginTop="10dp"
         android:elevation="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

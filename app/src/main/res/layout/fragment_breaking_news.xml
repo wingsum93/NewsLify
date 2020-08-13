@@ -49,21 +49,23 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/no_internet" />
 
-    <TextView
-        android:id="@+id/no_internet_text"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/retry_connection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/rubik_bold"
-        android:text="@string/opps_couldn_t_load_feed_have_you_tried_switching_on_your_data"
-        android:textAlignment="center"
-        android:textColor="?attr/categoryTextColor"
-        android:textSize="20sp"
-        android:visibility="gone"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?attr/colorAccent"
+        android:text="retry"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lottie_no_internet"
-        app:layout_constraintVertical_bias="0.104" />
+        app:layout_constraintVertical_bias="0.16000003" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

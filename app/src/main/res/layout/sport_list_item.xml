@@ -48,7 +48,7 @@
                     android:textStyle="bold"
                     android:maxLines="3"
                     android:textColor="?attr/textColorForSportScienceAndBusiness"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sport_publishedAt"
@@ -63,7 +63,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="20dp"
                     android:background="@color/shimmer_color"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
             </RelativeLayout>
 

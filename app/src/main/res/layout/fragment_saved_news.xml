@@ -12,7 +12,6 @@
         android:id="@+id/spinnerFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:backgroundTint="?attr/navbackgroundColor"
         android:drawableEnd="@drawable/arrow_drop_down"
         android:fontFamily="@font/rubik_bold"
@@ -23,16 +22,17 @@
         app:elevation="40dp"
         app:iconTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/rvSavedNews"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerFilter1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52"
         app:rippleColor="@color/white" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/spinnerFilter1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:backgroundTint="?attr/navbackgroundColor"
         android:drawableEnd="@drawable/arrow_drop_down"
         android:fontFamily="@font/rubik_bold"
@@ -44,9 +44,10 @@
         app:iconTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/rvSavedNews"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.79"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintStart_toEndOf="@+id/spinnerFilter"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.53"
         app:rippleColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView

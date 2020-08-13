@@ -13,6 +13,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/explore_rv1"
+            android:background="?attr/mainBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -25,8 +26,9 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/rubik_bold"
             android:text="@string/ftm"
+            android:padding="8dp"
             android:textColor="?attr/categoryTextColor"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/explore_rv2"

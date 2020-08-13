@@ -289,11 +289,10 @@ class ArticleFragment : Fragment() {
                         loadinghasFinished = true
                         lottie_webview_loading1.visibility = View.GONE
                         webview_loading_text2.visibility = View.GONE
-                        StyleableToast.makeText(
-                            requireContext(),
-                            "An error occurred",
-                            R.style.customToast
-                        ).show()
+                        SimpleCustomSnackbar.make(
+                            requireView(), "an unknown error occurred",
+                            Snackbar.LENGTH_SHORT, null, R.drawable.error_ic, "", null
+                        )?.show()
                     } catch (e: Exception) {
                     }
                 }

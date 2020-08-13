@@ -6,24 +6,33 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.airbnb.lottie.LottieAnimationView
 import com.crushtech.newslify.R
+import com.crushtech.newslify.api.NewsApi
+import com.crushtech.newslify.api.RetrofitInstance
+import com.crushtech.newslify.db.ArticleDatabase
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.NewsResponse
+import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.repository.NewsRepository
 import com.crushtech.newslify.ui.util.Resource
+import com.google.android.material.snackbar.Snackbar
 import com.muddzdev.styleabletoastlibrary.StyleableToast
+import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
 import java.util.*
 
 class NewsViewModel(
-    app: Application,
-    private val newsRepository: NewsRepository
+    private val app: Application,
+    private var newsRepository: NewsRepository
 ) : AndroidViewModel(app) {
 
     val businessNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
@@ -809,7 +818,7 @@ class NewsViewModel(
 
     suspend fun deleteAllArticles() = newsRepository.deleteAllArticles()
 
-    private fun hasInternetConnection(): Boolean {
+    fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<NewsApplication>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
@@ -838,5 +847,37 @@ class NewsViewModel(
             }
         }
         return false
+    }
+
+    fun retryData() {
+        val getCountryCode =
+            app.applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE)
+        val countryIsoCode = getCountryCode?.getString("countryIsoCode", "us")
+
+        if (countryIsoCode != null) {
+            getSportNews(countryIsoCode.toLowerCase(Locale.ROOT), "sport")
+            getBusinessNews(countryIsoCode.toLowerCase(Locale.ROOT), "business")
+            getAllBreakingNews(countryIsoCode.toLowerCase(Locale.ROOT))
+            getEntertainmentNews(
+                countryIsoCode.toLowerCase(Locale.ROOT), "entertainment",
+                app.applicationContext
+            )
+            getScienceNews(countryIsoCode.toLowerCase(Locale.ROOT), "science")
+        }
+
+        try {
+
+
+            getTechnologyNews("us", "technology")
+            getHealthNews("us", "health")
+            getSpecificNews6("wsj.com")
+            getSpecificNews5("cnbc.com")
+            getSpecificNews4("espn.com")
+            getSpecificNews3("reuters.com")
+            getSpecificNews2("techcrunch.com")
+            getSpecificNews1("cnn.com")
+            getSpecificNews("bbc.com")
+        } catch (e: Exception) {
+        }
     }
 }

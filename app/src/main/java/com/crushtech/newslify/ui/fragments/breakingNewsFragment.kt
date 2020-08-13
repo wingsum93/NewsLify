@@ -37,7 +37,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
-
     }
 
     override fun onCreateView(
@@ -63,7 +62,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
 
     private fun setUpRecyclerView() {
-
         initGroupData()
         setUpData()
         groupAdapter = GroupAdapter(
@@ -71,11 +69,11 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             this
         )
         groupAdapter!!.differ.submitList(groups!!)
+        rvBreakingNews.visibility = View.VISIBLE
         rvBreakingNews.apply {
             adapter = groupAdapter
             layoutManager = LinearLayoutManager(activity)
         }
-
     }
 
     private fun setUpData() {
@@ -97,12 +95,11 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
-                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
                             Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
-                          null
+                            null
                         )?.show()
 
                     }
@@ -135,7 +132,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
-                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
@@ -171,7 +167,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
-                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
@@ -205,7 +200,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 }
                 is Resource.Error -> {
                     lottie_no_internet.visibility = View.VISIBLE
-                    no_internet_text.visibility = View.VISIBLE
                     rvBreakingNews.visibility = View.INVISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
@@ -226,6 +220,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel.allBreakingNews.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
+                    retry_connection.visibility = View.GONE
                     groupAdapter!!.breakingNews.showShimmer = false
 
                     response.data?.let { newsResponse ->
@@ -241,7 +236,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Error -> {
                     rvBreakingNews.visibility = View.INVISIBLE
                     lottie_no_internet.visibility = View.VISIBLE
-                    no_internet_text.visibility = View.VISIBLE
                     response.message?.let {
                         SimpleCustomSnackbar.make(
                             brk_coordinator, "an error occurred: $it",
@@ -249,8 +243,25 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                             null
                         )?.show()
                     }
+                    if (groupAdapter!!.differ.currentList.isEmpty()) {
+                        retry_connection.visibility = View.VISIBLE
+                    }
+                    retry_connection.setOnClickListener {
+                        if (viewModel.hasInternetConnection()) {
+                            rvBreakingNews.visibility = View.VISIBLE
+                            lottie_no_internet.visibility = View.GONE
+                            viewModel.retryData()
+                        } else {
+                            SimpleCustomSnackbar.make(
+                                brk_coordinator, "no network connection",
+                                Snackbar.LENGTH_SHORT, null, R.drawable.network_off, "",
+                                null
+                            )?.show()
+                        }
+                    }
                 }
                 is Resource.Loading -> {
+                    retry_connection.visibility = View.GONE
                     GlobalScope.launch(Dispatchers.Main) {
                         delay(3000)
                     }

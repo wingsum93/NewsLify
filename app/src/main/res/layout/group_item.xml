@@ -26,7 +26,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:layout_toStartOf="@+id/view_all"
                 android:ellipsize="end"
                 android:fontFamily="@font/rubik_bold"
                 android:lines="1"
@@ -38,17 +37,24 @@
                 android:id="@+id/view_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:clickable="false"
                 android:focusable="false"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/rubik_bold"
-                android:maxLength="15"
                 android:text="View All"
-                android:drawableEnd="@drawable/chevron_ic"
+                android:padding="10dp"
                 android:textColor="?attr/colorAccent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/chevron_ic" />
 
         </RelativeLayout>
 

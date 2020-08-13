@@ -5,13 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
+import com.crushtech.newslify.models.CustomZoomLayoutManager
 import com.crushtech.newslify.models.Group
 import com.crushtech.newslify.ui.fragments.breakingNewsFragment
 import kotlinx.android.synthetic.main.group_item.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 class GroupAdapter
     (
@@ -64,8 +71,8 @@ class GroupAdapter
             0 -> setSportList(recyclerView)
             1 -> setBusinessList(recyclerView)
             2 -> setEntertainmentList(recyclerView)
-            3-> setScienceList(recyclerView)
-            4-> setBreakingNews(recyclerView)
+            3 -> setScienceList(recyclerView)
+            4 -> setBreakingNews(recyclerView)
 
         }
     }
@@ -87,6 +94,13 @@ class GroupAdapter
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = sportNews
             isNestedScrollingEnabled = true
+            post {
+                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
+                scrollBy(-dx, 0)
+                // Assign the LinearSnapHelper that will initially snap the near-center view.
+                val snapHelper = LinearSnapHelper()
+                snapHelper.attachToRecyclerView(recyclerView)
+            }
         }
     }
 
@@ -106,26 +120,43 @@ class GroupAdapter
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = businessNews
+            (layoutManager as LinearLayoutManager).scrollToPosition(3)
             isNestedScrollingEnabled = true
+            post {
+                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
+                scrollBy(-dx, 0)
+                // Assign the LinearSnapHelper that will initially snap the near-center view.
+                val snapHelper = LinearSnapHelper()
+                snapHelper.attachToRecyclerView(recyclerView)
+            }
         }
     }
+
     private fun setEntertainmentList(recyclerView: RecyclerView) {
-       entertainmentNews.setOnItemClickListener { article ->
-           article.category = "Entertainment"
-           val bundle = Bundle().apply {
-               putSerializable("article", article)
-           }
-           breakingNewsFragment.findNavController().navigate(
-               R.id.action_breakingNewsFragment_to_articleFragment,
-               bundle
-           )
+        entertainmentNews.setOnItemClickListener { article ->
+            article.category = "Entertainment"
+            val bundle = Bundle().apply {
+                putSerializable("article", article)
+            }
+            breakingNewsFragment.findNavController().navigate(
+                R.id.action_breakingNewsFragment_to_articleFragment,
+                bundle
+            )
         }
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager =
                 GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = entertainmentNews
+            (layoutManager as LinearLayoutManager).scrollToPosition(3)
             isNestedScrollingEnabled = true
+            post {
+                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
+                scrollBy(-dx, 0)
+                // Assign the LinearSnapHelper that will initially snap the near-center view.
+                val snapHelper = LinearSnapHelper()
+                snapHelper.attachToRecyclerView(recyclerView)
+            }
         }
     }
 
@@ -143,11 +174,20 @@ class GroupAdapter
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                CustomZoomLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = scienceNews
+            (layoutManager as LinearLayoutManager).scrollToPosition(3)
             isNestedScrollingEnabled = true
+            post {
+                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
+                scrollBy(-dx, 0)
+                // Assign the LinearSnapHelper that will initially snap the near-center view.
+                val snapHelper = LinearSnapHelper()
+                snapHelper.attachToRecyclerView(recyclerView)
+            }
         }
     }
+
     private fun setBreakingNews(recyclerView: RecyclerView) {
         breakingNews.setOnItemClickListener { article ->
             article.category = "General News"

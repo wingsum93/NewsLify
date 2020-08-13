@@ -30,6 +30,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:elevation="50dp"
+        android:textSize="16sp"
         app:icon="@drawable/no_item_icon"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"

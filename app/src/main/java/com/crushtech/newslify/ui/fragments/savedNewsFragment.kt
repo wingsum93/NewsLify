@@ -467,6 +467,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         rvSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
+            isNestedScrollingEnabled = true
         }
     }
 
