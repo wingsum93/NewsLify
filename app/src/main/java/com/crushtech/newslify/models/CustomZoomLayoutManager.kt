@@ -13,8 +13,8 @@ class CustomZoomLayoutManager(
     reverseLayout: Boolean
 ) :
     LinearLayoutManager(context, orientation, reverseLayout) {
-    private val mShrinkAmount = 0.5f
-    private val mShrinkDistance = 0.75f
+    private val mShrinkAmount = 0.15f
+    private val mShrinkDistance = 0.9f
     override fun scrollHorizontallyBy(
         dx: Int,
         recycler: Recycler,

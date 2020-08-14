@@ -14,26 +14,20 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.crushtech.newslify.R
 import com.crushtech.newslify.db.ArticleDatabase
-import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.repository.NewsRepository
-import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.activity_news.*
-import java.lang.reflect.Method
 
 
 class NewsActivity : AppCompatActivity() {
     lateinit var newsViewModel: NewsViewModel
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-    lateinit var newsRepository: NewsRepository
+    private lateinit var newsRepository: NewsRepository
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +41,6 @@ class NewsActivity : AppCompatActivity() {
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = Firebase.analytics
-
-        //show upgrade dialog
-        close_ad.setOnClickListener {
-            ShowUpgradePopUpDialog.showPopupDialog(this, this)
-        }
 
         supportActionBar?.show()
         newsRepository = NewsRepository(ArticleDatabase(this))
@@ -89,7 +78,7 @@ class NewsActivity : AppCompatActivity() {
     fun hideBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.GONE
-            adParent.visibility = View.GONE
+            adView.visibility = View.GONE
         } catch (e: Exception) {
         }
     }
@@ -97,7 +86,7 @@ class NewsActivity : AppCompatActivity() {
     fun showBottomNavigation() {
         try {
             bottomNavigationView.visibility = View.VISIBLE
-            // adParent.visibility = View.VISIBLE
+            adView.visibility = View.VISIBLE
         } catch (e: Exception) {
         }
     }

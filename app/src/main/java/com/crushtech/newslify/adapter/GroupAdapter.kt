@@ -14,15 +14,10 @@ import com.crushtech.newslify.models.CustomZoomLayoutManager
 import com.crushtech.newslify.models.Group
 import com.crushtech.newslify.ui.fragments.breakingNewsFragment
 import kotlinx.android.synthetic.main.group_item.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class GroupAdapter
     (
-    private val context: Context,
     private val breakingNewsFragment: breakingNewsFragment
 ) : RecyclerView.Adapter<GroupAdapter.GroupViewHolder>() {
     var businessNews: BusinessNewsCoverAdapter = BusinessNewsCoverAdapter()
@@ -66,7 +61,7 @@ class GroupAdapter
 
 
     private fun setLists(recyclerView: RecyclerView, position: Int) {
-        //todo 4. Create a new adapter for it and display it in the list
+       
         when (position) {
             0 -> setSportList(recyclerView)
             1 -> setBusinessList(recyclerView)
@@ -94,13 +89,6 @@ class GroupAdapter
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = sportNews
             isNestedScrollingEnabled = true
-            post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
-            }
         }
     }
 
@@ -118,9 +106,9 @@ class GroupAdapter
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                CustomZoomLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = businessNews
-            (layoutManager as LinearLayoutManager).scrollToPosition(3)
+            (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
                 val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
@@ -148,7 +136,7 @@ class GroupAdapter
             layoutManager =
                 GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = entertainmentNews
-            (layoutManager as LinearLayoutManager).scrollToPosition(3)
+            (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
                 val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
@@ -176,7 +164,7 @@ class GroupAdapter
             layoutManager =
                 CustomZoomLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = scienceNews
-            (layoutManager as LinearLayoutManager).scrollToPosition(3)
+            (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
                 val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2

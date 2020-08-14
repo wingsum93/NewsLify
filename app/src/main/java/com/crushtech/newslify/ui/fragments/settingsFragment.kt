@@ -30,7 +30,6 @@ import com.crushtech.newslify.adapter.PremiumThemesAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
-import com.crushtech.newslify.ui.fragments.settingsFragment.ShowUpgradePopUpDialog.showPopupDialog
 import com.crushtech.newslify.ui.util.Constants.Companion.MY_EMAIL
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
@@ -238,8 +237,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         }
     }
 
-    object ShowUpgradePopUpDialog {
-        fun showPopupDialog(context: Context, activity: Activity) {
+        private fun showPopupDialog(context: Context, activity: Activity) {
             val animation = AnimationUtils.loadAnimation(
                 context,
                 R.anim.button_anim
@@ -258,7 +256,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             dialog.show()
         }
-    }
+
 
     private fun setupPurchaseThemes() {
         purchaseThemes.setOnClickListener {

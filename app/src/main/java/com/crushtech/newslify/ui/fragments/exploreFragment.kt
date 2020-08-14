@@ -96,6 +96,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
             requireContext(), this, viewModel
         )
         exploreGroupAdapter!!.differ.submitList(exploreSource)
+        explore_rv2.visibility = View.VISIBLE
         explore_rv2.apply {
             adapter = exploreGroupAdapter
             isNestedScrollingEnabled = false

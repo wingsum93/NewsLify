@@ -64,10 +64,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private fun setUpRecyclerView() {
         initGroupData()
         setUpData()
-        groupAdapter = GroupAdapter(
-            requireContext(),
-            this
-        )
+        groupAdapter = GroupAdapter(this)
         groupAdapter!!.differ.submitList(groups!!)
         rvBreakingNews.visibility = View.VISIBLE
         rvBreakingNews.apply {
@@ -243,7 +240,7 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                             null
                         )?.show()
                     }
-                    if (groupAdapter!!.differ.currentList.isEmpty()) {
+                    if (!viewModel.hasInternetConnection()) {
                         retry_connection.visibility = View.VISIBLE
                     }
                     retry_connection.setOnClickListener {

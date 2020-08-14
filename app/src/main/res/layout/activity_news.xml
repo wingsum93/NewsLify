@@ -8,6 +8,19 @@
     android:background="?attr/mainBackground"
     tools:context="com.crushtech.newslify.ui.NewsActivity">
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="50dp"
+        app:adSize="BANNER"
+        app:adUnitId="@string/my_banner_id"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <FrameLayout
         android:id="@+id/flFragment"
         android:layout_width="match_parent"
@@ -27,34 +40,6 @@
             app:navGraph="@navigation/news_nav_graph" />
 
     </FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/adParent"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="?attr/mainBackground"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/flFragment"
-        app:layout_constraintVertical_bias="1.0">
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="50dp"
-            app:adSize="BANNER"
-            app:adUnitId="@string/my_banner_id" />
-
-        <ImageView
-            android:id="@+id/close_ad"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/no_item_icon" />
-    </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
