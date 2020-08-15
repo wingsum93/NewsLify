@@ -1,13 +1,14 @@
 package com.crushtech.newslify.adapter
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.GroupAdapter.SnapHelper.setUpSnapHelper
 import com.crushtech.newslify.models.CustomZoomLayoutManager
@@ -18,8 +19,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.explore_rv2_items.view.*
 
 class ExploreGroupAdapter(
-    val context: Context,
-    val exploreFragment: exploreFragment,
+    private val exploreFragment: exploreFragment,
     val viewModel: NewsViewModel
 ) :
     RecyclerView.Adapter<ExploreGroupAdapter.EsViewHolder>() {

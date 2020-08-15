@@ -4,15 +4,14 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crushtech.newslify.R
-import com.crushtech.newslify.adapter.ExploreItemsAdapter
 import com.crushtech.newslify.adapter.ExploreGroupAdapter
+import com.crushtech.newslify.adapter.ExploreItemsAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
@@ -23,8 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.ArrayList
-import kotlin.math.exp
+import java.util.*
 
 data class Explore(val name: String, val imageSource: Int, val itemBackground: Int)
 data class ExploreSource(val sourceName: String, val img: Int, val motto: String)
@@ -92,9 +90,7 @@ class exploreFragment : Fragment(R.layout.explore_layout) {
     private fun setUpRecyclerViewForSource() {
         initExploreSourceItems()
         setUpData()
-        exploreGroupAdapter = ExploreGroupAdapter(
-            requireContext(), this, viewModel
-        )
+        exploreGroupAdapter = ExploreGroupAdapter(this, viewModel)
         exploreGroupAdapter!!.differ.submitList(exploreSource)
         explore_rv2.visibility = View.VISIBLE
         explore_rv2.apply {
