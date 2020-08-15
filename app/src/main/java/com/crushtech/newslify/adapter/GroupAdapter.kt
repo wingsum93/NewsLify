@@ -1,6 +1,5 @@
 package com.crushtech.newslify.adapter
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +9,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
+import com.crushtech.newslify.adapter.GroupAdapter.SnapHelper.setUpSnapHelper
 import com.crushtech.newslify.models.CustomZoomLayoutManager
 import com.crushtech.newslify.models.Group
 import com.crushtech.newslify.ui.fragments.breakingNewsFragment
@@ -61,7 +61,7 @@ class GroupAdapter
 
 
     private fun setLists(recyclerView: RecyclerView, position: Int) {
-       
+
         when (position) {
             0 -> setSportList(recyclerView)
             1 -> setBusinessList(recyclerView)
@@ -90,6 +90,7 @@ class GroupAdapter
             adapter = sportNews
             isNestedScrollingEnabled = true
         }
+
     }
 
     private fun setBusinessList(recyclerView: RecyclerView) {
@@ -111,11 +112,7 @@ class GroupAdapter
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -139,11 +136,7 @@ class GroupAdapter
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -167,11 +160,7 @@ class GroupAdapter
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -226,5 +215,16 @@ class GroupAdapter
         }
     }
 
-
+    object SnapHelper {
+        fun setUpSnapHelper(recyclerView: RecyclerView) {
+            if (recyclerView.getChildAt(0) != null) {
+                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
+                recyclerView.scrollBy(-dx, 0)
+                // Assign the LinearSnapHelper that will initially snap the near-center view.
+                val snapHelper = LinearSnapHelper()
+                if (recyclerView.onFlingListener == null)
+                    snapHelper.attachToRecyclerView(recyclerView)
+            }
+        }
+    }
 }

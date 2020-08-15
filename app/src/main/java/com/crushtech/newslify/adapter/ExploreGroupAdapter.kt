@@ -9,6 +9,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
+import com.crushtech.newslify.adapter.GroupAdapter.SnapHelper.setUpSnapHelper
 import com.crushtech.newslify.models.CustomZoomLayoutManager
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.ExploreSource
@@ -99,11 +100,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -127,11 +124,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -155,11 +148,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -183,11 +172,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -212,11 +197,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -240,11 +221,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
@@ -269,11 +246,7 @@ class ExploreGroupAdapter(
             (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
             post {
-                val dx = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
-                scrollBy(-dx, 0)
-                // Assign the LinearSnapHelper that will initially snap the near-center view.
-                val snapHelper = LinearSnapHelper()
-                snapHelper.attachToRecyclerView(recyclerView)
+                setUpSnapHelper(recyclerView)
             }
         }
     }
