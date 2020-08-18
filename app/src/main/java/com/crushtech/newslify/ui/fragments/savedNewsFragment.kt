@@ -10,7 +10,6 @@ import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
-import android.widget.CheckedTextView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,14 +18,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.SavedArticlesAdapter
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -34,15 +32,27 @@ import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.util.*
+import kotlin.properties.Delegates
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private lateinit var viewModel: NewsViewModel
+    private lateinit var catAnim: Animation
     private lateinit var newsAdapter: SavedArticlesAdapter
+    private var currentTheme by Delegates.notNull<Int>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        catAnim = AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.button_anim
+        )
+        //get current theme
+        val componentName = (activity as NewsActivity).componentName
+        currentTheme = (activity as NewsActivity).packageManager.getActivityInfo(
+            componentName,
+            0
+        ).themeResource
 
         viewModel = (activity as NewsActivity).newsViewModel
         retainInstance = true
@@ -139,17 +149,21 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun setupSpannerLikeFilter() {
         val spinnerBottomDialog = BottomSheetDialog(
-            requireContext(),
-            R.style.Theme_MaterialComponents_BottomSheetDialog
+            requireContext(), currentTheme
+
         )
         val view =
             LayoutInflater.from(context).inflate(R.layout.saved_items_spinner, null)
         spinnerBottomDialog.setContentView(view)
+
+
         val allSavedItems = view.findViewById<TextView>(R.id.All_saved_items)
         val oldestSavedItems = view.findViewById<TextView>(R.id.oldest_saved_items)
         val newestSavedItems = view.findViewById<TextView>(R.id.newest_saved_items)
         val ascSavedItems = view.findViewById<TextView>(R.id.asc_saved_items)
         val cancelDialog = view.findViewById<MaterialButton>(R.id.cancel_filter)
+
+        cancelDialog.startAnimation(catAnim)
 
         allSavedItems.setOnClickListener {
             spinnerFilter.text = allSavedItems.text
@@ -235,19 +249,22 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             spinnerBottomDialog.dismiss()
         }
         spinnerFilter.setOnClickListener {
-            spinnerBottomDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            spinnerBottomDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             spinnerBottomDialog.show()
+            checkForDialogState(spinnerBottomDialog)
         }
+
     }
 
     private fun setUpSpinnerLikeForCategories() {
         val spinnerBottomDialog = BottomSheetDialog(
             requireContext(),
-            R.style.Theme_MaterialComponents_BottomSheetDialog
+            currentTheme
         )
         val view =
             LayoutInflater.from(context).inflate(R.layout.saved_items_spinner_categories, null)
         spinnerBottomDialog.setContentView(view)
+
 
         val tech = view.findViewById<TextView>(R.id.tech_saved_items)
         val gen = view.findViewById<TextView>(R.id.gen_saved_items)
@@ -257,7 +274,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         val health = view.findViewById<TextView>(R.id.health_saved_items)
         val enter = view.findViewById<TextView>(R.id.ent_saved_items)
         val dismissDialog = view.findViewById<MaterialButton>(R.id.cancel_category)
-
+        dismissDialog.startAnimation(catAnim)
 
         tech.setOnClickListener {
             spinnerFilter1.text = tech.text
@@ -446,8 +463,9 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                     health.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
                 }
             }
-            spinnerBottomDialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            spinnerBottomDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             spinnerBottomDialog.show()
+            checkForDialogState(spinnerBottomDialog)
         }
     }
 
@@ -551,6 +569,15 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         return super.onOptionsItemSelected(item)
     }
 
+
+    private fun checkForDialogState(dialog: BottomSheetDialog) {
+        if (dialog.isShowing) {
+            (activity as NewsActivity).hideBottomNavigation()
+        }
+        dialog.setOnDismissListener {
+            (activity as NewsActivity).showBottomNavigation()
+        }
+    }
 }
 
 

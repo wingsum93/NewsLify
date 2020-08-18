@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.GroupAdapter.SnapHelper.setUpSnapHelper
 import com.crushtech.newslify.models.CustomZoomLayoutManager
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.ExploreSource
 import com.crushtech.newslify.ui.fragments.exploreFragment
@@ -25,19 +26,54 @@ class ExploreGroupAdapter(
     RecyclerView.Adapter<ExploreGroupAdapter.EsViewHolder>() {
 
     var bbcNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "Bbc News")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "Bbc News",
+            exploreFragment.activity as NewsActivity
+        )
     var cnnNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "Cnn News")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "Cnn News",
+            exploreFragment.activity as NewsActivity
+        )
     var techCrunchnewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "TechCrunch News")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "TechCrunch News",
+            exploreFragment.activity as NewsActivity
+        )
     var reutersNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "Reuters News")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "Reuters News",
+            exploreFragment.activity as NewsActivity
+        )
     var espnNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "Espn News")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "Espn News",
+            exploreFragment.activity as NewsActivity
+        )
     var cnbcNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "Cnbc News")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "Cnbc News",
+            exploreFragment.activity as NewsActivity
+        )
     var wsjNewsSource: ExploreBottomAdapter =
-        ExploreBottomAdapter(exploreFragment, viewModel, "Wall Street Journal")
+        ExploreBottomAdapter(
+            exploreFragment,
+            viewModel,
+            "Wall Street Journal",
+            exploreFragment.activity as NewsActivity
+        )
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -67,7 +103,6 @@ class ExploreGroupAdapter(
     }
 
     private fun setLists(recyclerView: RecyclerView, position: Int) {
-        //todo 4. Create a new adapter for it and display it in the list
         when (position) {
             0 -> setBbcSourceNews(recyclerView)
             1 -> setCnnSourceNews(recyclerView)

@@ -1,10 +1,10 @@
 package com.crushtech.newslify.adapter
 
+import android.app.Activity
 import android.content.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.models.SimpleCustomSnackbar
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.fragments.exploreFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,7 +27,8 @@ import java.util.*
 class ExploreBottomAdapter(
     val exploreFragment: exploreFragment,
     val viewModel: NewsViewModel,
-    val category: String
+    val category: String,
+    val activity: Activity
 ) : RecyclerView.Adapter<ExploreBottomAdapter.ExploreBottomViewHolder>() {
     private var btnCount = 0
     private var isClicked = false
@@ -77,9 +79,15 @@ class ExploreBottomAdapter(
             source_title.text = items.title
             source_des.text = items?.description
             items.category = category
-
+            //get current theme
+            val componentName = (activity as NewsActivity).componentName
+            val currentTheme = activity.packageManager.getActivityInfo(
+                componentName,
+                0
+            ).themeResource
+            //pass theme to spinner
             val bottomDialog =
-                BottomSheetDialog(context, R.style.Theme_MaterialComponents_BottomSheetDialog)
+                BottomSheetDialog(context, currentTheme)
             val view =
                 LayoutInflater.from(context).inflate(R.layout.explore_news_options_layout, null)
             bottomDialog.setContentView(view)
