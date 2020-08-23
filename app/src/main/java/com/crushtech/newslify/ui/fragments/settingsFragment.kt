@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -55,7 +56,25 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
         val streakCount = prefs.getInt(STREAK, 0)
         dailynewsGoals.text = "Goals reached: $streakCount news articles read today"
+        val pref =
+            requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
+        val getPrefsCount = pref.getInt("Goal Count", 5)
 
+        if (streakCount >= getPrefsCount) {
+            streak_count_img.setColorFilter(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.streakEqualsGoalsTint
+                ), android.graphics.PorterDuff.Mode.SRC_IN
+            )
+        } else {
+            streak_count_img.setColorFilter(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.streakNotEqualGoalsTint
+                ), android.graphics.PorterDuff.Mode.SRC_IN
+            )
+        }
         settingItemsAnim = AnimationUtils.loadAnimation(
             context,
             android.R.anim.fade_in

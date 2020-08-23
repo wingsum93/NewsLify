@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.webkit.*
@@ -22,11 +24,13 @@ import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
-import com.google.android.gms.ads.*
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.customized_article_layout.*
 import kotlinx.coroutines.Dispatchers
@@ -328,7 +332,5 @@ class ArticleFragment : Fragment() {
         (activity as NewsActivity).hideBottomNavigation()
         super.onResume()
     }
-
-
 }
 
