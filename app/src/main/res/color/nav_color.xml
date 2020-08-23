@@ -5,5 +5,4 @@
     <item android:color="?attr/iconTintOnSelect" android:state_selected="true" />
 
     <item android:color="?attr/iconTintUnselected" android:state_selected="false" />
-
 </selector>

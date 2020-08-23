@@ -17,8 +17,6 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,31 +28,25 @@ import com.crushtech.newslify.adapter.PremiumThemesAdapter
 import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
-import com.crushtech.newslify.ui.util.Constants.Companion.MY_EMAIL
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import com.mikelau.countrypickerx.CountryPickerCallbacks
 import com.mikelau.countrypickerx.CountryPickerDialog
-import com.muddzdev.styleabletoastlibrary.StyleableToast
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.settings_layout.*
 import java.util.*
 
 data class ThemeItems(val themeName: String, val lottieRaw: Int, val themeBackground: Int)
-
 class settingsFragment : Fragment(R.layout.settings_layout) {
     private var countryPicker: CountryPickerDialog? = null
     private var countryIsoCode: String? = null
     private var myCountry: String? = null
-    private var textAnim: Animation? = null
+    private var settingItemsAnim: Animation? = null
     private var isPremiumUser = false
     private lateinit var viewModel: NewsViewModel
-    private lateinit var premiumDialog: Dialog
+    private var premiumDialog: BottomSheetDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,13 +56,23 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         val streakCount = prefs.getInt(STREAK, 0)
         dailynewsGoals.text = "Goals reached: $streakCount news articles read today"
 
-
-        textAnim = AnimationUtils.loadAnimation(
+        settingItemsAnim = AnimationUtils.loadAnimation(
             context,
             android.R.anim.fade_in
         )
-        Picasso.get().load(R.drawable.news_bbb).fit().centerCrop()
-            .into(image_settings)
+        dailynewsGoalsParent.setOnClickListener {
+            it.startAnimation(settingItemsAnim)
+        }
+        custom_N.setOnClickListener {
+            it.startAnimation(settingItemsAnim)
+        }
+        checkCoins.setOnClickListener {
+            it.startAnimation(settingItemsAnim)
+        }
+        support_us.setOnClickListener {
+            it.startAnimation(settingItemsAnim)
+        }
+
 
         val conPrefs = requireContext().getSharedPreferences("myprefs", Context.MODE_PRIVATE)
         val country = conPrefs.getString("Country", "")
@@ -80,10 +82,10 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         setupPrivacyPolicy()
         setUpShareFunction()
         setUpRateApp()
-        setupWhyUpgradePopUp()
         setupPurchaseThemes()
 
         sendFeedback.setOnClickListener {
+            sendFeedback.startAnimation(settingItemsAnim)
             findNavController().navigate(R.id.action_settingsFragment_to_sendFeebackFragment)
         }
 
@@ -91,9 +93,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setupDailyGoals() {
         setnewsGoals.setOnClickListener {
-//            if (!isPremiumUser) {
-//                activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
-//            } else {
+            setnewsGoals.startAnimation(settingItemsAnim)
             val dialog = Dialog(requireContext(), R.style.PauseDialog)
             dialog.setContentView(R.layout.news_goals_dialog)
             val dismissDialog = dialog.findViewById<Button>(R.id.btn_cancel)
@@ -142,8 +142,8 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
     }
 
     private fun setupCountry() {
-        change_country.setOnClickListener {
-            change_country.animation = textAnim
+        change_countryParent.setOnClickListener {
+            change_countryParent.startAnimation(settingItemsAnim)
             countryPicker = CountryPickerDialog(
                 requireContext(),
                 CountryPickerCallbacks { country, _ ->
@@ -178,7 +178,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setupPrivacyPolicy() {
         privacy_policy.setOnClickListener {
-            privacy_policy.animation = textAnim
+            privacy_policy.startAnimation(settingItemsAnim)
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(PRIVACY_POLICY)
             startActivity(intent)
@@ -188,7 +188,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setUpRateApp() {
         rate_app.setOnClickListener {
-            rate_app.animation = textAnim
+            rate_app.startAnimation(settingItemsAnim)
             try {
                 startActivity(
                     Intent(
@@ -210,7 +210,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setUpShareFunction() {
         shareApp.setOnClickListener {
-            shareApp.animation = textAnim
+            shareApp.startAnimation(settingItemsAnim)
             val shareIntent = Intent(Intent.ACTION_SEND)
             val appPackageName =
                 requireContext().applicationContext.packageName
@@ -231,32 +231,6 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     }
 
-    private fun setupWhyUpgradePopUp() {
-        whyUpgrade.setOnClickListener {
-            this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
-        }
-    }
-
-        private fun showPopupDialog(context: Context, activity: Activity) {
-            val animation = AnimationUtils.loadAnimation(
-                context,
-                R.anim.button_anim
-            )
-            val dialog = Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-            dialog.setContentView(R.layout.upgrade_popup_dialog)
-            val dismissDialog = dialog.findViewById<ImageView>(R.id.close_popup)
-            val upgradeTxt = dialog.findViewById<TextView>(R.id.popup_ugrade_txt)
-            upgradeTxt.animation = animation
-            dismissDialog.setOnClickListener {
-                //set orientation to unspecified
-                activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-                dialog.dismiss()
-            }
-            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            dialog.show()
-        }
-
 
     private fun setupPurchaseThemes() {
         purchaseThemes.setOnClickListener {
@@ -268,15 +242,17 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                     requireContext(),
                     R.style.Theme_MaterialComponents_BottomSheetDialog
                 )
-            premiumDialog.setContentView(R.layout.customthemes_popup_dialog)
+            premiumDialog!!.setContentView(R.layout.customthemes_popup_dialog)
             val dismissDialog =
-                premiumDialog.findViewById<ExtendedFloatingActionButton>(R.id.close_theme_popup)
+                premiumDialog!!.findViewById<ExtendedFloatingActionButton>(R.id.close_theme_popup)
             val slideInAnim: Animation = AnimationUtils.loadAnimation(
                 context,
                 R.anim.button_anim
             )
-            dismissDialog.animation = slideInAnim
-            val recyclerView = premiumDialog.findViewById<RecyclerView>(R.id.customThemesRv)
+            if (dismissDialog != null) {
+                dismissDialog.animation = slideInAnim
+            }
+            val recyclerView = premiumDialog!!.findViewById<RecyclerView>(R.id.customThemesRv)
             val themesItems: ArrayList<ThemeItems> = ArrayList()
             val themesAdapter = PremiumThemesAdapter()
             themesItems.add(
@@ -323,29 +299,30 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             )
 
             themesAdapter.differ.submitList(themesItems)
-            recyclerView.apply {
+            recyclerView?.apply {
                 adapter = themesAdapter
                 layoutManager =
                     GridLayoutManager(requireContext(), 2, LinearLayoutManager.HORIZONTAL, false)
             }
             // to update the current switch item
-            if (!recyclerView.isComputingLayout && recyclerView.scrollState == SCROLL_STATE_IDLE) {
-                recyclerView.adapter?.notifyDataSetChanged()
+            if (recyclerView != null) {
+                if (!recyclerView.isComputingLayout && recyclerView.scrollState == SCROLL_STATE_IDLE) {
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
             }
 
-            dismissDialog.setOnClickListener {
-                premiumDialog.dismiss()
+            dismissDialog?.setOnClickListener {
+                premiumDialog!!.dismiss()
             }
-            premiumDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            premiumDialog.show()
-
-            // }
+            premiumDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            premiumDialog!!.show()
         }
     }
 
 
     override fun onStop() {
         countryPicker?.dismiss()
+        premiumDialog?.dismiss()
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onStop()
     }
@@ -367,7 +344,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     override fun onPause() {
         try {
-            premiumDialog.dismiss()
+            premiumDialog?.dismiss()
         } catch (e: Exception) {
         }
         super.onPause()
@@ -375,9 +352,10 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     override fun onDestroy() {
         try {
-            premiumDialog.dismiss()
+            premiumDialog?.dismiss()
         } catch (e: Exception) {
         }
         super.onDestroy()
     }
+
 }
