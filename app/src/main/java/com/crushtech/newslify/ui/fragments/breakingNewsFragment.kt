@@ -2,21 +2,17 @@ package com.crushtech.newslify.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.R
 import com.crushtech.newslify.adapter.GroupAdapter
 import com.crushtech.newslify.models.Group
 import com.crushtech.newslify.models.SimpleCustomSnackbar
+import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Resource
-import com.google.android.gms.ads.AdView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_breaking_news.*
 import kotlinx.coroutines.Dispatchers
@@ -27,29 +23,26 @@ import java.util.*
 
 class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private var groups: ArrayList<Group>? = null
-    lateinit var mAdView: AdView
     private lateinit var viewModel: NewsViewModel
     private val TAG = "BreakingNewsFragment"
     private var groupAdapter: GroupAdapter? = null
     private var mView: View? = null
+    private var lastFirstVisiblePosition: Int? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).newsViewModel
         setUpRecyclerView()
+
+        if (savedInstanceState != null) {
+            retainInstance = true
+            // scroll to existing position which exist before rotation.
+            (rvBreakingNews.layoutManager as LinearLayoutManager)
+                .scrollToPositionWithOffset(savedInstanceState.getInt("position"), 0)
+        }
+
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_breaking_news, container, false)
-        }
-        retainInstance = true
-        return mView
-    }
 
     private fun initGroupData() {
         groups = ArrayList()
@@ -278,4 +271,20 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         (activity as NewsActivity).showBottomNavigation()
         super.onResume()
     }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        if (rvBreakingNews != null) {
+            lastFirstVisiblePosition =
+                (rvBreakingNews.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
+            savedInstanceState.putInt(
+                "position",
+                lastFirstVisiblePosition!!
+            ) // get current recycle view visible position here.
+        }
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
 }

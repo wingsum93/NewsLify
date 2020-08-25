@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -45,7 +44,6 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
     private var countryIsoCode: String? = null
     private var myCountry: String? = null
     private var settingItemsAnim: Animation? = null
-    private var isPremiumUser = false
     private lateinit var viewModel: NewsViewModel
     private var premiumDialog: BottomSheetDialog? = null
 
@@ -61,6 +59,12 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         val getPrefsCount = pref.getInt("Goal Count", 5)
 
         if (streakCount >= getPrefsCount) {
+            val myanim = AnimationUtils.loadAnimation(
+                requireContext(),
+                android.R.anim.fade_in
+            )
+            myanim.repeatCount = Animation.INFINITE
+            streak_count_img.startAnimation(myanim)
             streak_count_img.setColorFilter(
                 ContextCompat.getColor(
                     requireContext(),
@@ -79,9 +83,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             context,
             android.R.anim.fade_in
         )
-        dailynewsGoalsParent.setOnClickListener {
-            it.startAnimation(settingItemsAnim)
-        }
+
         custom_N.setOnClickListener {
             it.startAnimation(settingItemsAnim)
         }
@@ -342,7 +344,6 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
     override fun onStop() {
         countryPicker?.dismiss()
         premiumDialog?.dismiss()
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         super.onStop()
     }
 

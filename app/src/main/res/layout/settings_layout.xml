@@ -2,389 +2,427 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="?attr/mainBackground">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/dailynewsGoalsParent"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/explore_item5_bg"
-                android:orientation="vertical"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintVertical_bias="1.0">
 
                 <ImageView
+                    android:id="@+id/checkCoins"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/custom_setting_item2_bg"
+                    android:elevation="1dp"
+                    android:padding="20dp"
+                    android:src="@drawable/p_coins"
+                    android:tint="#E6A3C1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/rubik_bold"
+                    android:letterSpacing="0.1"
+                    android:maxLines="2"
+                    android:padding="17dp"
+                    android:text="@string/premium_coins_balance"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/checkCoins"
+                    app:layout_constraintEnd_toEndOf="@+id/checkCoins"
+                    app:layout_constraintHorizontal_bias="0.333"
+                    app:layout_constraintStart_toStartOf="@+id/checkCoins"
+                    app:layout_constraintTop_toTopOf="@id/checkCoins"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <ImageView
                     android:id="@+id/streak_count_img"
-                    android:layout_marginTop="5dp"
+                    android:layout_width="150dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/explore_item5_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/streak_icon"
-                    android:tint="@color/streakNotEqualGoalsTint" />
+                    android:tint="@color/streakNotEqualGoalsTint"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/checkCoins"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/dailynewsGoals"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
-                    android:padding="20dp"
+                    android:maxLines="5"
+                    android:padding="17dp"
                     android:text="Goals reached:0 news article read today"
                     android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/setnewsGoals"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/explore_item2_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/dailynewsGoalsParent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/streak_count_img"
+                    app:layout_constraintEnd_toEndOf="@+id/streak_count_img"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/streak_count_img"
+                    app:layout_constraintTop_toTopOf="@id/streak_count_img"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/setnewsGoals"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/explore_item2_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/goal"
-                    android:tint="#C6B76D" />
+                    android:tint="#C6B76D"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/streak_count_img"
+                    app:layout_constraintTop_toBottomOf="@+id/checkCoins"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
+                    android:maxLines="5"
                     android:padding="17dp"
+                    android:textAlignment="center"
                     android:text="Tap to set daily goals"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/purchaseThemes"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/explore_item1_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dailynewsGoalsParent"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/setnewsGoals"
+                    app:layout_constraintEnd_toEndOf="@+id/setnewsGoals"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/setnewsGoals"
+                    app:layout_constraintTop_toTopOf="@id/setnewsGoals"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/purchaseThemes"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/explore_item1_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/purchase_ic"
-                    android:tint="#9C79CD" />
+                    android:tint="#9C79CD"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dailynewsGoals"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="@string/purchase_themes"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/custom_N"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_setting_item1_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/purchaseThemes"
-                app:layout_constraintTop_toBottomOf="@+id/setnewsGoals"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/purchaseThemes"
+                    app:layout_constraintEnd_toEndOf="@+id/purchaseThemes"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/purchaseThemes"
+                    app:layout_constraintTop_toTopOf="@id/purchaseThemes"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/custom_N"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/custom_setting_item1_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/push_notifications_ic"
-                    android:tint="#D9DFD5" />
+                    android:tint="#D9DFD5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/purchaseThemes"
+                    app:layout_constraintTop_toBottomOf="@+id/setnewsGoals"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="@string/push_notification"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/checkCoins"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_setting_item2_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/purchaseThemes"
-                app:layout_constraintTop_toBottomOf="@+id/custom_N"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/custom_N"
+                    app:layout_constraintEnd_toEndOf="@+id/custom_N"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/custom_N"
+                    app:layout_constraintTop_toTopOf="@id/custom_N"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/p_coins"
-                    android:tint="#E6A3C1" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/rubik_bold"
-                    android:letterSpacing="0.1"
-                    android:padding="17dp"
-                    android:text="@string/premium_coins_balance"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/change_countryParent"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_setting_item3_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/purchaseThemes"
-                app:layout_constraintVertical_bias="0.0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/change_countryParent"
+                    android:layout_width="150dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/custom_setting_item3_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/country_ic"
-                    android:tint="#8E9DED" />
+                    android:tint="#8E9DED"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/purchaseThemes"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/change_country"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Tap to Change Country"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/sendFeedback"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/explore_item5_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkCoins"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/change_countryParent"
+                    app:layout_constraintEnd_toEndOf="@+id/change_countryParent"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/change_countryParent"
+                    app:layout_constraintTop_toTopOf="@id/change_countryParent"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/sendFeedback"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/explore_item5_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/ic_baseline_email_24"
-                    android:tint="#6CCABD" />
+                    android:tint="#6CCABD"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/change_countryParent"
+                    app:layout_constraintTop_toBottomOf="@+id/custom_N"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Send Feeback to developers"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/support_us"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_setting_item4_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/sendFeedback"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/change_countryParent"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/sendFeedback"
+                    app:layout_constraintEnd_toEndOf="@+id/sendFeedback"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/sendFeedback"
+                    app:layout_constraintTop_toTopOf="@id/sendFeedback"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/support_us"
+                    android:layout_width="220dp"
+                    android:layout_height="170dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/custom_setting_item4_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/fav"
-                    android:tint="#E1F3AF" />
+                    android:tint="#E1F3AF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/change_countryParent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Tap to Support Us"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rate_app"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/custom_setting_item2_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/support_us"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/support_us"
+                    app:layout_constraintEnd_toEndOf="@+id/support_us"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/support_us"
+                    app:layout_constraintTop_toTopOf="@id/support_us"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/rate_app"
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/custom_setting_item2_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/rate_ic"
-                    android:tint="#E6A3C1" />
+                    android:tint="#E6A3C1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/support_us"
+                    app:layout_constraintTop_toBottomOf="@+id/sendFeedback"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Tap to Rate this app"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/shareApp"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/explore_item1_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/support_us"
-                app:layout_constraintTop_toBottomOf="@+id/sendFeedback"
-                app:layout_constraintVertical_bias="0.0">
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rate_app"
+                    app:layout_constraintEnd_toEndOf="@+id/rate_app"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/rate_app"
+                    app:layout_constraintTop_toTopOf="@id/rate_app"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/shareApp"
+                    android:layout_width="150dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/explore_item1_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/ic_share"
-                    android:tint="#9C79CD" />
+                    android:tint="#9C79CD"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/support_us"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Tap to share this app"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/shareApp"
+                    app:layout_constraintEnd_toEndOf="@+id/shareApp"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/shareApp"
+                    app:layout_constraintTop_toTopOf="@id/shareApp"
+                    app:layout_constraintVertical_bias="1.0" />
 
-            <LinearLayout
-                android:id="@+id/privacy_policy"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/explore_item6_bg"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/shareApp">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
+                    android:id="@+id/privacy_policy"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="9dp"
+                    android:background="@drawable/explore_item6_bg"
+                    android:elevation="1dp"
                     android:src="@drawable/policy_ic"
-                    android:tint="#D9DFD5" />
+                    android:tint="#D9DFD5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/shareApp"
+                    app:layout_constraintTop_toBottomOf="@+id/rate_app"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:elevation="1dp"
                     android:fontFamily="@font/rubik_bold"
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Privacy policy"
-                    android:textAlignment="center"
                     android:textColor="@android:color/white"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/privacy_policy"
+                    app:layout_constraintEnd_toEndOf="@+id/privacy_policy"
+                    app:layout_constraintHorizontal_bias="0.018"
+                    app:layout_constraintStart_toStartOf="@+id/privacy_policy"
+                    app:layout_constraintTop_toTopOf="@+id/privacy_policy"
+                    app:layout_constraintVertical_bias="1.0" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

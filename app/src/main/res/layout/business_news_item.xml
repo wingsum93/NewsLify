@@ -22,7 +22,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:elevation="12dp"
+            android:elevation="1dp"
             app:cardBackgroundColor="?attr/eTAndBreakingNewsBgColor"
             app:cardCornerRadius="5dp">
 

@@ -198,7 +198,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
             spinnerBottomDialog.dismiss()
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
-                newsAdapter.differ.submitList(article)
+                newsAdapter.differ.submitList(article.reversed())
                 updateUI(article)
             })
         }
@@ -218,7 +218,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
             spinnerBottomDialog.dismiss()
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
-                newsAdapter.differ.submitList(article.reversed())
+                newsAdapter.differ.submitList(article)
                 updateUI(article)
             })
         }
