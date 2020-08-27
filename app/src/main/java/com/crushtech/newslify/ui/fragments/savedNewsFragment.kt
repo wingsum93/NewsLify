@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,14 +33,12 @@ import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.properties.Delegates
 
 class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private lateinit var viewModel: NewsViewModel
     private lateinit var catAnim: Animation
     private lateinit var newsAdapter: SavedArticlesAdapter
-    private var currentTheme by Delegates.notNull<Int>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,12 +46,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             requireContext(),
             R.anim.button_anim
         )
-        //get current theme
-        val componentName = (activity as NewsActivity).componentName
-        currentTheme = (activity as NewsActivity).packageManager.getActivityInfo(
-            componentName,
-            0
-        ).themeResource
+
 
         viewModel = (activity as NewsActivity).newsViewModel
         retainInstance = true
@@ -61,13 +55,17 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         setUpSpinnerLikeForCategories()
 
 
-        newsAdapter.setOnItemClickListener { article ->
+        newsAdapter.setOnItemClickListener { transitionView, article ->
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             findNavController().navigate(
                 R.id.action_savedNewsFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
         }
 
@@ -149,7 +147,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun setupSpannerLikeFilter() {
         val spinnerBottomDialog = BottomSheetDialog(
-            requireContext(), currentTheme
+            requireContext(), NewsActivity.GetCurrentTheme.currentTheme(activity as NewsActivity)
 
         )
         val view =
@@ -259,7 +257,7 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
     private fun setUpSpinnerLikeForCategories() {
         val spinnerBottomDialog = BottomSheetDialog(
             requireContext(),
-            currentTheme
+            NewsActivity.GetCurrentTheme.currentTheme(activity as NewsActivity)
         )
         val view =
             LayoutInflater.from(context).inflate(R.layout.saved_items_spinner_categories, null)
@@ -578,6 +576,8 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             (activity as NewsActivity).showBottomNavigation()
         }
     }
+
+
 }
 
 

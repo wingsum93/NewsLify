@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/pThreeColorPrimaryDark</item>
         <item name="colorAccent">@color/pThreeColorAccent</item>
         <item name="closeAdColor">@color/black</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="actionMenuTextColor">@color/black</item>
         <item name="savedTimeTxtColor">@color/black</item>
         <item name="snackBarViewTextColor">@color/pThreeColor2</item>
@@ -46,6 +47,7 @@
         <item name="exploreMottoBgColor">@color/pOneColorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/pOneColorPrimaryDark</item>
         <item name="colorAccent">@color/pOneColorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="snackBarViewTextColor">@color/pOneColorAccent</item>
         <item name="mainBackground">@color/pOneColor1</item>
         <item name="snackBgColor">@color/pOneColor1</item>
@@ -80,6 +82,7 @@
         <item name="colorPrimaryDark">@color/pTwoColorPrimaryDark</item>
         <item name="colorAccent">@color/pTwoColorAccent</item>
         <item name="closeAdColor">@color/white</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="savedTimeTxtColor">@color/pTwoColorWhite</item>
         <item name="snackBarViewTextColor">@color/pTwoColorAccent</item>
         <item name="exploretitleTextColor">@color/pTwoColorPrimary</item>
@@ -116,6 +119,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="mainBackground">@color/black</item>
         <item name="exploreMottotextColor">@color/black</item>
         <item name="exploreMottoBgColor">@color/colorPrimary</item>
@@ -156,6 +160,7 @@
         <item name="closeAdColor">@color/white</item>
         <item name="savedTimeTxtColor">@color/pFourColor2</item>
         <item name="snackBarViewTextColor">@color/black</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="exploretitleTextColor">@color/pFourColor2</item>
         <item name="mainBackground">@color/pFourColorPrimary</item>
         <item name="snackBgColor">@color/pFourColorPrimaryDark</item>
@@ -192,6 +197,7 @@
         <item name="savedTimeTxtColor">@color/pFiveColorAccent</item>
         <item name="snackBarViewTextColor">@color/pFiveColorPrimary</item>
         <item name="exploretitleTextColor">@color/black</item>
+        <item name="android:windowContentTransitions">true</item>
         <item name="mainBackground">@color/pFiveColor1</item>
         <item name="snackBgColor">@color/pFiveColor1</item>
         <item name="navbackgroundColor">@color/pFiveColorPrimary</item>
@@ -257,4 +263,10 @@
         <item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>
         <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
+
+    <drawable name="safe_mode_background">#60000000</drawable>
+    <!-- Background drawable that can be used for a transparent activity to
+         be able to display a dark UI: this darkens its background to make
+         a dark (default theme) UI more visible. -->
+    <drawable name="screen_background_dark_transparent">#80000000</drawable>
 </resources>

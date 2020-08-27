@@ -1,8 +1,6 @@
 package com.crushtech.newslify.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
-import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
 import com.squareup.picasso.Picasso
 import getTimeAgo
 import kotlinx.android.synthetic.main.saved_article_items.view.*
@@ -85,18 +82,20 @@ class SavedArticlesAdapter :
             }
 
 
+            saved_news_image.apply {
+                transitionName = article.title
+            }
             setOnClickListener {
-                onItemClickListener?.let {
-                    it(article)
-                }
+                onItemClickListener?.invoke(saved_news_image, article)
             }
         }
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
+
     }
 
 

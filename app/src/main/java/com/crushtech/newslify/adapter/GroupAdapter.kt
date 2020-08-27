@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.crushtech.newslify.R
@@ -73,14 +74,18 @@ class GroupAdapter
     }
 
     private fun setSportList(recyclerView: RecyclerView) {
-        sportNews.setOnItemClickListener { article ->
+        sportNews.setOnItemClickListener { transitionView, article ->
             article.category = "Sports"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             breakingNewsFragment.findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
         }
         recyclerView.apply {
@@ -89,19 +94,24 @@ class GroupAdapter
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = sportNews
             isNestedScrollingEnabled = true
+            isSaveEnabled = true
         }
 
     }
 
     private fun setBusinessList(recyclerView: RecyclerView) {
-        businessNews.setOnItemClickListener { article ->
+        businessNews.setOnItemClickListener { transitionView, article ->
             article.category = "Business"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             breakingNewsFragment.findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
         }
         recyclerView.apply {
@@ -109,7 +119,7 @@ class GroupAdapter
             layoutManager =
                 CustomZoomLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = businessNews
-            (layoutManager as LinearLayoutManager).scrollToPosition(2)
+            (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(0, 0)
             isNestedScrollingEnabled = true
             post {
                 setUpSnapHelper(recyclerView)
@@ -118,14 +128,18 @@ class GroupAdapter
     }
 
     private fun setEntertainmentList(recyclerView: RecyclerView) {
-        entertainmentNews.setOnItemClickListener { article ->
+        entertainmentNews.setOnItemClickListener { transitionView, article ->
             article.category = "Entertainment"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             breakingNewsFragment.findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
         }
         recyclerView.apply {
@@ -133,23 +147,24 @@ class GroupAdapter
             layoutManager =
                 GridLayoutManager(context, 2, LinearLayoutManager.HORIZONTAL, false)
             adapter = entertainmentNews
-            (layoutManager as LinearLayoutManager).scrollToPosition(2)
             isNestedScrollingEnabled = true
-            post {
-                setUpSnapHelper(recyclerView)
-            }
+            isSaveEnabled = true
         }
     }
 
     private fun setScienceList(recyclerView: RecyclerView) {
-        scienceNews.setOnItemClickListener { article ->
+        scienceNews.setOnItemClickListener { transitionView, article ->
             article.category = "Science"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             breakingNewsFragment.findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
         }
         recyclerView.apply {
@@ -157,8 +172,9 @@ class GroupAdapter
             layoutManager =
                 CustomZoomLayoutManager(recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = scienceNews
-            (layoutManager as LinearLayoutManager).scrollToPosition(2)
+            (layoutManager as LinearLayoutManager).scrollToPosition(0)
             isNestedScrollingEnabled = true
+            isSaveEnabled = true
             post {
                 setUpSnapHelper(recyclerView)
             }
@@ -166,20 +182,25 @@ class GroupAdapter
     }
 
     private fun setBreakingNews(recyclerView: RecyclerView) {
-        breakingNews.setOnItemClickListener { article ->
+        breakingNews.setOnItemClickListener { transitionView, article ->
             article.category = "General News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             breakingNewsFragment.findNavController().navigate(
                 R.id.action_breakingNewsFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
         }
         recyclerView.apply {
             adapter = breakingNews
             layoutManager = LinearLayoutManager(recyclerView.context)
             isNestedScrollingEnabled = true
+            isSaveEnabled = true
         }
 
     }
@@ -227,4 +248,5 @@ class GroupAdapter
             }
         }
     }
+
 }

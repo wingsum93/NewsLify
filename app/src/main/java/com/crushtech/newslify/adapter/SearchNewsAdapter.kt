@@ -11,7 +11,6 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.science_list_item.view.*
 import kotlinx.android.synthetic.main.search_news_items.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,20 +65,22 @@ class SearchNewsAdapter : RecyclerView.Adapter<SearchNewsAdapter.SearchNewsAdapt
 
                 search_news_title.text = article.title
                 search_news_desc.text = article.description
+                search_news_picture.apply {
+                    transitionName = article.title
+                }
                 setOnClickListener {
-                    onItemClickListener?.let {
-                        it(article)
-                    }
+                    onItemClickListener?.invoke(search_news_picture, article)
                 }
             }
         }
     }
 
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
+
     }
 
 

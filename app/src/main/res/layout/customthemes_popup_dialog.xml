@@ -3,39 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/customthemes_popup_bg">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/watchAds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/pFiveColorPrimary"
+        android:drawableEnd="@drawable/rewarded_video_ic"
+        android:fontFamily="@font/rubik_medium"
+        android:padding="20dp"
+        android:text="Watch Ads to earn coins"
+        android:textColor="@android:color/white"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:rippleColor="@android:color/holo_green_light" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/customThemesRv"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:padding="5dp"
-        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/watchAds"
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/close_theme_popup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/rubik_medium"
         android:shadowColor="@color/black"
         android:text="Close Theme"
         android:textAllCaps="false"
+        android:backgroundTint="@android:color/white"
         android:textColor="@color/black"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:elevation="50dp"
-        android:textSize="16sp"
         app:icon="@drawable/no_item_icon"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.962"
+        app:layout_constraintTop_toBottomOf="@+id/customThemesRv"
+        app:layout_constraintVertical_bias="0.0"
         app:rippleColor="@color/colorAccent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

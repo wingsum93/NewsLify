@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -117,14 +118,18 @@ class ExploreGroupAdapter(
 
 
     private fun setBbcSourceNews(recyclerView: RecyclerView) {
-        bbcNewsSource.setOnItemClickListener { article ->
+        bbcNewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "Bbc News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }
@@ -141,14 +146,18 @@ class ExploreGroupAdapter(
     }
 
     private fun setCnnSourceNews(recyclerView: RecyclerView) {
-        cnnNewsSource.setOnItemClickListener { article ->
+        cnnNewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "Cnn News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }
@@ -165,14 +174,18 @@ class ExploreGroupAdapter(
     }
 
     private fun setTechCrunchSourceNews(recyclerView: RecyclerView) {
-        techCrunchnewsSource.setOnItemClickListener { article ->
+        techCrunchnewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "TechCrunch News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }
@@ -189,14 +202,18 @@ class ExploreGroupAdapter(
     }
 
     private fun setReutersSourceNews(recyclerView: RecyclerView) {
-        reutersNewsSource.setOnItemClickListener { article ->
+        reutersNewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "Reuters News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }
@@ -214,14 +231,18 @@ class ExploreGroupAdapter(
 
 
     private fun setEspnSourceNews(recyclerView: RecyclerView) {
-        espnNewsSource.setOnItemClickListener { article ->
+        espnNewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "TechCrunch News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }
@@ -238,14 +259,18 @@ class ExploreGroupAdapter(
     }
 
     private fun setCnbcSourceNews(recyclerView: RecyclerView) {
-        cnbcNewsSource.setOnItemClickListener { article ->
+        cnbcNewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "Cnbc News"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }
@@ -263,14 +288,18 @@ class ExploreGroupAdapter(
 
 
     private fun setWsjSourceNews(recyclerView: RecyclerView) {
-        wsjNewsSource.setOnItemClickListener { article ->
+        wsjNewsSource.setOnItemClickListener { transitionView, article ->
             article.category = "Wall Street Journal"
             val bundle = Bundle().apply {
                 putSerializable("article", article)
             }
             exploreFragment.findNavController().navigate(
                 R.id.action_exploreFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
             )
 
         }

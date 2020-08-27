@@ -29,7 +29,7 @@
     <color name="pTwoColorAccent">#FF6D00</color>
     <color name="pTwoColorWhite">#FFFF</color>
     <color name="pTwoColorgrey">#4E4A4A</color>
-
+<color name="myop">#33150130</color>
     <!--premiumThreeColors -->
     <color name="pThreeColorPrimary">#FBFBF2</color>
     <color name="pThreeColorPrimaryDark">#E5E6E4</color>
@@ -49,4 +49,5 @@
     <color name="pFiveColorPrimaryDark">#F8F7F7</color>
     <color name="pFiveColorAccent">#43C7FF</color>
     <color name="pFiveColor1">#141E1F</color>
+    <color name="tintArticleBackground">#80000000</color>
 </resources>

@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,8 +19,10 @@ import com.crushtech.newslify.ui.util.Constants
 import com.crushtech.newslify.ui.util.Resource
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_view_all_news.*
-import kotlinx.coroutines.*
-import java.lang.Exception
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
@@ -40,7 +42,7 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
 
         setUpRecyclerView()
         retainInstance = true
-        viewAllAdapter.setOnItemClickListener { article ->
+        viewAllAdapter.setOnItemClickListener { transitionView, article ->
             article.category = articleCategory
             val bundle = Bundle().apply {
                 putSerializable("article", article)
@@ -48,7 +50,12 @@ class ViewAllFragment : Fragment(R.layout.fragment_view_all_news) {
             }
             findNavController().navigate(
                 R.id.action_viewAllFragment_to_articleFragment,
-                bundle
+                bundle,
+                null,
+                FragmentNavigatorExtras(
+                    transitionView to article.title.toString()
+                )
+
             )
         }
     }

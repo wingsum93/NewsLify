@@ -52,19 +52,21 @@
         android:id="@+id/retry_connection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="?attr/colorAccent"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="?attr/colorAccent"
+        android:fontFamily="@font/rubik_medium"
         android:padding="20dp"
-        android:text="Retry"
-        android:textSize="19sp"
-        android:visibility="visible"
-        app:cornerRadius="16dp"
+        android:text="Retry connection"
+        android:visibility="gone"
+        app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lottie_no_internet"
-        app:layout_constraintVertical_bias="0.16000003" />
+        app:layout_constraintVertical_bias="0.274"
+        app:rippleColor="@android:color/holo_green_light" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

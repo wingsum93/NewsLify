@@ -3,8 +3,6 @@ package com.crushtech.newslify.ui.fragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -15,22 +13,13 @@ import androidx.navigation.fragment.findNavController
 import com.crushtech.newslify.R
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.util.Constants
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.send_feeback_dialog.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class SendFeebackFragment : Fragment(R.layout.send_feeback_dialog) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
 
         sendEmailFeedback.setOnClickListener {
             val subject = emailSubject.text.toString()

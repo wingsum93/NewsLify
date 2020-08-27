@@ -71,20 +71,21 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
                 }
                 title.text = article?.title
                 description.text = article?.description
-
+                breaking_news_image.apply {
+                    transitionName = article.title
+                }
                 setOnClickListener {
-                    onItemClickListener?.let {
-                        it(article)
-                    }
+                    onItemClickListener?.invoke(breaking_news_image, article)
                 }
             }
         }
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
+
     }
 
 

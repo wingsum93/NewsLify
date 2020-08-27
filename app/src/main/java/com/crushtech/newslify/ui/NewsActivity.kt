@@ -1,6 +1,7 @@
 package com.crushtech.newslify.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -34,6 +35,7 @@ class NewsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setUpThemes()
         setContentView(R.layout.activity_news)
+
 
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
@@ -134,5 +136,18 @@ class NewsActivity : AppCompatActivity() {
                 setTheme(R.style.DefaultTheme)
             }
         }
+    }
+
+    object GetCurrentTheme {
+        //get current theme
+        fun currentTheme(activity: Activity): Int {
+            val componentName = activity.componentName
+            return activity.packageManager.getActivityInfo(
+                componentName,
+                0
+            ).themeResource
+        }
+
+
     }
 }

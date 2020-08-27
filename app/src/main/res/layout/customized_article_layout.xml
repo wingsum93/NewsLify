@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorPrimary">
+    android:id="@+id/article_parent"
+    android:background="?attr/mainBackground">
 
     <ImageView
-        android:id="@+id/articleimages"
+        android:id="@+id/breaking_news_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:contentDescription="@string/app_name"
@@ -15,10 +15,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/my_container"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:elevation="700dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/expandedImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:visibility="invisible" />
+    </FrameLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="650dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/customized_article_top_bg"
         android:elevation="2dp"
         android:visibility="visible"
@@ -26,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/articleimages"
+        app:layout_constraintTop_toBottomOf="@+id/breaking_news_image"
         app:layout_constraintVertical_bias="0.16000003">
 
         <WebView
@@ -52,7 +71,7 @@
         app:elevation="50dp"
         app:icon="@drawable/extend_icon"
         app:iconTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/articleimages"
+        app:layout_constraintBottom_toBottomOf="@+id/breaking_news_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="parent"

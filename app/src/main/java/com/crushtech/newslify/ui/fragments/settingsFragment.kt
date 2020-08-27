@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -30,11 +31,18 @@ import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.PRIVACY_POLICY
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.mikelau.countrypickerx.CountryPickerCallbacks
 import com.mikelau.countrypickerx.CountryPickerDialog
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import kotlinx.android.synthetic.main.settings_layout.*
 import java.util.*
 
@@ -46,6 +54,8 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
     private var settingItemsAnim: Animation? = null
     private lateinit var viewModel: NewsViewModel
     private var premiumDialog: BottomSheetDialog? = null
+    private lateinit var rewardedAd: RewardedAd
+    private var totalCoins = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,6 +67,10 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         val pref =
             requireContext().getSharedPreferences("Goal Count", Context.MODE_PRIVATE)
         val getPrefsCount = pref.getInt("Goal Count", 5)
+
+        val myPrefs = requireContext().getSharedPreferences("coins", Context.MODE_PRIVATE)
+        val balance = myPrefs.getInt("totalCoins", 0)
+        premiumCoinText.text = getString(R.string.premium_coins_balance) + "$balance"
 
         if (streakCount >= getPrefsCount) {
             val myanim = AnimationUtils.loadAnimation(
@@ -255,17 +269,21 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
     private fun setupPurchaseThemes() {
         purchaseThemes.setOnClickListener {
-//            if (!isPremiumUser) {
-//                this.activity?.let { it1 -> showPopupDialog(requireContext(), it1) }
-//            }else {
             premiumDialog =
                 BottomSheetDialog(
                     requireContext(),
-                    R.style.Theme_MaterialComponents_BottomSheetDialog
+                    NewsActivity.GetCurrentTheme.currentTheme(activity as NewsActivity)
                 )
             premiumDialog!!.setContentView(R.layout.customthemes_popup_dialog)
             val dismissDialog =
                 premiumDialog!!.findViewById<ExtendedFloatingActionButton>(R.id.close_theme_popup)
+            val watchAd = premiumDialog!!.findViewById<MaterialButton>(R.id.watchAds)
+
+            if (watchAd != null) {
+                setUpRewardedAdFunction(watchAd)
+            }
+
+
             val slideInAnim: Animation = AnimationUtils.loadAnimation(
                 context,
                 R.anim.button_anim
@@ -321,9 +339,11 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
 
             themesAdapter.differ.submitList(themesItems)
             recyclerView?.apply {
+                setHasFixedSize(true)
                 adapter = themesAdapter
                 layoutManager =
                     GridLayoutManager(requireContext(), 2, LinearLayoutManager.HORIZONTAL, false)
+                isNestedScrollingEnabled = true
             }
             // to update the current switch item
             if (recyclerView != null) {
@@ -340,6 +360,59 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
         }
     }
 
+
+    private fun setUpRewardedAdFunction(mButton: MaterialButton) {
+        fun createAndLoadRewardedAd(): RewardedAd {
+            rewardedAd = RewardedAd(requireContext(), getString(R.string.my_rewardedvideo_ad))
+            val adLoadCallback = object : RewardedAdLoadCallback() {
+                override fun onRewardedAdFailedToLoad(p0: Int) {
+                    Log.d("ADS", "Rewarded Ad failed to load")
+                }
+
+                override fun onRewardedAdLoaded() {
+                    Log.d("ADS", "Rewarded loaded with success 1")
+                }
+            }
+            rewardedAd.loadAd(AdRequest.Builder().build(), adLoadCallback)
+            return rewardedAd
+        }
+
+        fun onRewardAdClosed() {
+            this.rewardedAd = createAndLoadRewardedAd()
+        }
+        createAndLoadRewardedAd()
+
+        mButton.setOnClickListener {
+            if (rewardedAd.isLoaded) {
+                val adCallback = object : RewardedAdCallback() {
+                    override fun onUserEarnedReward(premiumCoins: RewardItem) {
+                        totalCoins += premiumCoins.amount
+                        StyleableToast.makeText(
+                            requireContext(),
+                            "${premiumCoins.amount} " +
+                                    "${premiumCoins.type} earned",
+                            R.style.customToast1
+                        ).show()
+                        requireContext().getSharedPreferences("coins", Context.MODE_PRIVATE).edit()
+                            .putInt("totalCoins", totalCoins).apply()
+                    }
+
+                    override fun onRewardedAdClosed() {
+                        onRewardAdClosed()
+                    }
+
+                    override fun onRewardedAdFailedToShow(p0: Int) {
+                        StyleableToast.makeText(
+                            requireContext(), "an error occurred",
+                            R.style.customToast
+                        ).show()
+                        super.onRewardedAdFailedToShow(p0)
+                    }
+                }
+                rewardedAd.show(requireActivity(), adCallback)
+            }
+        }
+    }
 
     override fun onStop() {
         countryPicker?.dismiss()

@@ -11,10 +11,7 @@ import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.business_news_item.view.*
 import kotlinx.android.synthetic.main.entertainment_news.view.*
-import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,21 +72,22 @@ class EntertainmentNewsAdapter : RecyclerView.Adapter<EntertainmentNewsAdapter.E
                 entertainment_news_title.text = article.title
                 entertainment_news_source.text = article.source?.name
 
+                entertainment_news_image.apply {
+                    transitionName = article.title
+                }
                 setOnClickListener {
-                    onItemClickListener?.let {
-                        it(article)
-                    }
+                    onItemClickListener?.invoke(entertainment_news_image, article)
                 }
             }
         }
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
-    }
 
+    }
 
     inner class EntertainmentNewsHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

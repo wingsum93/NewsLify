@@ -153,10 +153,11 @@ class ExploreBottomAdapter(
 
             }
 
+            news_source_image.apply {
+                transitionName = items.title
+            }
             setOnClickListener {
-                onItemClickListener?.let {
-                    it(items)
-                }
+                onItemClickListener?.invoke(news_source_image, items)
             }
         }
     }
@@ -167,10 +168,11 @@ class ExploreBottomAdapter(
         clipboard.setPrimaryClip(clip)
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
+
     }
 
     private val differCallBack = object : DiffUtil.ItemCallback<Article>() {

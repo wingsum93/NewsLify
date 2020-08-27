@@ -1,6 +1,5 @@
 package com.crushtech.newslify.adapter
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants.Companion.SHIMMER_ITEM_NUMBER
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.breaking_news_items.view.*
-import kotlinx.android.synthetic.main.science_list_item.view.*
 import kotlinx.android.synthetic.main.sport_list_item.view.*
-import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,10 +64,11 @@ class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHold
                 sport_title.text = article.title
 
 
+                sport_news_picture.apply {
+                    transitionName = article.title
+                }
                 setOnClickListener {
-                    onItemClickListener?.let {
-                        it(article)
-                    }
+                    onItemClickListener?.invoke(sport_news_picture, article)
                 }
             }
         }
@@ -84,10 +79,11 @@ class SportNewsAdapter : RecyclerView.Adapter<SportNewsAdapter.SportNewsViewHold
     }
 
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
+
     }
 
 

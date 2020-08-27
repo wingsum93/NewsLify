@@ -9,14 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crushtech.newslify.R
 import com.crushtech.newslify.models.Article
 import com.crushtech.newslify.ui.util.Constants
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import getTimeAgo
-import kotlinx.android.synthetic.main.business_news_item.view.*
-import kotlinx.android.synthetic.main.breaking_news_items.view.*
 import kotlinx.android.synthetic.main.view_all_news_items.view.*
-import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -76,19 +71,22 @@ class ViewAllAdapter : RecyclerView.Adapter<ViewAllAdapter.VAdapter>() {
                 view_all_news_title.text = article?.title
                 view_all_news_description.text = article?.description
 
+                view_all_news_image.apply {
+                    transitionName = article.title
+                }
                 setOnClickListener {
-                    onItemClickListener?.let {
-                        it(article)
-                    }
+                    onItemClickListener?.invoke(view_all_news_image, article)
                 }
             }
         }
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    private var onItemClickListener: ((transitionView: View, article: Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (View, Article) -> Unit) {
         onItemClickListener = listener
+
     }
 
 

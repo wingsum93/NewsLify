@@ -1,54 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/news_nav_graph"
     app:startDestination="@id/breakingNewsFragment">
 
     <fragment
         android:id="@+id/breakingNewsFragment"
+        tools:layout="@layout/fragment_breaking_news"
         android:name="com.crushtech.newslify.ui.fragments.breakingNewsFragment"
         android:label="Breaking News">
         <action
             android:id="@+id/action_breakingNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/articleFragment" />
         <action
             android:id="@+id/action_breakingNewsFragment_to_viewAllFragment"
-            app:destination="@id/viewAllFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/viewAllFragment" />
+        <argument
+            android:name="customAnimation"
+            app:argType="android.os.Bundle" />
     </fragment>
     <fragment
         android:id="@+id/savedNewsFragment"
+        tools:layout="@layout/fragment_saved_news"
         android:name="com.crushtech.newslify.ui.fragments.savedNewsFragment"
         android:label="Saved News">
         <action
             android:id="@+id/action_savedNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchNewsFragment"
+        tools:layout="@layout/fragment_search_news"
         android:name="com.crushtech.newslify.ui.fragments.searchNewsFragment"
         android:label="Search News">
         <action
             android:id="@+id/action_searchNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
+        tools:layout="@layout/customized_article_layout"
         android:name="com.crushtech.newslify.ui.fragments.ArticleFragment"
         android:label="News Article">
         <argument
@@ -56,14 +48,11 @@
             app:argType="com.crushtech.newslify.models.Article" />
         <action
             android:id="@+id/action_articleFragment_to_savedNewsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:destination="@id/savedNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
+        tools:layout="@layout/settings_layout"
         android:name="com.crushtech.newslify.ui.fragments.settingsFragment"
         android:label="Settings">
         <action
@@ -83,22 +72,15 @@
     </fragment>
     <fragment
         android:id="@+id/exploreFragment"
+        tools:layout="@layout/explore_layout"
         android:name="com.crushtech.newslify.ui.fragments.exploreFragment"
         android:label="Explore News">
         <action
             android:id="@+id/action_exploreFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/articleFragment" />
         <action
             android:id="@+id/action_exploreFragment_to_exploreTopItemsFragment"
-            app:destination="@id/exploreTopItemsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/exploreTopItemsFragment" />
         <action
             android:id="@+id/action_exploreFragment_to_savedNewsFragment"
             app:enterAnim="@anim/slide_in_right"
@@ -109,6 +91,7 @@
     </fragment>
     <fragment
         android:id="@+id/viewAllFragment"
+        tools:layout="@layout/fragment_view_all_news"
         android:name="com.crushtech.newslify.ui.fragments.ViewAllFragment"
         android:label="ViewAllFragment">
         <argument
@@ -117,14 +100,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_viewAllFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/exploreTopItemsFragment"
+        tools:layout="@layout/fragment_explore_top_items_news"
         android:name="com.crushtech.newslify.ui.fragments.ExploreTopItemsFragment"
         android:label="ExploreTopItemsFragment">
         <argument
@@ -132,14 +112,11 @@
             app:argType="string" />
         <action
             android:id="@+id/action_exploreTopItemsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/sendFeebackFragment"
+        tools:layout="@layout/send_feeback_dialog"
         android:name="com.crushtech.newslify.ui.fragments.SendFeebackFragment"
         android:label="Feedback">
         <action

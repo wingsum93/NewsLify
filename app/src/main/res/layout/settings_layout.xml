@@ -40,15 +40,15 @@
                     android:elevation="1dp"
                     android:padding="20dp"
                     android:src="@drawable/p_coins"
-                    android:tint="#E6A3C1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#E6A3C1" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/premiumCoinText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="1dp"
@@ -77,13 +77,13 @@
                     android:background="@drawable/explore_item5_bg"
                     android:elevation="1dp"
                     android:src="@drawable/streak_icon"
-                    android:tint="@color/streakNotEqualGoalsTint"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/checkCoins"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="@color/streakNotEqualGoalsTint" />
 
                 <TextView
                     android:id="@+id/dailynewsGoals"
@@ -114,12 +114,12 @@
                     android:background="@drawable/explore_item2_bg"
                     android:elevation="1dp"
                     android:src="@drawable/goal"
-                    android:tint="#C6B76D"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/streak_count_img"
                     app:layout_constraintTop_toBottomOf="@+id/checkCoins"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#C6B76D" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -129,8 +129,8 @@
                     android:letterSpacing="0.1"
                     android:maxLines="5"
                     android:padding="17dp"
-                    android:textAlignment="center"
                     android:text="Tap to set daily goals"
+                    android:textAlignment="center"
                     android:textColor="@android:color/white"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/setnewsGoals"
@@ -150,13 +150,13 @@
                     android:background="@drawable/explore_item1_bg"
                     android:elevation="1dp"
                     android:src="@drawable/purchase_ic"
-                    android:tint="#9C79CD"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/dailynewsGoals"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#9C79CD" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -185,12 +185,12 @@
                     android:background="@drawable/custom_setting_item1_bg"
                     android:elevation="1dp"
                     android:src="@drawable/push_notifications_ic"
-                    android:tint="#D9DFD5"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/purchaseThemes"
                     app:layout_constraintTop_toBottomOf="@+id/setnewsGoals"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#D9DFD5" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -219,13 +219,13 @@
                     android:background="@drawable/custom_setting_item3_bg"
                     android:elevation="1dp"
                     android:src="@drawable/country_ic"
-                    android:tint="#8E9DED"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/purchaseThemes"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#8E9DED" />
 
                 <TextView
                     android:id="@+id/change_country"
@@ -255,13 +255,13 @@
                     android:background="@drawable/explore_item5_bg"
                     android:elevation="1dp"
                     android:src="@drawable/ic_baseline_email_24"
-                    android:tint="#6CCABD"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/change_countryParent"
                     app:layout_constraintTop_toBottomOf="@+id/custom_N"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#6CCABD" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -271,8 +271,8 @@
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Send Feeback to developers"
-                    android:textColor="@android:color/white"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/sendFeedback"
                     app:layout_constraintEnd_toEndOf="@+id/sendFeedback"
@@ -291,13 +291,13 @@
                     android:background="@drawable/custom_setting_item4_bg"
                     android:elevation="1dp"
                     android:src="@drawable/fav"
-                    android:tint="#E1F3AF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/change_countryParent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#E1F3AF" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -326,12 +326,12 @@
                     android:background="@drawable/custom_setting_item2_bg"
                     android:elevation="1dp"
                     android:src="@drawable/rate_ic"
-                    android:tint="#E6A3C1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/support_us"
                     app:layout_constraintTop_toBottomOf="@+id/sendFeedback"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#E6A3C1" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -360,13 +360,13 @@
                     android:background="@drawable/explore_item1_bg"
                     android:elevation="1dp"
                     android:src="@drawable/ic_share"
-                    android:tint="#9C79CD"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/support_us"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#9C79CD" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -396,12 +396,12 @@
                     android:background="@drawable/explore_item6_bg"
                     android:elevation="1dp"
                     android:src="@drawable/policy_ic"
-                    android:tint="#D9DFD5"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/shareApp"
                     app:layout_constraintTop_toBottomOf="@+id/rate_app"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    app:tint="#D9DFD5" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -411,8 +411,8 @@
                     android:letterSpacing="0.1"
                     android:padding="17dp"
                     android:text="Privacy policy"
-                    android:textColor="@android:color/white"
                     android:textAlignment="center"
+                    android:textColor="@android:color/white"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/privacy_policy"
                     app:layout_constraintEnd_toEndOf="@+id/privacy_policy"
