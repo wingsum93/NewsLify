@@ -8,8 +8,14 @@ A app for see news.
 
 ## App Insight
 
-Kotlin , jetpack compose, mvvm architecture, compose animation, custom compose ui widget
+### Ongoing
+
+Jetpack compose, mvvm architecture, compose animation, custom compose ui widget
+
+### Done
+
+Kotlin ,
 
 ### links
 
-[News Api Doc](https://newsapi.org/docs)
+[News Api Doc (newsapi)](https://newsapi.org/docs)
