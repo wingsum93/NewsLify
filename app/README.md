@@ -9,3 +9,7 @@ A app for see news.
 ## App Insight
 
 Kotlin , jetpack compose, mvvm architecture, compose animation, custom compose ui widget
+
+### links
+
+[News Api Doc](https://newsapi.org/docs)
