@@ -15,7 +15,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.util.TypedValue
-import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.webkit.*
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -35,6 +35,7 @@ import com.crushtech.newslify.models.SimpleCustomSnackbar
 import com.crushtech.newslify.ui.NewsActivity
 import com.crushtech.newslify.ui.NewsViewModel
 import com.crushtech.newslify.ui.util.Constants.Companion.STREAK
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
@@ -43,6 +44,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.muddzdev.styleabletoastlibrary.StyleableToast
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.customized_article_layout.*
 import kotlinx.coroutines.Dispatchers
@@ -61,12 +63,13 @@ class ArticleFragment : Fragment(), Picasso.Listener {
     private var streakCount = 0
     private var loadinghasFinished = false
     private lateinit var mInterstitialAd: InterstitialAd
-
     private val args: ArticleFragmentArgs by navArgs()
     private var currentAnimator: AnimatorSet? = null
     private var shortAnimationDuration: Int = 0
+    private lateinit var fabAnimation: Animation
+    private var expandedImage: PhotoView? = null
+    private var exProgressBar: ProgressBar? = null
 
-    @SuppressLint("SetJavaScriptEnabled")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +80,7 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         sharedElementReturnTransition = transition
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,21 +90,35 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         viewModel = (activity as NewsActivity).newsViewModel
         val imageHolder = view.findViewById<ImageView>(R.id.breaking_news_image)
         retainInstance = true
-
+        val shareFab = view.findViewById<FloatingActionButton>(R.id.fab_share1)
         //get the argument from the generated arg class
         val article = args.article
-
+        fabAnimation = AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.slide_up
+        )
+        expandedImage = view.findViewById(R.id.expandedImage)
+        exProgressBar = view.findViewById(R.id.expandedImageProgressBar)
 
         imageHolder.apply {
             transitionName = article.title
             setOnClickListener {
-                hideOtherViews()
+
+                //check if image view has an image attached
+                if (imageHolder.drawable != null) {
+                    (exProgressBar as ProgressBar).visibility = View.VISIBLE
+                    hideOtherViews()
+                }
                 zoomImageFromThumb(this, article.urlToImage, view)
+
             }
         }
 
+
         //Retrieve and cache the system default "short" animation time
         shortAnimationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
+
+        //configure the article image.. in case of nullable article image
         try {
             if (article.urlToImage.isNullOrEmpty()) {
                 Picasso.get().load(R.drawable.mylogo).fit().centerCrop().into(imageHolder)
@@ -137,6 +155,8 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         collapseArticleView.animation = slideInAnim
         extendArticleView.animation = slideInAnim
         val nestedScrollView = view.findViewById<NestedScrollView>(R.id.nestedScrollView)
+        val nestedAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_in_left)
+        nestedScrollView.animation = nestedAnim
         //extend article logic
         extendArticleView.setOnClickListener {
             (activity as NewsActivity).supportActionBar?.hide()
@@ -146,8 +166,8 @@ class ArticleFragment : Fragment(), Picasso.Listener {
             extendArticleView.visibility = View.GONE
         }
         //collapse article logic
-        nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?,
-                                                     scrollX: Int,
+        nestedScrollView.setOnScrollChangeListener { _: NestedScrollView?,
+                                                     _: Int,
                                                      scrollY: Int,
                                                      oldScrollX: Int,
                                                      oldScrollY: Int ->
@@ -170,65 +190,68 @@ class ArticleFragment : Fragment(), Picasso.Listener {
             collapseArticleView.visibility = View.GONE
         }
 
-        view.findViewById<FloatingActionButton>(R.id.fab_favorite1).setOnClickListener {
-            val customSnackListener: View.OnClickListener = View.OnClickListener {
-                findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
-            }
-            isClicked = true
-            if (isClicked && btnCount == 0) {
-                val date = Calendar.getInstance().time
-                val dateFormat: DateFormat =
-                    SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault())
-                val strDate = dateFormat.format(date)
-                article.timeInsertedToRoomDatabase = strDate
-                viewModel.saveArticle(article)
-
-                view.findViewById<FloatingActionButton>(R.id.fab_favorite1).apply {
-                    setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
-                    startAnimation(logoAnim)
+        view.findViewById<FloatingActionButton>(R.id.fab_favorite1).apply {
+            setOnClickListener {
+                val customSnackListener: View.OnClickListener = View.OnClickListener {
+                    findNavController().navigate(R.id.action_articleFragment_to_savedNewsFragment)
                 }
-                GlobalScope.launch(Dispatchers.Main) {
-                    try {
-                        lottie_saved_anim1.visibility = View.VISIBLE
-                        lottie_webview_loading1.visibility = View.INVISIBLE
-                        webview_loading_text2.visibility = View.INVISIBLE
-                    } catch (e: Exception) {
+                isClicked = true
+                if (isClicked && btnCount == 0) {
+                    val date = Calendar.getInstance().time
+                    val dateFormat: DateFormat =
+                        SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault())
+                    val strDate = dateFormat.format(date)
+                    article.timeInsertedToRoomDatabase = strDate
+                    viewModel.saveArticle(article)
+
+                    view.findViewById<FloatingActionButton>(R.id.fab_favorite1).apply {
+                        setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
+                        startAnimation(logoAnim)
                     }
-                    delay(3000L)
-                    try {
-                        lottie_saved_anim1.visibility = View.GONE
-                        //check if loading lottie has already appeared and has finished loading
-                        if (!loadinghasFinished) {
-                            lottie_webview_loading1.visibility = View.VISIBLE
-                            webview_loading_text2.visibility = View.VISIBLE
+                    GlobalScope.launch(Dispatchers.Main) {
+                        try {
+                            lottie_saved_anim1.visibility = View.VISIBLE
+                            lottie_webview_loading1.visibility = View.INVISIBLE
+                            webview_loading_text2.visibility = View.INVISIBLE
+                        } catch (e: Exception) {
                         }
-                    } catch (e: Exception) {
+                        delay(2000L)
+                        try {
+                            lottie_saved_anim1.visibility = View.GONE
+                            //check if loading lottie has already appeared and has finished loading
+                            if (!loadinghasFinished) {
+                                lottie_webview_loading1.visibility = View.VISIBLE
+                                webview_loading_text2.visibility = View.VISIBLE
+                            }
+                        } catch (e: Exception) {
+                        }
                     }
+
+                    SimpleCustomSnackbar.make(
+                        viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
+                        customSnackListener, R.drawable.snack_fav,
+                        "View", null
+                    )?.show()
+                    val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
+                    streakCount = prefs.getInt(STREAK, 0)
+                    streakCount++
+                    requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
+                        .edit().putInt(STREAK, streakCount).apply()
+                    val cal = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
+                    requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE).edit()
+                        .putInt("TIME", cal).apply()
+                } else {
+                    lottie_saved_anim1.visibility = View.GONE
+                    SimpleCustomSnackbar.make(
+                        viewPos, "Article already saved", Snackbar.LENGTH_LONG,
+                        customSnackListener, R.drawable.snack_fav,
+                        "View", null
+                    )?.show()
                 }
-
-                SimpleCustomSnackbar.make(
-                    viewPos, "Article saved successfully", Snackbar.LENGTH_LONG,
-                    customSnackListener, R.drawable.snack_fav,
-                    "View", null
-                )?.show()
-                val prefs = requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-                streakCount = prefs.getInt(STREAK, 0)
-                streakCount++
-                requireContext().getSharedPreferences(STREAK, Context.MODE_PRIVATE)
-                    .edit().putInt(STREAK, streakCount).apply()
-                val cal = Calendar.getInstance()[Calendar.DAY_OF_YEAR]
-                requireContext().getSharedPreferences("TIME", Context.MODE_PRIVATE).edit()
-                    .putInt("TIME", cal).apply()
-            } else {
-                lottie_saved_anim1.visibility = View.GONE
-                SimpleCustomSnackbar.make(
-                    viewPos, "Article already saved", Snackbar.LENGTH_LONG,
-                    customSnackListener, R.drawable.snack_fav,
-                    "View", null
-                )?.show()
+                btnCount++
             }
-            btnCount++
 
+            animation = fabAnimation
         }
 
 
@@ -307,19 +330,27 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         })
 
 
-        view.findViewById<FloatingActionButton>(R.id.fab_share1).setOnClickListener {
-            try {
-                val articleUrl = "From NewsLify:  ${article.url}"
-                val shareSub = "APP NAME/TITLE"
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "text/link"
-                    putExtra(Intent.EXTRA_SUBJECT, shareSub)
-                    putExtra(Intent.EXTRA_TEXT, articleUrl)
+        shareFab.apply {
+            animation = fabAnimation
+            setOnClickListener {
+                try {
+                    val articleUrl = "From NewsLify:  ${article.url}"
+                    val shareSub = "APP NAME/TITLE"
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/link"
+                        putExtra(Intent.EXTRA_SUBJECT, shareSub)
+                        putExtra(Intent.EXTRA_TEXT, articleUrl)
+                    }
+                    if (intent.resolveActivity((activity as NewsActivity).packageManager) != null) {
+                        startActivity(Intent.createChooser(intent, "Share Using"))
+                    }
+
+                } catch (e: ActivityNotFoundException) {
+                    StyleableToast.makeText(requireContext(), e.message, R.style.customToast).show()
                 }
-                requireContext().startActivity(Intent.createChooser(intent, "Share Using"))
-            } catch (e: ActivityNotFoundException) {
             }
         }
+
 
         view.findViewById<WebView>(R.id.scrollwebView1).apply {
             this.settings.cacheMode = WebSettings.LOAD_DEFAULT
@@ -368,8 +399,12 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         currentAnimator?.cancel()
 
         //load image
-        val expandedImage = myView.findViewById<ImageView>(R.id.expandedImage)
-        Picasso.get().load(articleImage).fit().centerCrop().into(expandedImage)
+
+        if (articleImage.isNullOrEmpty()) {
+            Picasso.get().load(R.drawable.mylogo).fit().centerCrop().into(expandedImage)
+        } else {
+            Picasso.get().load(articleImage).fit().centerCrop().into(expandedImage)
+        }
 
 
         // Calculate the starting and ending bounds for the zoomed-in image.
@@ -418,13 +453,18 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         // begins, it will position the zoomed-in view in the place of the
         // thumbnail.
         imageView.alpha = 0f
-        expandedImage.visibility = View.VISIBLE
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(200L)
+            expandedImage!!.visibility = View.VISIBLE
+            exProgressBar!!.visibility = View.GONE
+        }
+
 
         // Set the pivot point for SCALE_X and SCALE_Y transformations
         // to the top-left corner of the zoomed-in view (the default
         // is the center of the view).
-        expandedImage.pivotX = 0f
-        expandedImage.pivotY = 0f
+        expandedImage!!.pivotX = 0f
+        expandedImage!!.pivotY = 0f
 
         // Construct and run the parallel animation of the four translation and
         // scale properties (X, Y, SCALE_X, and SCALE_Y).
@@ -466,26 +506,10 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         // Upon clicking the zoomed-in image, it should zoom back down
         // to the original bounds and show the thumbnail instead of
         // the expanded image.
-        expandedImage.apply {
+        expandedImage!!.apply {
             setOnClickListener {
                 showOtherViews()
                 setupAnimator(startBounds, startScale, imageView)
-            }
-            setOnDragListener(object : View.OnDragListener {
-                override fun onDrag(p0: View?, p1: DragEvent?): Boolean {
-                    if (p1?.action == DragEvent.ACTION_DRAG_ENTERED || p1?.action == DragEvent.ACTION_DRAG_ENDED) {
-                        showOtherViews()
-                        setupAnimator(startBounds, startScale, imageView)
-                        return true
-                    }
-                    return false
-                }
-
-            })
-            setOnLongClickListener {
-                showOtherViews()
-                setupAnimator(startBounds, startScale, imageView)
-                true
             }
         }
 
@@ -497,8 +521,15 @@ class ArticleFragment : Fragment(), Picasso.Listener {
         scrollwebView1.visibility = View.VISIBLE
         fab_favorite1.visibility = View.VISIBLE
         fab_share1.visibility = View.VISIBLE
-        lottie_webview_loading1.visibility = View.VISIBLE
-        webview_loading_text2.visibility = View.VISIBLE
+
+        if (loadinghasFinished) {
+            lottie_webview_loading1.visibility = View.INVISIBLE
+            webview_loading_text2.visibility = View.INVISIBLE
+        } else {
+            lottie_webview_loading1.visibility = View.VISIBLE
+            webview_loading_text2.visibility = View.VISIBLE
+        }
+
     }
 
     private fun hideOtherViews() {
@@ -529,23 +560,18 @@ class ArticleFragment : Fragment(), Picasso.Listener {
 
                 override fun onAnimationEnd(animation: Animator) {
                     imageView.alpha = 1f
-                    expandedImage.visibility = View.GONE
+                    expandedImage!!.visibility = View.GONE
+                    exProgressBar!!.visibility = View.GONE
                     currentAnimator = null
                 }
 
                 override fun onAnimationCancel(animation: Animator) {
-//                val typedValue = TypedValue()
-//                activity!!.theme
-//                    .resolveAttribute(R.attr.mainBackground, typedValue, true)
-//                if (typedValue.resourceId != 0) {
-//                    article_parent.setBackgroundResource(typedValue.resourceId)
-//                } else {
-//                    article_parent.setBackgroundColor(typedValue.data)
-//                }
                     imageView.alpha = 1f
-                    expandedImage.visibility = View.GONE
+                    expandedImage!!.visibility = View.GONE
+                    exProgressBar!!.visibility = View.GONE
                     currentAnimator = null
                 }
+
             })
             start()
         }

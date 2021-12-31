@@ -56,6 +56,11 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
     private var premiumDialog: BottomSheetDialog? = null
     private lateinit var rewardedAd: RewardedAd
     private var totalCoins = 0
+    private var themeOneIsPurchased = false
+    private var themeTwoIsPurchased = false
+    private var themeThreeIsPurchased = false
+    private var themeFourIsPurchased = false
+    private var themeFiveIsPurchased = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -278,10 +283,7 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
             val dismissDialog =
                 premiumDialog!!.findViewById<ExtendedFloatingActionButton>(R.id.close_theme_popup)
             val watchAd = premiumDialog!!.findViewById<MaterialButton>(R.id.watchAds)
-
-            if (watchAd != null) {
-                setUpRewardedAdFunction(watchAd)
-            }
+            setUpRewardedAdFunction(watchAd!!)
 
 
             val slideInAnim: Animation = AnimationUtils.loadAnimation(
@@ -395,6 +397,11 @@ class settingsFragment : Fragment(R.layout.settings_layout) {
                         ).show()
                         requireContext().getSharedPreferences("coins", Context.MODE_PRIVATE).edit()
                             .putInt("totalCoins", totalCoins).apply()
+                        val myPrefs =
+                            requireContext().getSharedPreferences("coins", Context.MODE_PRIVATE)
+                        val balance = myPrefs.getInt("totalCoins", 0)
+                        premiumCoinText.text =
+                            getString(R.string.premium_coins_balance) + "$balance"
                     }
 
                     override fun onRewardedAdClosed() {

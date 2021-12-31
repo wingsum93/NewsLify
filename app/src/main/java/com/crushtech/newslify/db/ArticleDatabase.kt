@@ -18,8 +18,9 @@ abstract class ArticleDatabase : RoomDatabase() {
     //singleton
 
     companion object {
-        //@Volatile indicates
-        // that writes to this field are immediately made visible to other threads.
+        /**
+         * @see Volatile **/
+        // it indicates that writes to this field are immediately made visible to other threads.
         @Volatile
         private var instance: ArticleDatabase? = null
         private val LOCK = Any()

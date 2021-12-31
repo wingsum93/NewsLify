@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
@@ -116,9 +117,9 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
                     isCurrentlyActive
                 ).addBackgroundColor(ContextCompat.getColor(requireContext(), R.color.color_red_AA))
                     .addActionIcon(R.drawable.ic_baseline_delete_24)
-                    .addSwipeLeftLabel("delete article")
-                    .setSwipeLeftLabelTextSize(1, 18F)
-                    .setSwipeLeftLabelColor(R.color.white)
+                    .addSwipeLeftLabel("Delete")
+                    .setSwipeLeftLabelTypeface(Typeface.DEFAULT_BOLD)
+                    .setSwipeLeftLabelColor(Color.WHITE)
                     .create()
                     .decorate()
                 super.onChildDraw(
@@ -235,9 +236,11 @@ class savedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
             spinnerBottomDialog.dismiss()
             viewModel.getSavedNews().observe(viewLifecycleOwner, Observer { article ->
+
                 val ascOrder = article.sortedBy {
                     it.title
                 }
+
                 newsAdapter.differ.submitList(ascOrder)
                 updateUI(article)
             })

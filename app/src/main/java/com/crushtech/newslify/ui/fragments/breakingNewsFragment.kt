@@ -26,7 +26,6 @@ class breakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private var groups: ArrayList<Group>? = null
     private lateinit var viewModel: NewsViewModel
     private var groupAdapter: GroupAdapter? = null
-    private var mView: View? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

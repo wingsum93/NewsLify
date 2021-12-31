@@ -2,13 +2,12 @@ package com.crushtech.newslify.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.crushtech.newslify.R
 import com.mikelau.countrypickerx.CountryPickerCallbacks
 import com.mikelau.countrypickerx.CountryPickerDialog
@@ -77,14 +76,13 @@ class SelectCountry : AppCompatActivity() {
     }
 
     private fun saveDataToPref(country: String) {
-        val sharedPrefs =
-            applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE).apply {
-                edit().apply {
-                    putString("Country", country)
-                    putString("countryIsoCode", countryIsoCode)
-                    apply()
-                }
+        applicationContext.getSharedPreferences("myprefs", Context.MODE_PRIVATE).apply {
+            edit().apply {
+                putString("Country", country)
+                putString("countryIsoCode", countryIsoCode)
+                apply()
             }
+        }
     }
 
     override fun onStop() {

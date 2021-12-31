@@ -30,6 +30,9 @@ class BreakingNewsAdapter : RecyclerView.Adapter<BreakingNewsAdapter.BreakingNew
     }
 
     override fun getItemCount(): Int {
+        /**
+         * if true then show our shimmer effect with fixed shimmer item number
+         * @see SHIMMER_ITEM_NUMBER **/
         return if (showShimmer) SHIMMER_ITEM_NUMBER else differ.currentList.size
     }
 
